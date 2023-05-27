@@ -57,6 +57,8 @@ void ARockGenerator::BeginPlay()
 			}
 		}
 	}
+
+	TMap<FIntVector, int> VertexMap = TMap<FIntVector, int>();
 	
 	for (int x = 0; x < Size - 1; ++x)
 	{
@@ -88,55 +90,19 @@ void ARockGenerator::BeginPlay()
 				
 				for (int i = 0; Edges[i] != -1; i += 3)
 				{
-					// First edge lies between vertex e00 and vertex e01
-					const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[i]][0];
-					const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[i]][1];
-					const FIntVector E00Index = Pos + MarchingCubesLookupTables::VertexOffsets[E00];
-					const FIntVector E01Index = Pos + MarchingCubesLookupTables::VertexOffsets[E01];
-					Vertices.Add(
-					MarchingCubesLookupTables::Interp(
-							FVector(MarchingCubesLookupTables::VertexOffsets[E00]),
-							Voxels[E00Index.X][E00Index.Y][E00Index.Z],
-							FVector(MarchingCubesLookupTables::VertexOffsets[E01]),
-							Voxels[E01Index.X][E01Index.Y][E01Index.Z],
-							Isolevel
-						) + FVector(Pos)
-					);
-
-					// Second edge lies between vertex e10 and vertex e11
-					const int E10 = MarchingCubesLookupTables::EdgeConnections[Edges[i + 1]][0];
-					const int E11 = MarchingCubesLookupTables::EdgeConnections[Edges[i + 1]][1];
-					const FIntVector E10Index = Pos + MarchingCubesLookupTables::VertexOffsets[E10];
-					const FIntVector E11Index = Pos + MarchingCubesLookupTables::VertexOffsets[E11];
-					Vertices.Add(
-					MarchingCubesLookupTables::Interp(
-							FVector(MarchingCubesLookupTables::VertexOffsets[E10]),
-							Voxels[E10Index.X][E10Index.Y][E10Index.Z],
-							FVector(MarchingCubesLookupTables::VertexOffsets[E11]),
-							Voxels[E11Index.X][E11Index.Y][E11Index.Z],
-							Isolevel
-						) + FVector(Pos)
-					);
-        
-					// Third edge lies between vertex e20 and vertex e21
-					const int E20 = MarchingCubesLookupTables::EdgeConnections[Edges[i + 2]][0];
-					const int E21 = MarchingCubesLookupTables::EdgeConnections[Edges[i + 2]][1];
-					const FIntVector E20Index = Pos + MarchingCubesLookupTables::VertexOffsets[E20];
-					const FIntVector E21Index = Pos + MarchingCubesLookupTables::VertexOffsets[E21];
-					Vertices.Add(
-					MarchingCubesLookupTables::Interp(
-							FVector(MarchingCubesLookupTables::VertexOffsets[E20]),
-							Voxels[E20Index.X][E20Index.Y][E20Index.Z],
-							FVector(MarchingCubesLookupTables::VertexOffsets[E21]),
-							Voxels[E21Index.X][E21Index.Y][E21Index.Z],
-							Isolevel
-						) + FVector(Pos)
-					);
-
-					const int VertexIndex = Vertices.Num() - 3;
-					Triangles.Add(VertexIndex);
+					const int VertexIndex = Vertices.Num();
+					
 					Triangles.Add(VertexIndex + 1);
 					Triangles.Add(VertexIndex + 2);
+					
+					// First edge lies between vertex e00 and vertex e01
+					AddEdge(Voxels, Pos, Edges, i, Vertices, Triangles, VertexMap, Isolevel);
+
+					// Second edge lies between vertex e10 and vertex e11
+					AddEdge(Voxels, Pos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel);
+        
+					// Third edge lies between vertex e20 and vertex e21
+					AddEdge(Voxels, Pos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel);
 				}
 			}
 		}
@@ -144,6 +110,33 @@ void ARockGenerator::BeginPlay()
 
 	// Create the mesh section
 	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
+}
+
+void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges, const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FIntVector, int>& VertexMap, float Isolevel)
+{
+	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
+	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
+	const FIntVector E00Index = Pos + MarchingCubesLookupTables::VertexOffsets[E00];
+	const FIntVector E01Index = Pos + MarchingCubesLookupTables::VertexOffsets[E01];
+	if (const FIntVector ID = (MarchingCubesLookupTables::VertexOffsets[E00] + MarchingCubesLookupTables::VertexOffsets[E01]) / 2 + Pos;
+		VertexMap.Contains(ID))
+	{
+		Triangles.Add(VertexMap[ID]);
+	}
+	else
+	{
+		Vertices.Add(
+		MarchingCubesLookupTables::Interp(
+				FVector(MarchingCubesLookupTables::VertexOffsets[E00]),
+				Voxels[E00Index.X][E00Index.Y][E00Index.Z],
+				FVector(MarchingCubesLookupTables::VertexOffsets[E01]),
+				Voxels[E01Index.X][E01Index.Y][E01Index.Z],
+				Isolevel
+			) + FVector(Pos));
+		const int Index = Vertices.Num() - 1;
+		VertexMap.Add(ID, Index);
+		Triangles.Add(Index);
+	}
 }
 
 // Called every frame
