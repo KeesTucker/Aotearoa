@@ -20,21 +20,61 @@ ARockGenerator::ARockGenerator()
 void ARockGenerator::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
+void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges, const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap, float Isolevel)
+{
+	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
+	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
+	const FIntVector E00Index = Pos + MarchingCubesLookupTables::VertexOffsets[E00];
+	const FIntVector E01Index = Pos + MarchingCubesLookupTables::VertexOffsets[E01];
+
+	FString ID = MarchingCubesLookupTables::VertexOffsets[E00].ToString();
+	ID += MarchingCubesLookupTables::VertexOffsets[E01].ToString();
+	ID += Pos.ToString();
+	FString UUID = LexToString(FMD5::HashAnsiString(*ID));
+	
+	if (VertexMap.Contains(UUID))
+	{
+		Triangles.Add(VertexMap[UUID]);
+	}
+	else
+	{
+		Vertices.Add(
+		MarchingCubesLookupTables::Interp(
+				FVector(MarchingCubesLookupTables::VertexOffsets[E00]),
+				Voxels[E00Index.X][E00Index.Y][E00Index.Z],
+				FVector(MarchingCubesLookupTables::VertexOffsets[E01]),
+				Voxels[E01Index.X][E01Index.Y][E01Index.Z],
+				Isolevel
+			) + FVector(Pos));
+		const int Index = Vertices.Num() - 1;
+		VertexMap.Add(UUID, Index);
+		Triangles.Add(Index);
+	}
+}
+
+// Called every frame
+void ARockGenerator::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 50;
+	constexpr int Size = 30;
 	constexpr float PerlinScale = 0.1;
 	constexpr float PerlinInfluence = 0.15;
 	constexpr int Octaves = 3;
 	
-	TArray<TArray<TArray<float>>> Voxels;
-	TArray<FVector> Vertices;
-	TArray<int32> Triangles;
-	TArray<FVector> Normals;
-	TArray<FVector2D> UV0;
-	const TArray<FColor> VertexColors;
-	TArray<FProcMeshTangent> Tangents;
+	TArray<TArray<TArray<float>>> Voxels = TArray<TArray<TArray<float>>>();
+	TArray<FVector> Vertices = TArray<FVector>();
+	TArray<int32> Triangles = TArray<int32>();
+	TArray<FVector> Normals = TArray<FVector>();
+	TArray<FVector2D> UV0 = TArray<FVector2D>();
+	const TArray<FLinearColor> VertexColors = TArray<FLinearColor>();
+	TArray<FProcMeshTangent> Tangents = TArray<FProcMeshTangent>();
 
+	float Time = FPlatformTime::ToMilliseconds(FPlatformTime::Cycles()) * 0.01f;
+	
 	Voxels.SetNum(Size);
 	for (int x = 0; x < Size; ++x)
 	{
@@ -50,14 +90,15 @@ void ARockGenerator::BeginPlay()
 				float Noise = 0;
 				for (float i = 1.f; i <= Octaves; ++i)
 				{
-					Noise += FMath::PerlinNoise3D(FVector(x, y, z) * PerlinScale * i) * PerlinInfluence / i;
+					Noise += FMath::PerlinNoise3D(FVector(x, y, z + Time) * PerlinScale * i) * PerlinInfluence / i;
 				}
-				
 				Voxels[x][y][z] = NormalizedDistance + Noise;
 			}
 		}
 	}
 
+	Debug::LogFloat(TEXT(""), Time);
+	
 	TMap<FString, int> VertexMap = TMap<FString, int>();
 	
 	for (int x = 0; x < Size - 1; ++x)
@@ -103,7 +144,7 @@ void ARockGenerator::BeginPlay()
 		}
 	}
 
-	/*Normals.SetNum(Vertices.Num());
+	Normals.SetNum(Vertices.Num());
 	for (int32 i = 0; i < Triangles.Num(); i += 3)
 	{
 		const int32 Index0 = Triangles[i];
@@ -124,47 +165,10 @@ void ARockGenerator::BeginPlay()
 	for (FVector& Normal : Normals)
 	{
 		Normal.Normalize();
-	}*/
+	}
 	
 	// Create the mesh section
-	ProceduralMesh->CreateMeshSection(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
-}
-
-void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges, const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap, float Isolevel)
-{
-	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
-	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
-	const FIntVector E00Index = Pos + MarchingCubesLookupTables::VertexOffsets[E00];
-	const FIntVector E01Index = Pos + MarchingCubesLookupTables::VertexOffsets[E01];
-
-	FString ID = MarchingCubesLookupTables::VertexOffsets[E00].ToString();
-	ID += MarchingCubesLookupTables::VertexOffsets[E01].ToString();
-	ID += Pos.ToString();
-	FString UUID = LexToString(FMD5::HashAnsiString(*ID));
-	
-	if (VertexMap.Contains(UUID))
-	{
-		Triangles.Add(VertexMap[UUID]);
-	}
-	else
-	{
-		Vertices.Add(
-		MarchingCubesLookupTables::Interp(
-				FVector(MarchingCubesLookupTables::VertexOffsets[E00]),
-				Voxels[E00Index.X][E00Index.Y][E00Index.Z],
-				FVector(MarchingCubesLookupTables::VertexOffsets[E01]),
-				Voxels[E01Index.X][E01Index.Y][E01Index.Z],
-				Isolevel
-			) + FVector(Pos));
-		const int Index = Vertices.Num() - 1;
-		VertexMap.Add(UUID, Index);
-		Triangles.Add(Index);
-	}
-}
-
-// Called every frame
-void ARockGenerator::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	ProceduralMesh->ClearMeshSection(0);
+	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
 }
 
