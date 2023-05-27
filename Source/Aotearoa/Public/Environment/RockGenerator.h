@@ -12,15 +12,17 @@ class AOTEAROA_API ARockGenerator : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
 	ARockGenerator();
+
+	UPROPERTY(EditAnywhere, Category = "Materials")
+	UMaterialInterface* RockMat;
+	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual int AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
-	                      const int EdgeIndex, TArray<
-		                      FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap,
-	                      const float Isolevel, TArray<TArray<int>>&
-	                      VertexTriangleIndices);
+	                      const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap,
+	                      const float Isolevel, TArray<TArray<int>>& VertexTriangleIndices, TArray<FLinearColor> VertexColors);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

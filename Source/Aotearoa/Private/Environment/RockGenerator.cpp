@@ -15,6 +15,12 @@ ARockGenerator::ARockGenerator()
 	
 	// Create Procedural Mesh Component and attach it to the root
 	ProceduralMesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("ProceduralMesh"));
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MaterialAsset(TEXT("/Script/Engine.Material'/Game/Mats/MRock.MRock'"));
+	if (MaterialAsset.Succeeded())
+	{
+		RockMat = MaterialAsset.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -23,7 +29,7 @@ void ARockGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 500;
+	constexpr int Size = 300;
 	constexpr float PerlinScale = 2.5;
 	constexpr float PerlinInfluence = 0.5;
 	constexpr int Octaves = 3;
@@ -57,7 +63,7 @@ void ARockGenerator::BeginPlay()
 				{
 					Noise += (FastNoise.GetNoise(x * PerlinScale * i, y * PerlinScale * i, z * PerlinScale * i) + 0.5f) * PerlinInfluence / i;
 				}
-				Voxels[x][y][z] = NormalizedDistance + Noise;
+				Voxels[x][y][z] = 0.9f + Noise;
 			}
 		}
 	}
@@ -95,15 +101,13 @@ void ARockGenerator::BeginPlay()
 				for (int i = 0; Edges[i] != -1; i += 3)
 				{
 					// First edge lies between vertex e00 and vertex e01
-					int VertIndex1 = AddVertex(Voxels, Pos, Edges, i, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices);
+					int VertIndex1 = AddVertex(Voxels, Pos, Edges, i, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices, VertexColors);
 
 					// Second edge lies between vertex e10 and vertex e11
-					int VertIndex2 = AddVertex(Voxels, Pos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices);
+					int VertIndex2 = AddVertex(Voxels, Pos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices, VertexColors);
         
 					// Third edge lies between vertex e20 and vertex e21
-					int VertIndex3 = AddVertex(Voxels, Pos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices);
-
-					VertexColors.Add(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f));
+					int VertIndex3 = AddVertex(Voxels, Pos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices, VertexColors);
 
 					VertexTriangleIndices[VertIndex1].Add(VertIndex1);
 					VertexTriangleIndices[VertIndex1].Add(VertIndex2);
@@ -145,6 +149,7 @@ void ARockGenerator::BeginPlay()
 	// Create the mesh section
 	ProceduralMesh->ClearAllMeshSections();
 	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
+	ProceduralMesh->SetMaterial(0, RockMat);
 }
 
 // Called every frame
@@ -156,7 +161,7 @@ void ARockGenerator::Tick(float DeltaTime)
 int ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
                               const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles,
                               TMap<FString, int>& VertexMap,
-                              const float Isolevel, TArray<TArray<int>>& VertexTriangleIndices)
+                              const float Isolevel, TArray<TArray<int>>& VertexTriangleIndices, TArray<FLinearColor> VertexColors)
 {
 	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
 	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
@@ -188,6 +193,7 @@ int ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const
 		VertexMap.Add(UUID, Index);
 		Triangles.Add(Index);
 		VertexTriangleIndices.Add(TArray<int>());
+		VertexColors.Add(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f));
 	}
 
 	return Index;
