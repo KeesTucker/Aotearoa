@@ -1,0 +1,3 @@
+[submodule "Plugins/UnrealUtility"]
+	path = Plugins/UnrealUtility
+	url = https://github.com/headcoach73/UnrealUtility
