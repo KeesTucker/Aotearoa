@@ -42,7 +42,6 @@ void ARockGenerator::BeginPlay()
 	TArray<TArray<TArray<float>>> Voxels = TArray<TArray<TArray<float>>>();
 	TArray<FVector3f> Vertices = TArray<FVector3f>();
 	TArray<uint32> Triangles = TArray<uint32>();
-	TArray<FVector2f> UVs = TArray<FVector2f>();
 	FRawMesh Mesh;
 
 	FastNoiseLite CellularNoise = FastNoiseLite();
@@ -105,13 +104,13 @@ void ARockGenerator::BeginPlay()
 				for (int i = 0; Edges[i] != -1; i += 3)
 				{
 					// First edge lies between vertex e00 and vertex e01
-					AddVertex(Voxels, Pos, Edges, i, Vertices, Triangles, UVs, VertexMap, Isolevel);
+					AddVertex(Voxels, Pos, Edges, i, Vertices, Triangles, VertexMap, Isolevel);
 
 					// Second edge lies between vertex e10 and vertex e11
-					AddVertex(Voxels, Pos, Edges, i + 1, Vertices, Triangles, UVs, VertexMap, Isolevel);
+					AddVertex(Voxels, Pos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel);
         
 					// Third edge lies between vertex e20 and vertex e21
-					AddVertex(Voxels, Pos, Edges, i + 2, Vertices, Triangles, UVs, VertexMap, Isolevel);
+					AddVertex(Voxels, Pos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel);
 				}
 			}
 		}
@@ -128,9 +127,9 @@ void ARockGenerator::BeginPlay()
 	Mesh.WedgeIndices = Triangles;
 	Mesh.FaceMaterialIndices = FaceMatIndices;
 	Mesh.FaceSmoothingMasks = FaceSmoothingGroups;
-	Mesh.WedgeTexCoords[0] = UVs;
+	Mesh.WedgeTexCoords[0].Init(FVector2f(0.0f, 0.0f), Triangles.Num());
 	Mesh.WedgeColors.Init(FColor(0, 0, 0, 0), Triangles.Num());
-	Mesh.WedgeTangentY.Init(UE::Math::TVector(0.0f, 0.0f, 1.0f), Triangles.Num());
+	Mesh.WedgeTangentY.Init(FVector3f(0.0f, 0.0f, 1.0f), Triangles.Num());
 
 	UPackage* Package = CreatePackage(*SavePath);
 	check(Package);
@@ -173,12 +172,10 @@ void ARockGenerator::Tick(float DeltaTime)
 }
 
 void ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
-                               const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles,
-                               TArray<FVector2f>& UVs, TMap<FString, int>& VertexMap, const float Isolevel)
+                               const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles, TMap<FString,
+                               int>& VertexMap, const float Isolevel)
 {
-	const float Scale = 0.3f;
-	
-	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
+		const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
 	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
 	const FIntVector E00Index = Pos + MarchingCubesLookupTables::VertexOffsets[E00];
 	const FIntVector E01Index = Pos + MarchingCubesLookupTables::VertexOffsets[E01];
@@ -193,16 +190,10 @@ void ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, cons
 	{
 		Index = VertexMap[UUID];
 		Triangles.Add(Index);
-		FVector3f Vert = Vertices[Index];
-		FastNoiseLite PerlinNoise = FastNoiseLite();
-		PerlinNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-		PerlinNoise.SetFrequency(Scale);
-		const FVector2f UV = FVector2f(PerlinNoise.GetNoise(Vert.X, Vert.Z), PerlinNoise.GetNoise(Vert.X, Vert.Y));
-		UVs.Add(UV);
 	}
 	else
 	{
-		FVector3f Vert = MarchingCubesLookupTables::Interp(
+		const FVector3f Vert = MarchingCubesLookupTables::Interp(
 				FVector3f(MarchingCubesLookupTables::VertexOffsets[E00]),
 				Voxels[E00Index.X][E00Index.Y][E00Index.Z],
 				FVector3f(MarchingCubesLookupTables::VertexOffsets[E01]),
@@ -213,12 +204,6 @@ void ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, cons
 		Index = Vertices.Num() - 1;
 		VertexMap.Add(UUID, Index);
 		Triangles.Add(Index);
-
-		FastNoiseLite PerlinNoise = FastNoiseLite();
-		PerlinNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-		PerlinNoise.SetFrequency(Scale);
-		const FVector2f UV = FVector2f(PerlinNoise.GetNoise(Vert.X, Vert.Z), PerlinNoise.GetNoise(Vert.X, Vert.Y));
-		UVs.Add(UV);
 	}
 }
 

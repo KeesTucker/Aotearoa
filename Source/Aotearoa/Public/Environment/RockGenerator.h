@@ -21,7 +21,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
 	                       const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles,
-	                       TArray<FVector2f>& UVs,
 	                       TMap<FString, int>& VertexMap, const float Isolevel);
 
 protected:
