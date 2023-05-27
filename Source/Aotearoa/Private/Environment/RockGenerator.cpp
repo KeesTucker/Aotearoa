@@ -22,7 +22,7 @@ void ARockGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 100;
+	constexpr int Size = 50;
 	constexpr float PerlinScale = 0.1;
 	constexpr float PerlinInfluence = 0.15;
 	constexpr int Octaves = 3;
@@ -32,7 +32,7 @@ void ARockGenerator::BeginPlay()
 	TArray<int32> Triangles;
 	TArray<FVector> Normals;
 	TArray<FVector2D> UV0;
-	TArray<FLinearColor> VertexColors;
+	const TArray<FColor> VertexColors;
 	TArray<FProcMeshTangent> Tangents;
 
 	Voxels.SetNum(Size);
@@ -103,7 +103,7 @@ void ARockGenerator::BeginPlay()
 		}
 	}
 
-	Normals.SetNum(Vertices.Num());
+	/*Normals.SetNum(Vertices.Num());
 	for (int32 i = 0; i < Triangles.Num(); i += 3)
 	{
 		const int32 Index0 = Triangles[i];
@@ -124,10 +124,10 @@ void ARockGenerator::BeginPlay()
 	for (FVector& Normal : Normals)
 	{
 		Normal.Normalize();
-	}
+	}*/
 	
 	// Create the mesh section
-	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
+	ProceduralMesh->CreateMeshSection(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
 }
 
 void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges, const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap, float Isolevel)
