@@ -25,6 +25,7 @@ void ARockGenerator::BeginPlay()
 	constexpr int Size = 100;
 	constexpr float PerlinScale = 0.1;
 	constexpr float PerlinInfluence = 0.15;
+	constexpr int Octaves = 3;
 	
 	TArray<TArray<TArray<float>>> Voxels;
 	TArray<FVector> Vertices;
@@ -46,7 +47,12 @@ void ARockGenerator::BeginPlay()
 				float Distance = FVector::Dist(FVector(x, y, z), FVector(Size / 2, Size / 2, Size / 2));
 				float NormalizedDistance = 1.f - Distance / (Size / 2);
 				NormalizedDistance = FMath::Clamp(NormalizedDistance, 0.f, 1.f);
-				float Noise = FMath::PerlinNoise3D(FVector(x, y, z) * PerlinScale) * PerlinInfluence;
+				float Noise = 0;
+				for (float i = 1.f; i <= Octaves; ++i)
+				{
+					Noise += FMath::PerlinNoise3D(FVector(x, y, z) * PerlinScale * i) * PerlinInfluence / i;
+				}
+				
 				Voxels[x][y][z] = NormalizedDistance + Noise;
 			}
 		}
