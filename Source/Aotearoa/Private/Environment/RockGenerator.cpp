@@ -103,6 +103,29 @@ void ARockGenerator::BeginPlay()
 		}
 	}
 
+	Normals.SetNum(Vertices.Num());
+	for (int32 i = 0; i < Triangles.Num(); i += 3)
+	{
+		const int32 Index0 = Triangles[i];
+		const int32 Index1 = Triangles[i + 1];
+		const int32 Index2 = Triangles[i + 2];
+
+		const FVector& Vertex0 = Vertices[Index0];
+		const FVector& Vertex1 = Vertices[Index1];
+		const FVector& Vertex2 = Vertices[Index2];
+
+		const FVector FaceNormal = FVector::CrossProduct(Vertex2 - Vertex0, Vertex1 - Vertex0).GetSafeNormal();
+
+		Normals[Index0] += FaceNormal;
+		Normals[Index1] += FaceNormal;
+		Normals[Index2] += FaceNormal;
+	}
+
+	for (FVector& Normal : Normals)
+	{
+		Normal.Normalize();
+	}
+	
 	// Create the mesh section
 	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
 }
