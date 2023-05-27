@@ -4,6 +4,7 @@
 #include "Environment/RockGenerator.h"
 
 #include "Debug.h"
+#include "Environment/FastNoiseLite.h"
 #include "Environment/MarchingCubesLookupTables.h"
 
 // Sets default values
@@ -22,10 +23,10 @@ void ARockGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 200;
-	constexpr float PerlinScale = 0.01;
+	constexpr int Size = 500;
+	constexpr float PerlinScale = 2.5;
 	constexpr float PerlinInfluence = 0.5;
-	constexpr int Octaves = 5;
+	constexpr int Octaves = 3;
 	
 	TArray<TArray<TArray<float>>> Voxels = TArray<TArray<TArray<float>>>();
 	TArray<FVector> Vertices = TArray<FVector>();
@@ -36,7 +37,8 @@ void ARockGenerator::BeginPlay()
 	TArray<FLinearColor> VertexColors = TArray<FLinearColor>();
 	TArray<FProcMeshTangent> Tangents = TArray<FProcMeshTangent>();
 
-	float Time = FPlatformTime::ToMilliseconds(FPlatformTime::Cycles()) * 0.01f;
+	FastNoiseLite FastNoise = FastNoiseLite();
+	FastNoise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 	
 	Voxels.SetNum(Size);
 	for (int x = 0; x < Size; ++x)
@@ -53,7 +55,7 @@ void ARockGenerator::BeginPlay()
 				float Noise = 0;
 				for (float i = 1.f; i <= Octaves; ++i)
 				{
-					Noise += FMath::PerlinNoise3D(FVector(x, y, z + Time) * PerlinScale * i) * PerlinInfluence / i;
+					Noise += (FastNoise.GetNoise(x * PerlinScale * i, y * PerlinScale * i, z * PerlinScale * i) + 0.5f) * PerlinInfluence / i;
 				}
 				Voxels[x][y][z] = NormalizedDistance + Noise;
 			}
@@ -100,6 +102,8 @@ void ARockGenerator::BeginPlay()
         
 					// Third edge lies between vertex e20 and vertex e21
 					int VertIndex3 = AddVertex(Voxels, Pos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, VertexTriangleIndices);
+
+					VertexColors.Add(FLinearColor(0.8f, 0.8f, 0.8f, 1.0f));
 
 					VertexTriangleIndices[VertIndex1].Add(VertIndex1);
 					VertexTriangleIndices[VertIndex1].Add(VertIndex2);
