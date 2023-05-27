@@ -176,7 +176,7 @@ void ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, cons
                                const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles,
                                TArray<FVector2f>& UVs, TMap<FString, int>& VertexMap, const float Isolevel)
 {
-	const float Scale = 0.05f;
+	const float Scale = 0.3f;
 	
 	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
 	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
@@ -195,9 +195,9 @@ void ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, cons
 		Triangles.Add(Index);
 		FVector3f Vert = Vertices[Index];
 		FastNoiseLite PerlinNoise = FastNoiseLite();
-		PerlinNoise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+		PerlinNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 		PerlinNoise.SetFrequency(Scale);
-		const FVector2f UV = FVector2f((PerlinNoise.GetNoise(Vert.X, Vert.Z, Vert.Y) + 1.f) / 2.f, (PerlinNoise.GetNoise(Vert.X, Vert.Y, Vert.Z) + 1.f) / 2.f);
+		const FVector2f UV = FVector2f(PerlinNoise.GetNoise(Vert.X, Vert.Z), PerlinNoise.GetNoise(Vert.X, Vert.Y));
 		UVs.Add(UV);
 	}
 	else
@@ -215,9 +215,9 @@ void ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, cons
 		Triangles.Add(Index);
 
 		FastNoiseLite PerlinNoise = FastNoiseLite();
-		PerlinNoise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+		PerlinNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 		PerlinNoise.SetFrequency(Scale);
-		const FVector2f UV = FVector2f((PerlinNoise.GetNoise(Vert.X, Vert.Z, Vert.Y) + 1.f) / 2.f, (PerlinNoise.GetNoise(Vert.X, Vert.Y, Vert.Z) + 1.f) / 2.f);
+		const FVector2f UV = FVector2f(PerlinNoise.GetNoise(Vert.X, Vert.Z), PerlinNoise.GetNoise(Vert.X, Vert.Y));
 		UVs.Add(UV);
 	}
 }
