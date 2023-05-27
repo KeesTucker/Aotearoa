@@ -29,7 +29,7 @@ void ARockGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 300;
+	constexpr int Size = 500;
 	constexpr float PerlinScale = 2.5;
 	constexpr float PerlinInfluence = 0.5;
 	constexpr int Octaves = 3;
@@ -63,7 +63,7 @@ void ARockGenerator::BeginPlay()
 				{
 					Noise += (FastNoise.GetNoise(x * PerlinScale * i, y * PerlinScale * i, z * PerlinScale * i) + 0.5f) * PerlinInfluence / i;
 				}
-				Voxels[x][y][z] = 0.9f + Noise;
+				Voxels[x][y][z] = NormalizedDistance + Noise;
 			}
 		}
 	}
