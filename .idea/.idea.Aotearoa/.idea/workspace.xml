@@ -10,6 +10,7 @@
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +122,7 @@
       <workItem from="1685148786776" duration="297000" />
       <workItem from="1685149117901" duration="18227000" />
       <workItem from="1685168358514" duration="140000" />
-      <workItem from="1685168521668" duration="4009000" />
+      <workItem from="1685168521668" duration="9285000" />
     </task>
     <servers />
   </component>
