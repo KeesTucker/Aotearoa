@@ -58,7 +58,7 @@ void ARockGenerator::BeginPlay()
 		}
 	}
 
-	TMap<FIntVector, int> VertexMap = TMap<FIntVector, int>();
+	TMap<FString, int> VertexMap = TMap<FString, int>();
 	
 	for (int x = 0; x < Size - 1; ++x)
 	{
@@ -90,11 +90,6 @@ void ARockGenerator::BeginPlay()
 				
 				for (int i = 0; Edges[i] != -1; i += 3)
 				{
-					const int VertexIndex = Vertices.Num();
-					
-					Triangles.Add(VertexIndex + 1);
-					Triangles.Add(VertexIndex + 2);
-					
 					// First edge lies between vertex e00 and vertex e01
 					AddEdge(Voxels, Pos, Edges, i, Vertices, Triangles, VertexMap, Isolevel);
 
@@ -112,16 +107,21 @@ void ARockGenerator::BeginPlay()
 	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
 }
 
-void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges, const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FIntVector, int>& VertexMap, float Isolevel)
+void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges, const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap, float Isolevel)
 {
 	const int E00 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
 	const int E01 = MarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
 	const FIntVector E00Index = Pos + MarchingCubesLookupTables::VertexOffsets[E00];
 	const FIntVector E01Index = Pos + MarchingCubesLookupTables::VertexOffsets[E01];
-	if (const FIntVector ID = (MarchingCubesLookupTables::VertexOffsets[E00] + MarchingCubesLookupTables::VertexOffsets[E01]) / 2 + Pos;
-		VertexMap.Contains(ID))
+
+	FString ID = MarchingCubesLookupTables::VertexOffsets[E00].ToString();
+	ID += MarchingCubesLookupTables::VertexOffsets[E01].ToString();
+	ID += Pos.ToString();
+	FString UUID = LexToString(FMD5::HashAnsiString(*ID));
+	
+	if (VertexMap.Contains(UUID))
 	{
-		Triangles.Add(VertexMap[ID]);
+		Triangles.Add(VertexMap[UUID]);
 	}
 	else
 	{
@@ -134,7 +134,7 @@ void ARockGenerator::AddEdge(const TArray<TArray<TArray<float>>>& Voxels, const 
 				Isolevel
 			) + FVector(Pos));
 		const int Index = Vertices.Num() - 1;
-		VertexMap.Add(ID, Index);
+		VertexMap.Add(UUID, Index);
 		Triangles.Add(Index);
 	}
 }
