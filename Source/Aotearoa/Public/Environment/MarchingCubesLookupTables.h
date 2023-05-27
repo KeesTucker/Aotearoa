@@ -1,22 +1,31 @@
 ﻿#pragma once
 
 namespace MarchingCubesLookupTables {
-    const FIntVector GCornerOffsets[8] = {
-        FIntVector(0, 0, 1),
-        FIntVector(1, 0, 1),
-        FIntVector(1, 0, 0),
-        FIntVector(0, 0, 0),
-        FIntVector(0, 1, 1),
-        FIntVector(1, 1, 1),
-        FIntVector(1, 1, 0),
-        FIntVector(0, 1, 0)
-    };
-    constexpr int GEdgeConnections[12][2] = {
-        {0, 1}, {1, 2}, {2, 3}, {3, 0},
-        {4, 5}, {5, 6}, {6, 7}, {7, 4},
-        {0, 4}, {1, 5}, {2, 6}, {3, 7}
-    };
-    constexpr int GTriTable[256][16] = {
+	const FIntVector VertexOffsets[12] = {
+		FIntVector(0, 1, 0),
+		FIntVector(1, 1, 0),
+		FIntVector(1, 0, 0),
+		FIntVector(0, 0, 0),
+		FIntVector(0, 1, 1),
+		FIntVector(1, 1, 1),
+		FIntVector(1, 0, 1),
+		FIntVector(0, 0, 1)
+	};
+	constexpr int32 EdgeConnections[12][2] = {
+		{ 0, 1 },
+		{ 1, 2 },
+		{ 2, 3 },
+		{ 3, 0 },
+		{ 4, 5 },
+		{ 5, 6 },
+		{ 6, 7 },
+		{ 7, 4 },
+		{ 0, 4 },
+		{ 1, 5 },
+		{ 2, 6 },
+		{ 3, 7 }
+	};
+    constexpr int TriTable[256][16] = {
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -275,30 +284,14 @@ namespace MarchingCubesLookupTables {
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}
     };
 
-    int GetPositionIndex(const FIntVector& Pos, const int Size)
+    inline FVector Interp(const FVector& EdgeVertex1, const float ValueAtVertex1, const FVector& EdgeVertex2,
+                          const float ValueAtVertex2, const float IsoLevel)
     {
-    	return Pos.X * Size * Size + Pos.Y * Size + Pos.Z;
+    	return EdgeVertex1 + (IsoLevel - ValueAtVertex1) * (EdgeVertex2 - EdgeVertex1)  / (ValueAtVertex2 - ValueAtVertex1);
     }
-    
-    FIntVector GetPositionVector(const int Index, const int Size)
+
+    inline FIntVector UECoordinateConvert(const FIntVector input)
     {
-    	const int x = Index / (Size * Size);
-    	const int y = Index % (Size * Size) / Size;
-    	const int z = Index % (Size * Size) % Size;
-    	
-    	return FIntVector(x, y, z);
-    }
-    
-    int GetPositionOffset(const int Index, int Size)
-    {
-    	const FIntVector Offset = GCornerOffsets[Index];
-    
-    	return Offset.X + Offset.Y * Size + Offset.Z * Size * Size;
-    }
-    
-    FVector Interp(const FVector& EdgeVertex1, const float ValueAtVertex1, const FVector& EdgeVertex2,
-                                const float ValueAtVertex2, const float IsoLevel)
-    {
-    	return EdgeVertex1 + EdgeVertex2 / 2.0;
+	    return FIntVector(input.Y, input.Z, input.X);
     }
 }
