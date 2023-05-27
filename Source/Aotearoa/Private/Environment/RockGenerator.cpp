@@ -20,18 +20,12 @@ ARockGenerator::ARockGenerator()
 void ARockGenerator::BeginPlay()
 {
 	Super::BeginPlay();
-}
 
-// Called every frame
-void ARockGenerator::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 100;
-	constexpr float PerlinScale = 0.1;
-	constexpr float PerlinInfluence = 0.15;
-	constexpr int Octaves = 3;
+	constexpr int Size = 200;
+	constexpr float PerlinScale = 0.01;
+	constexpr float PerlinInfluence = 0.5;
+	constexpr int Octaves = 5;
 	
 	TArray<TArray<TArray<float>>> Voxels = TArray<TArray<TArray<float>>>();
 	TArray<FVector> Vertices = TArray<FVector>();
@@ -147,6 +141,12 @@ void ARockGenerator::Tick(float DeltaTime)
 	// Create the mesh section
 	ProceduralMesh->ClearAllMeshSections();
 	ProceduralMesh->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UV0, VertexColors, Tangents, false);
+}
+
+// Called every frame
+void ARockGenerator::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 }
 
 int ARockGenerator::AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
