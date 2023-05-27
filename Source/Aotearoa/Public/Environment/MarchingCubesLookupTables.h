@@ -284,7 +284,7 @@ namespace MarchingCubesLookupTables {
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}
     };
 
-    inline FVector Interp(const FVector& EdgeVertex1, const float ValueAtVertex1, const FVector& EdgeVertex2,
+    inline FVector3f Interp(const FVector3f& EdgeVertex1, const float ValueAtVertex1, const FVector3f& EdgeVertex2,
                           const float ValueAtVertex2, const float IsoLevel)
     {
     	return EdgeVertex1 + (IsoLevel - ValueAtVertex1) * (EdgeVertex2 - EdgeVertex1)  / (ValueAtVertex2 - ValueAtVertex1);

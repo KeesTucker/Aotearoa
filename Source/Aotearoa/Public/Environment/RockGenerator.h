@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "ProceduralMeshComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "RockGenerator.generated.h"
@@ -20,11 +19,12 @@ public:
 	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	virtual int AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
-	                      const int EdgeIndex, TArray<FVector>& Vertices, TArray<int>& Triangles, TMap<FString, int>& VertexMap,
-	                      const float Isolevel, TArray<TArray<int>>& VertexTriangleIndices, TArray<FLinearColor> VertexColors);
+	virtual void AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
+	                       const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles,
+	                       TArray<FVector2f>& UVs,
+	                       TMap<FString, int>& VertexMap, const float Isolevel);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UProceduralMeshComponent* ProceduralMesh;
+	UStaticMeshComponent* StaticMeshComponent;
 };
