@@ -19,7 +19,7 @@ ARockGenerator::ARockGenerator()
 	// Create Procedural Mesh Component and attach it to the root
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MaterialAsset(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Mats/MI_Rock.MI_Rock_2'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MaterialAsset(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Mats/MI_Rock_3.MI_Rock_3'"));
 	if (MaterialAsset.Succeeded())
 	{
 		RockMat = MaterialAsset.Object;
@@ -32,7 +32,7 @@ void ARockGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 100;
+	constexpr int Size = 30;
 	constexpr float PerlinScale = 2.5;
 	constexpr float PerlinInfluence = 0.5;
 	constexpr int Octaves = 3;
