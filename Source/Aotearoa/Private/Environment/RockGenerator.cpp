@@ -32,7 +32,7 @@ void ARockGenerator::BeginPlay()
 	Super::BeginPlay();
 
 	constexpr float Isolevel = 0.5;
-	constexpr int Size = 30;
+	constexpr int Size = 100;
 	constexpr float PerlinScale = 2.5;
 	constexpr float PerlinInfluence = 0.5;
 	constexpr int Octaves = 3;
