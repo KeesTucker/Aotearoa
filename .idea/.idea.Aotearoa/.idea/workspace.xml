@@ -7,14 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Textures/TUVTest.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/LVoid.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/LVoid.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Surface_Material/M_MS_Surface_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Surface_Material/M_MS_Surface_Material.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/MRock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/MRock.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Megascans/Surfaces/Rough_Rock_xbkgbab/T_RoughRock_xbkgbab_4K_ORDp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Rough_Rock_xbkgbab/T_RoughRock_xbkgbab_4K_ORDp.uasset" afterDir="false" />
-    </list>
+    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,7 +156,7 @@
       <workItem from="1685149117901" duration="18227000" />
       <workItem from="1685168358514" duration="140000" />
       <workItem from="1685168521668" duration="15221000" />
-      <workItem from="1685219008818" duration="11645000" />
+      <workItem from="1685219008818" duration="12235000" />
     </task>
     <servers />
   </component>
