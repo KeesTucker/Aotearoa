@@ -7,7 +7,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="" />
+    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Mats/MI_Rock_1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/MI_Rock_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/MI_Rock_3.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Cracked_Shale_Beach_Rock_ulupagzn/MI_Cracked_Shale_Beach_Rock_ulupagzn_4K.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Cracked_Shale_Beach_Rock_ulupagzn/T_CrackedShaleBeachRock_ulupagzn_4K_ORDp.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Cracked_Shale_Beach_Rock_ulupagzn/T_Cracked_Shale_Beach_Rock_ulupagzn_4K_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Cracked_Shale_Beach_Rock_ulupagzn/T_Cracked_Shale_Beach_Rock_ulupagzn_4K_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Platforms/HoloLens/Config/HoloLensEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Mats/MI_Rock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/MI_Rock.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Mats/M_Triplanar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/M_Triplanar.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Megascans/Surfaces/Jagged_Rock_vlzkba1fw/T_JaggedRock_vlzkba1fw_4K_ORDp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Jagged_Rock_vlzkba1fw/T_JaggedRock_vlzkba1fw_4K_ORDp.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +172,7 @@
       <workItem from="1685149117901" duration="18227000" />
       <workItem from="1685168358514" duration="140000" />
       <workItem from="1685168521668" duration="15221000" />
-      <workItem from="1685219008818" duration="12893000" />
+      <workItem from="1685219008818" duration="14674000" />
     </task>
     <servers />
   </component>

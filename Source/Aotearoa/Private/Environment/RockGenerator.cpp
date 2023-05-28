@@ -19,7 +19,7 @@ ARockGenerator::ARockGenerator()
 	// Create Procedural Mesh Component and attach it to the root
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MaterialAsset(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Mats/MI_Rock.MI_Rock'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MaterialAsset(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Mats/MI_Rock.MI_Rock_2'"));
 	if (MaterialAsset.Succeeded())
 	{
 		RockMat = MaterialAsset.Object;
