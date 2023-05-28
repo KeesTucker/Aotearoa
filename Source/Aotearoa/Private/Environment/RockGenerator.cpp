@@ -36,8 +36,8 @@ void ARockGenerator::BeginPlay()
 	constexpr float PerlinScale = 2.5;
 	constexpr float PerlinInfluence = 0.5;
 	constexpr int Octaves = 3;
-	FString SavePath = "/Game/ProceduralMeshes";
-	FString Name = "Rock";
+	FString SavePath = "/Game/ProceduralMeshes/S_Generated";
+	FString Name = "S_Generated";
 	
 	TArray<TArray<TArray<float>>> Voxels = TArray<TArray<TArray<float>>>();
 	TArray<FVector3f> Vertices = TArray<FVector3f>();
