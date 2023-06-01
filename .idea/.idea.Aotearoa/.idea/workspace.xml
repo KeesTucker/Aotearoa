@@ -8,20 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Bryozoan/T_Bryozoan_Albedo.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Bryozoan/T_Bryozoan_Normal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Bryozoan/T_Bryozoan_ORDp.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Corraline/T_Corraline_Albedo.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Corraline/T_Corraline_Normal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Corraline/T_Corraline_ORDp.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Corraline/T_Corraline_Saturated_Albedo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/MI_Rock_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/MI_Rock_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/MaterialFunctions/TriplanarAlbedo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Mats/M_Triplanar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/M_Triplanar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/Corraline/Corraline_Albedo.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/Corraline/Corraline_Normal.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/Corraline/Corraline_ORDp.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/Corraline/Corraline_Saturated_Albedo.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/T_UVTest.uasset" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,6 +164,7 @@
       <workItem from="1685219008818" duration="16338000" />
       <workItem from="1685345962138" duration="1569000" />
       <workItem from="1685435385719" duration="646000" />
+      <workItem from="1685516763443" duration="947000" />
     </task>
     <servers />
   </component>
