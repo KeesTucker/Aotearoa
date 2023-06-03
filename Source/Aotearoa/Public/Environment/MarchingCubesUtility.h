@@ -15,7 +15,7 @@ class FMarchingCubesUtility
 		FString ID = FMarchingCubesLookupTables::VertexOffsets[E00].ToString();
 		ID += FMarchingCubesLookupTables::VertexOffsets[E01].ToString();
 		ID += VoxelPos.ToString();
-		FString UUID = LexToString(FMD5::HashAnsiString(*ID));
+		const FString UUID = LexToString(FMD5::HashAnsiString(*ID));
 
 		int Index;
 		if (VertexMap.Contains(UUID))
@@ -65,12 +65,12 @@ public:
 			{
 				for (int z = 0; z < Resolution - 1; ++z)
 				{
-					FIntVector Pos = FIntVector(x, y, z);
+					FIntVector VoxelPos = FIntVector(x, y, z);
 					int CubeIndex = 0;
 
 					for (int i = 0; i < 8; ++i)
 					{
-						if (const FIntVector VertexPos = Pos + FMarchingCubesLookupTables::VertexOffsets[i];
+						if (const FIntVector VertexPos = VoxelPos + FMarchingCubesLookupTables::VertexOffsets[i];
 							Voxels[VertexPos.X][VertexPos.Y][VertexPos.Z] < Isolevel)
 							CubeIndex |= static_cast<int>(std::pow(2, i));
 					}
@@ -80,16 +80,16 @@ public:
 					for (int i = 0; Edges[i] != -1; i += 3)
 					{
 						FVector3f ObjectOriginOffset = FVector3f(Resolution / 2, Resolution / 2, Resolution / 2);
-						FVector3f VectorPos = FVector3f(Pos) - ObjectOriginOffset;
+						FVector3f WorldPos = FVector3f(VoxelPos) - ObjectOriginOffset;
 						
 						// First edge lies between vertex e00 and vertex e01
-						AddVertex(Voxels, Pos, VectorPos, Edges, i, Vertices, Triangles, VertexMap, Isolevel, Scale);
+						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i, Vertices, Triangles, VertexMap, Isolevel, Scale);
 	
 						// Second edge lies between vertex e10 and vertex e11
-						AddVertex(Voxels, Pos, VectorPos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel, Scale);
+						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel, Scale);
     	    
 						// Third edge lies between vertex e20 and vertex e21
-						AddVertex(Voxels, Pos, VectorPos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, Scale);
+						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, Scale);
 					}
 				}
 			}
