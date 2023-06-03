@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ProceduralMeshComponent.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "RockGenerator.generated.h"
@@ -15,26 +17,34 @@ public:
 	ARockGenerator();
 
 	UPROPERTY(EditAnywhere)
-	UMaterialInterface* RockMat;
-
+	bool RealTimeGeneration = false;
+	
 	UPROPERTY(EditAnywhere)
-	float Isolevel = 0.5;
+	UMaterialInterface* Mat;
+	
 	UPROPERTY(EditAnywhere)
-	int Size = 100;
+	float Isolevel = 0.5f;
 	UPROPERTY(EditAnywhere)
-	float PerlinScale = 2.5;
+	float Size = 5.0f;
 	UPROPERTY(EditAnywhere)
-	float PerlinInfluence = 0.5;
+	float ResolutionPerUnit = 1.0f;
+	UPROPERTY(EditAnywhere)
+	float PerlinScale = 200.0f;
+	UPROPERTY(EditAnywhere)
+	float PerlinInfluence = 0.5f;
 	UPROPERTY(EditAnywhere)
 	int Octaves = 3;
+
+	int Resolution = Size * ResolutionPerUnit;
+	float Scale = Size / ResolutionPerUnit;
 	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	virtual void AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& Pos, const int* Edges,
-	                       const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles,
-	                       TMap<FString, int>& VertexMap, const float Isolevel);
+	virtual void AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& VoxelPos, const FVector3f& WorldPos,
+	                       const int* Edges, const int EdgeIndex, TArray<FVector3f>& Vertices,
+	                       TArray<uint32>& Triangles, TMap<FString, int>& VertexMap);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UStaticMeshComponent* StaticMeshComponent;
+	UProceduralMeshComponent* ProceduralMeshComponent;
 };
