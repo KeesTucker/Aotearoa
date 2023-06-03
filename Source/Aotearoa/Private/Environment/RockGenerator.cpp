@@ -21,8 +21,6 @@ ARockGenerator::ARockGenerator()
 void ARockGenerator::BeginPlay()
 {
 	Super::BeginPlay();
-
-	GenerateAndUpdateMesh();
 }
 
 // Called every frame

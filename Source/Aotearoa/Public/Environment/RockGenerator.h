@@ -25,6 +25,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float Seed = 0.f;
+
+	UPROPERTY(EditAnywhere)
+	UMaterialInterface* Mat;
 	
 	UPROPERTY(EditAnywhere)
 	float Size = 10.0f;
