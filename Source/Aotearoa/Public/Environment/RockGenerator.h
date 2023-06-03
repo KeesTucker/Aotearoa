@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "ProceduralMeshComponent.h"
-
 #include "CoreMinimal.h"
 #include "VoxelGeneration.h"
 #include "GameFramework/Actor.h"
@@ -16,13 +14,18 @@ class AOTEAROA_API ARockGenerator : public AActor
 	
 public:
 	explicit ARockGenerator();
-
-	UPROPERTY(EditAnywhere)
-	bool RealTimeGeneration = false;
 	
 	UPROPERTY(EditAnywhere)
-	UMaterialInterface* Mat;
+	bool SaveMesh = true;
 
+	UPROPERTY(EditAnywhere)
+	FString SavePath = TEXT("/Game/ProceduralMeshes/");
+	UPROPERTY(EditAnywhere)
+	FString Name = TEXT("S_Generated");
+
+	UPROPERTY(EditAnywhere)
+	float Seed = 0.f;
+	
 	UPROPERTY(EditAnywhere)
 	float Size = 10.0f;
 	UPROPERTY(EditAnywhere)
@@ -39,10 +42,10 @@ public:
 	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void PostEditChangeChainProperty(FPropertyChangedChainEvent & PropertyChangedEvent) override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UProceduralMeshComponent* ProceduralMeshComponent;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* StaticMeshComponent;
+	void GenerateAndUpdateMesh();
 };

@@ -36,7 +36,7 @@ struct FNoiseLayer
 class FVoxelGeneration
 {
 public:
-	static TArray<TArray<TArray<float>>> GenerateVoxelsWithNoise(const int Resolution,
+	static TArray<TArray<TArray<float>>> GenerateVoxelsWithNoise(const int Resolution, const float Seed,
 		const EShapeModifier ShapeModifier, TArray<FNoiseLayer> NoiseLayers)
 	{
 		FastNoiseLite Noise = FastNoiseLite();
@@ -82,9 +82,9 @@ public:
 					{
 						Noise.SetNoiseType(static_cast<FastNoiseLite::NoiseType>(NoiseType));
 						NoiseDensity += (Noise.GetNoise(
-							x * Scale / Resolution,
-							y * Scale / Resolution,
-							z * Scale / Resolution)
+							x * Scale / Resolution + Seed,
+							y * Scale / Resolution + Seed,
+							z * Scale / Resolution + Seed)
 							+ 0.5f) * Strength;
 					}
 					Voxels[x][y][z] = ShapeDensity + NoiseDensity;
