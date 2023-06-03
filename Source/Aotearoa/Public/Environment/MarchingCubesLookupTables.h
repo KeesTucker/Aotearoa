@@ -1,7 +1,9 @@
 ﻿#pragma once
 
-namespace MarchingCubesLookupTables {
-	const FIntVector VertexOffsets[12] = {
+class FMarchingCubesLookupTables
+{
+public:
+	inline static FIntVector VertexOffsets[12] = {
 		FIntVector(0, 1, 0),
 		FIntVector(1, 1, 0),
 		FIntVector(1, 0, 0),
@@ -11,7 +13,7 @@ namespace MarchingCubesLookupTables {
 		FIntVector(1, 0, 1),
 		FIntVector(0, 0, 1)
 	};
-	constexpr int32 EdgeConnections[12][2] = {
+	inline static int32 EdgeConnections[12][2] = {
 		{ 0, 1 },
 		{ 1, 2 },
 		{ 2, 3 },
@@ -25,7 +27,7 @@ namespace MarchingCubesLookupTables {
 		{ 2, 6 },
 		{ 3, 7 }
 	};
-    constexpr int TriTable[256][16] = {
+	inline static int TriTable[256][16] = {
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -283,15 +285,4 @@ namespace MarchingCubesLookupTables {
         {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}
     };
-
-    inline FVector3f Interp(const FVector3f& EdgeVertex1, const float ValueAtVertex1, const FVector3f& EdgeVertex2,
-                          const float ValueAtVertex2, const float IsoLevel)
-    {
-    	return EdgeVertex1 + (IsoLevel - ValueAtVertex1) * (EdgeVertex2 - EdgeVertex1)  / (ValueAtVertex2 - ValueAtVertex1);
-    }
-
-    inline FIntVector UECoordinateConvert(const FIntVector input)
-    {
-	    return FIntVector(input.Y, input.Z, input.X);
-    }
-}
+};
