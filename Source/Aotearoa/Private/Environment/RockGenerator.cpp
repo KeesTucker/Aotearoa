@@ -33,8 +33,11 @@ void ARockGenerator::Tick(const float DeltaTime)
 void ARockGenerator::PostEditChangeChainProperty(FPropertyChangedChainEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeChainProperty(PropertyChangedEvent);
-	
-	GenerateAndUpdateMesh();
+
+	if (RegenOnEdit)
+	{
+		GenerateAndUpdateMesh();
+	}
 }
 
 void ARockGenerator::GenerateAndUpdateMesh()

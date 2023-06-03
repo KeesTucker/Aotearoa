@@ -16,7 +16,7 @@ public:
 	explicit ARockGenerator();
 	
 	UPROPERTY(EditAnywhere)
-	bool SaveMesh = true;
+	bool RegenOnEdit = true;
 
 	UPROPERTY(EditAnywhere)
 	FString SavePath = TEXT("/Game/ProceduralMeshes/");
