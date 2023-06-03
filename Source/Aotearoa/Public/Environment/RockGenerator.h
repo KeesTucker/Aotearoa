@@ -14,8 +14,19 @@ class AOTEAROA_API ARockGenerator : public AActor
 public:
 	ARockGenerator();
 
-	UPROPERTY(EditAnywhere, Category = "Materials")
+	UPROPERTY(EditAnywhere)
 	UMaterialInterface* RockMat;
+
+	UPROPERTY(EditAnywhere)
+	float Isolevel = 0.5;
+	UPROPERTY(EditAnywhere)
+	int Size = 100;
+	UPROPERTY(EditAnywhere)
+	float PerlinScale = 2.5;
+	UPROPERTY(EditAnywhere)
+	float PerlinInfluence = 0.5;
+	UPROPERTY(EditAnywhere)
+	int Octaves = 3;
 	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

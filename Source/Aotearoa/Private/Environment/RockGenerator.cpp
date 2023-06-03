@@ -30,12 +30,7 @@ ARockGenerator::ARockGenerator()
 void ARockGenerator::BeginPlay()
 {
 	Super::BeginPlay();
-
-	constexpr float Isolevel = 0.5;
-	constexpr int Size = 100;
-	constexpr float PerlinScale = 2.5;
-	constexpr float PerlinInfluence = 0.5;
-	constexpr int Octaves = 3;
+	
 	FString SavePath = "/Game/ProceduralMeshes/S_Generated";
 	FString Name = "S_Generated";
 	
