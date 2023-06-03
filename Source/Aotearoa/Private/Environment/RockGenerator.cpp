@@ -46,7 +46,7 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	
 	auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
 
-	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles);
+	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
 	
 	StaticMeshComponent->SetStaticMesh(StaticMesh);
 }
