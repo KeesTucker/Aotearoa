@@ -10,33 +10,36 @@ struct COMPUTESHADER_API FComputeNoiseLayer
 	float Strength = 0.f;
 };
 
-struct COMPUTESHADER_API FVoxelDensityComputeShaderDispatchParams
+struct COMPUTESHADER_API FDispatchParams
 {
 	float Seed;
 	int Resolution;
 	int ShapeModifier;
 	int NoiseLayersLength;
 	TArray<FComputeNoiseLayer> NoiseLayers;
+
+	float Scale;
+	float IsoLevel;
 	
-	FVoxelDensityComputeShaderDispatchParams(const float InSeed, const int InResolution, const int InShapeModifier,
-		const TArray<FComputeNoiseLayer>& InNoiseLayers)
+	FDispatchParams(const float InSeed, const int InResolution, const int InShapeModifier,
+		const TArray<FComputeNoiseLayer>& InNoiseLayers, const float InScale, const float InIsoLevel)
 	: Seed(InSeed), Resolution(InResolution), ShapeModifier(InShapeModifier),
-	NoiseLayersLength(InNoiseLayers.Num()), NoiseLayers(InNoiseLayers) {}
+	NoiseLayersLength(InNoiseLayers.Num()), NoiseLayers(InNoiseLayers), Scale(InScale), IsoLevel(InIsoLevel) {}
 };
 
 // This is a public interface that we define so outside code can invoke our compute shader.
-class COMPUTESHADER_API FVoxelDensityComputeShaderInterface {
+class COMPUTESHADER_API FComputeShaderInterface {
 public:
 	// Executes this shader on the render thread
 	static void DispatchRenderThread(
 		FRHICommandListImmediate& RHICmdList,
-		FVoxelDensityComputeShaderDispatchParams Params,
+		FDispatchParams Params,
 		TFunction<void(TArray<float>)> AsyncCallback
 	);
 
 	// Executes this shader on the render thread from the game thread via EnqueueRenderThreadCommand
 	static void DispatchGameThread(
-		FVoxelDensityComputeShaderDispatchParams Params,
+		FDispatchParams Params,
 		TFunction<void(TArray<float> Voxels)> AsyncCallback
 	)
 	{
@@ -49,7 +52,7 @@ public:
 
 	// Dispatches this shader. Can be called from any thread
 	static void Dispatch(
-		const FVoxelDensityComputeShaderDispatchParams& Params,
+		const FDispatchParams& Params,
 		const TFunction<void(TArray<float> Voxels)>& AsyncCallback
 	)
 	{

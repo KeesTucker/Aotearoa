@@ -20,7 +20,6 @@ public:
 	DECLARE_GLOBAL_SHADER(FVoxelDensityComputeShader);
 	SHADER_USE_PARAMETER_STRUCT(FVoxelDensityComputeShader, FGlobalShader);
 	
-	
 	class FVoxelDensityComputeShader_Perm_Test : SHADER_PERMUTATION_INT("TEST", 1);
 	using FPermutationDomain = TShaderPermutationDomain<FVoxelDensityComputeShader_Perm_Test>;
 
@@ -34,11 +33,10 @@ public:
 		SHADER_PARAMETER_RDG_BUFFER_SRV(StructuredBuffer<FComputeNoiseLayer>, NoiseLayers)
 		
 		// Out
-		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<float>, Output)
+		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<float>, Voxels)
 
 	END_SHADER_PARAMETER_STRUCT()
 
-public:
 	static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters& Parameters)
 	{
 		const FPermutationDomain PermutationVector(Parameters.PermutationId);
@@ -55,21 +53,60 @@ public:
 		OutEnvironment.SetDefine(TEXT("THREADS_X"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
 		OutEnvironment.SetDefine(TEXT("THREADS_Y"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
 		OutEnvironment.SetDefine(TEXT("THREADS_Z"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
-
-		// This shader must support typed UAV load and we are testing if it is supported at runtime using RHIIsTypedUAVLoadSupported
-		//OutEnvironment.CompilerFlags.Add(CFLAG_AllowTypedUAVLoads);
-
-		// FForwardLightingParameters::ModifyCompilationEnvironment(Parameters.Platform, OutEnvironment);
 	}
-private:
+};
+
+// This class carries our parameter declarations and acts as the bridge between cpp and HLSL.
+class COMPUTESHADER_API FMarchingCubesComputeShader : public FGlobalShader
+{
+public:
+	
+	DECLARE_GLOBAL_SHADER(FMarchingCubesComputeShader);
+	SHADER_USE_PARAMETER_STRUCT(FMarchingCubesComputeShader, FGlobalShader);
+	
+	class FMarchingCubesComputeShader_Perm_Test : SHADER_PERMUTATION_INT("TEST", 1);
+	using FPermutationDomain = TShaderPermutationDomain<FMarchingCubesComputeShader_Perm_Test>;
+	
+	BEGIN_SHADER_PARAMETER_STRUCT(FParameters, )
+	
+		// In
+		SHADER_PARAMETER(int, Resolution)
+		SHADER_PARAMETER(float, Scale)
+		SHADER_PARAMETER(float, IsoLevel)
+		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<float>, Voxels)
+		
+		// Out
+		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<FVector3f>, Verts)
+		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<int>, Tris)
+
+	END_SHADER_PARAMETER_STRUCT()
+
+	static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters& Parameters)
+	{
+		const FPermutationDomain PermutationVector(Parameters.PermutationId);
+		
+		return true;
+	}
+
+	static void ModifyCompilationEnvironment(const FGlobalShaderPermutationParameters& Parameters, FShaderCompilerEnvironment& OutEnvironment)
+	{
+		FGlobalShader::ModifyCompilationEnvironment(Parameters, OutEnvironment);
+
+		const FPermutationDomain PermutationVector(Parameters.PermutationId);
+		
+		OutEnvironment.SetDefine(TEXT("THREADS_X"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
+		OutEnvironment.SetDefine(TEXT("THREADS_Y"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
+		OutEnvironment.SetDefine(TEXT("THREADS_Z"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
+	}
 };
 
 // This will tell the engine to create the shader and where the shader entry point is.
 //                            ShaderType                            ShaderPath                     Shader function name    Type
 IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/VoxelDensityComputeShader.usf", "VoxelDensityComputeShader", SF_Compute);
+IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/MarchingCubesComputeShader.usf", "MarchingCubesComputeShader", SF_Compute);
 
-void FVoxelDensityComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
-	FVoxelDensityComputeShaderDispatchParams Params, TFunction<void(TArray<float>)> AsyncCallback) {
+void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
+	FDispatchParams Params, TFunction<void(TArray<float>)> AsyncCallback) {
 	FRDGBuilder GraphBuilder(RHICmdList);
 	{
 		SCOPE_CYCLE_COUNTER(STAT_VoxelDensityComputeShader_Execute);
@@ -77,85 +114,118 @@ void FVoxelDensityComputeShaderInterface::DispatchRenderThread(FRHICommandListIm
 		RDG_EVENT_SCOPE(GraphBuilder, "VoxelDensityComputeShader");
 		RDG_GPU_STAT_SCOPE(GraphBuilder, VoxelDensityComputeShader);
 
-		const FVoxelDensityComputeShader::FPermutationDomain PermutationVector;
+		const FVoxelDensityComputeShader::FPermutationDomain VoxelDensityPermutationVector;
+		const FMarchingCubesComputeShader::FPermutationDomain MarchingCubesPermutationVector;
+
+		auto GroupCount = FComputeShaderUtils::GetGroupCount(
+			FIntVector(Params.Resolution, Params.Resolution, Params.Resolution),
+			FIntVector(NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER));
+
+		FVoxelDensityComputeShader::FParameters* PassParametersVoxels = GraphBuilder.AllocParameters<FVoxelDensityComputeShader::FParameters>();
+		FMarchingCubesComputeShader::FParameters* PassParametersMarchingCubes = GraphBuilder.AllocParameters<FMarchingCubesComputeShader::FParameters>();
 		
-		// Add any static permutation options here
-		// PermutationVector.Set<FVoxelDensityComputeShader::FMyPermutationName>(12345);
+		TShaderMapRef<FVoxelDensityComputeShader> VoxelDensityComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel), VoxelDensityPermutationVector);
+		TShaderMapRef<FMarchingCubesComputeShader> MarchingCubesComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel), MarchingCubesPermutationVector);
 
-		TShaderMapRef<FVoxelDensityComputeShader> ComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel), PermutationVector);
-
-		if (ComputeShader.IsValid()) {
-			FVoxelDensityComputeShader::FParameters* PassParameters = GraphBuilder.AllocParameters<FVoxelDensityComputeShader::FParameters>();
-
-			const uint64 NoiseLayersTotalSize = sizeof(FComputeNoiseLayer) * Params.NoiseLayers.Num();
-			const FRDGBufferRef NoiseLayerBuffer = CreateStructuredBuffer(
-				GraphBuilder, TEXT("NoiseLayerBuffer"), sizeof(FComputeNoiseLayer),
-				Params.NoiseLayers.Num(), Params.NoiseLayers.GetData(), NoiseLayersTotalSize
-			);
+		const uint64 NoiseLayersTotalSize = sizeof(FComputeNoiseLayer) * Params.NoiseLayers.Num();
+		const FRDGBufferRef NoiseLayerBuffer = CreateStructuredBuffer(
+			GraphBuilder, TEXT("NoiseLayerBuffer"), sizeof(FComputeNoiseLayer),
+			Params.NoiseLayers.Num(), Params.NoiseLayers.GetData(), NoiseLayersTotalSize
+		);
 			
-			const FRDGBufferRef OutputBuffer = GraphBuilder.CreateBuffer(
-				FRDGBufferDesc::CreateBufferDesc(sizeof(float),
-					Params.Resolution * Params.Resolution * Params.Resolution),TEXT("OutputBuffer"));
+		const FRDGBufferRef VoxelBuffer = GraphBuilder.CreateBuffer(
+			FRDGBufferDesc::CreateBufferDesc(sizeof(float),
+				Params.Resolution * Params.Resolution * Params.Resolution),TEXT("VoxelBuffer"));
 
-			PassParameters->Seed = Params.Seed;
-			PassParameters->Resolution = Params.Resolution;
-			PassParameters->ShapeModifier = Params.ShapeModifier;
-			PassParameters->NoiseLayersLength = Params.NoiseLayersLength;
-			PassParameters->NoiseLayers = GraphBuilder.CreateSRV(FRDGBufferSRVDesc(NoiseLayerBuffer));
-			PassParameters->Output = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(OutputBuffer, PF_R32_FLOAT));
+		const FRDGBufferRef VertBuffer = GraphBuilder.CreateBuffer(
+							FRDGBufferDesc::CreateBufferDesc(sizeof(float),
+								Params.Resolution * Params.Resolution * Params.Resolution * 15 * 3),TEXT("VertBuffer"));
+
+		const FRDGBufferRef TriBuffer = GraphBuilder.CreateBuffer(
+						FRDGBufferDesc::CreateBufferDesc(sizeof(int),
+							Params.Resolution * Params.Resolution * Params.Resolution * 15),TEXT("TriBuffer"));
+		
+		if (VoxelDensityComputeShader.IsValid())
+		{
+			PassParametersVoxels->Seed = Params.Seed;
+			PassParametersVoxels->Resolution = Params.Resolution;
+			PassParametersVoxels->ShapeModifier = Params.ShapeModifier;
+			PassParametersVoxels->NoiseLayersLength = Params.NoiseLayersLength;
+			PassParametersVoxels->NoiseLayers = GraphBuilder.CreateSRV(FRDGBufferSRVDesc(NoiseLayerBuffer));
 			
-
-			auto GroupCount = FComputeShaderUtils::GetGroupCount(
-				FIntVector(Params.Resolution, Params.Resolution, Params.Resolution),
-				FIntVector(NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER));
+			PassParametersVoxels->Voxels = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(VoxelBuffer, PF_R32_FLOAT));
+			
 			GraphBuilder.AddPass(
 				RDG_EVENT_NAME("ExecuteVoxelDensityComputeShader"),
-				PassParameters,
-				ERDGPassFlags::AsyncCompute,
-				[&PassParameters, ComputeShader, GroupCount](FRHIComputeCommandList& RHICmdList)
+				PassParametersVoxels,
+				ERDGPassFlags::Compute,
+				[&PassParametersVoxels, VoxelDensityComputeShader, GroupCount](FRHIComputeCommandList& RHICmdList)
 			{
-				FComputeShaderUtils::Dispatch(RHICmdList, ComputeShader, *PassParameters, GroupCount);
+				FComputeShaderUtils::Dispatch(RHICmdList, VoxelDensityComputeShader, *PassParametersVoxels, GroupCount);
 			});
-
-			
-			FRHIGPUBufferReadback* GPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteVoxelDensityComputeShaderOutput"));
-			AddEnqueueCopyPass(GraphBuilder, GPUBufferReadback, OutputBuffer, 0u);
-
-			auto RunnerFunc = [GPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
-				if (GPUBufferReadback->IsReady()) {
-					const int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution; //TODO: actually use resolution
-					const int32 BufferSize = sizeof(float) * NumElements;
-					const float* Buffer = static_cast<float*>(GPUBufferReadback->Lock(BufferSize));
-
-					TArray<float> OutVal;
-					OutVal.Append(Buffer, NumElements);
-					
-					GPUBufferReadback->Unlock();
-
-					AsyncTask(ENamedThreads::GameThread, [AsyncCallback, OutVal]() {
-						AsyncCallback(OutVal);
-					});
-
-					delete GPUBufferReadback;
-				} else {
-					AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
-						RunnerFunc(RunnerFunc);
-					});
-				}
-			};
-
-			AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
-				RunnerFunc(RunnerFunc);
-			});
-			
-		} else {
-			#if WITH_EDITOR
-				GEngine->AddOnScreenDebugMessage((uint64)42145125184, 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
-			#endif
-
-			// We exit here as we don't want to crash the game if the shader is not found or has an error.
-			
 		}
+		else {
+#if WITH_EDITOR
+			GEngine->AddOnScreenDebugMessage((uint64)42145125184, 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
+#endif
+			return;
+		}
+
+		if (MarchingCubesComputeShader.IsValid())
+		{
+			PassParametersMarchingCubes->Resolution = Params.Resolution;
+			PassParametersMarchingCubes->Scale = Params.Scale;
+			PassParametersMarchingCubes->IsoLevel = Params.IsoLevel;
+			PassParametersMarchingCubes->Voxels = PassParametersVoxels->Voxels;
+
+			PassParametersMarchingCubes->Verts = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(VertBuffer, PF_R32_FLOAT));
+			PassParametersMarchingCubes->Tris = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(TriBuffer, PF_R32_SINT));
+
+			GraphBuilder.AddPass(
+				RDG_EVENT_NAME("ExecuteMarchingCubesComputeShader"),
+				PassParametersMarchingCubes,
+				ERDGPassFlags::Compute,
+				[&PassParametersMarchingCubes, MarchingCubesComputeShader, GroupCount](FRHIComputeCommandList& RHICmdList)
+			{
+				FComputeShaderUtils::Dispatch(RHICmdList, MarchingCubesComputeShader, *PassParametersMarchingCubes, GroupCount);
+			});
+		}
+		else {
+#if WITH_EDITOR
+			GEngine->AddOnScreenDebugMessage((uint64)42145125184, 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
+#endif
+			return;
+		}
+		
+		FRHIGPUBufferReadback* GPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteVoxelDensityComputeShaderOutput"));
+		AddEnqueueCopyPass(GraphBuilder, GPUBufferReadback, VoxelBuffer, 0u);
+
+		auto RunnerFunc = [GPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
+			if (GPUBufferReadback->IsReady()) {
+				const int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution; //TODO: actually use resolution
+				const int32 BufferSize = sizeof(float) * NumElements;
+				const float* Buffer = static_cast<float*>(GPUBufferReadback->Lock(BufferSize));
+
+				TArray<float> OutVal;
+				OutVal.Append(Buffer, NumElements);
+				
+				GPUBufferReadback->Unlock();
+
+				AsyncTask(ENamedThreads::GameThread, [AsyncCallback, OutVal]() {
+					AsyncCallback(OutVal);
+				});
+
+				delete GPUBufferReadback;
+			} else {
+				AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
+					RunnerFunc(RunnerFunc);
+				});
+			}
+		};
+
+		AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
+			RunnerFunc(RunnerFunc);
+		});
 	}
 
 	GraphBuilder.Execute();
