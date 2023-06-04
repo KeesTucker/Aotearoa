@@ -45,7 +45,7 @@ void ARockGenerator::GenerateAndUpdateMesh()
 {
 	Resolution = Size * ResolutionPerUnit;
 	Resolution = (Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER) * NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER;
-	Scale = Size / Resolution / Size;
+	Scale = Size / Resolution;
 
 	const FVoxelDensityComputeShaderDispatchParams Params(Resolution, Seed);
 	

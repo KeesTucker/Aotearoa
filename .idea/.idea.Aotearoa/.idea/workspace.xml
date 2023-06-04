@@ -10,33 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Resources/Icon128.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Shaders/ComputeShader/Private/ExampleComputeShader/ExampleComputeShader.usf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Shaders/ComputeShader/Private/VoxelDensityComputeShader/VoxelComputeShader.usf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/ShadeupExamplePlugin.uplugin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/ComputeShader.Build.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/ComputeShader.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/ExampleComputeShader/ExampleComputeShader.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/ExampleComputeShader/ExampleComputeShader.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Public/ComputeShader.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Public/ExampleComputeShader/ExampleComputeShader.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Public/ExampleComputeShader/ExampleComputeShader_readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Public/VoxelDensityComputeShader/VoxelDensityComputeShader.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ShadeupTestPlugin/Private/ShadeupExamplePlugin.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ShadeupTestPlugin/Public/ShadeupExamplePlugin.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ShadeupTestPlugin/ShadeupExamplePlugin.Build.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/LTest.umap" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Aotearoa.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Aotearoa.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Shaders/ComputeShader/Private/VoxelDensityComputeShader/VoxelComputeShader.usf" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Shaders/ComputeShader/Private/VoxelDensityComputeShader/VoxelComputeShader.usf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/MarchingCubesUtility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/MarchingCubesUtility.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/StaticMeshGeneration.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/VoxelGeneration.cpp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +25,84 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -481,7 +537,7 @@
       <workItem from="1685766780848" duration="1448000" />
       <workItem from="1685768460523" duration="1651000" />
       <workItem from="1685770481594" duration="13107000" />
-      <workItem from="1685830144556" duration="11652000" />
+      <workItem from="1685830144556" duration="13055000" />
     </task>
     <servers />
   </component>
@@ -495,5 +551,16 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp</url>
+          <line>54</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
