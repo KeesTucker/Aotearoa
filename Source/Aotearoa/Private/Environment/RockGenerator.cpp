@@ -56,6 +56,18 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
 
 	FDateTime StartTime = FDateTime::UtcNow();
+	auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
+	
+	auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
+	const FDateTime EndTime = FDateTime::UtcNow();
+	const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
+	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
+
+	/*const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
+	
+	StaticMeshComponent->SetStaticMesh(StaticMesh);*/
+	
+	StartTime = FDateTime::UtcNow();
 	FComputeShaderInterface::Dispatch(Params, [this, StartTime](const TArray<uint32>& Tris, const TArray<FVector3f>& Verts) {
 		const FDateTime EndTime = FDateTime::UtcNow();
 		const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
@@ -82,18 +94,6 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		
 		StaticMeshComponent->SetStaticMesh(StaticMesh);
 	});
-
-	StartTime = FDateTime::UtcNow();
-	auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
-	
-	auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
-	const FDateTime EndTime = FDateTime::UtcNow();
-	const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
-	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
-
-	/*const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
-	
-	StaticMeshComponent->SetStaticMesh(StaticMesh);*/
 }
 
 
