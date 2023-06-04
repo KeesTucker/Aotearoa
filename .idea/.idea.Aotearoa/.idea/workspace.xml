@@ -10,8 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Mats/Instances/MI_Rock1.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Shaders/ComputeShader/Private/VoxelDensityComputeShader/VoxelComputeShader.usf" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Shaders/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.usf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/VoxelGeneration.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/VoxelGeneration.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -716,6 +721,7 @@
       <workItem from="1685768460523" duration="1651000" />
       <workItem from="1685770481594" duration="13107000" />
       <workItem from="1685830144556" duration="25033000" />
+      <workItem from="1685864127881" duration="1861000" />
     </task>
     <servers />
   </component>

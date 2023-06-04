@@ -80,7 +80,7 @@ public:
 							break;
 						}
 					case EShapeModifier::EShapeModifier_Ground:
-						ShapeDensity = y - Resolution / 2;
+						ShapeDensity = static_cast<float>(Resolution - z) / Resolution;
 						break;
 					default:
 						ShapeDensity = 0;

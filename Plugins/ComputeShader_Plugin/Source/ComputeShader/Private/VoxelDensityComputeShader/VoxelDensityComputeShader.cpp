@@ -66,7 +66,7 @@ private:
 
 // This will tell the engine to create the shader and where the shader entry point is.
 //                            ShaderType                            ShaderPath                     Shader function name    Type
-IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/VoxelComputeShader.usf", "VoxelDensityComputeShader", SF_Compute);
+IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/VoxelDensityComputeShader.usf", "VoxelDensityComputeShader", SF_Compute);
 
 void FVoxelDensityComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
 	FVoxelDensityComputeShaderDispatchParams Params, TFunction<void(TArray<float>)> AsyncCallback) {
