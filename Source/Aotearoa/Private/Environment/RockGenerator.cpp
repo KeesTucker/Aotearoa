@@ -6,7 +6,6 @@
 #include "Environment/MarchingCubesUtility.h"
 #include "Environment/StaticMeshGeneration.h"
 #include "Environment/VoxelGeneration.h"
-#include "ExampleComputeShader/ExampleComputeShader.h"
 #include "VoxelDensityComputeShader/VoxelDensityComputeShader.h"
 
 // Sets default values
@@ -47,11 +46,16 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	Resolution = (Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER) * NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER;
 	Scale = Size / Resolution;
 
-	const FVoxelDensityComputeShaderDispatchParams Params(Resolution, Seed);
+	TArray<FComputeNoiseLayer> ComputeNoiseLayers;
+	for (const FNoiseLayer& NoiseLayer : NoiseLayers)
+	{
+		FComputeNoiseLayer ComputeNoiseLayer(NoiseLayer.ToComputeNoiseLayer());
+		ComputeNoiseLayers.Add(ComputeNoiseLayer);
+	}
+	
+	const FVoxelDensityComputeShaderDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers);
 	
 	FVoxelDensityComputeShaderInterface::Dispatch(Params, [this](const TArray<float>& Voxels) {
-		//auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
-	
 		auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
 	
 		const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);

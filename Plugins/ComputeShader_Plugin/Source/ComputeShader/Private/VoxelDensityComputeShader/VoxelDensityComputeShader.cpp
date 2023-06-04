@@ -32,6 +32,10 @@ public:
 		// In
 		SHADER_PARAMETER(float, Seed)
 		SHADER_PARAMETER(int, Resolution)
+		SHADER_PARAMETER(int, ShapeModifier)
+		SHADER_PARAMETER(int, NoiseLayersLength)
+		SHADER_PARAMETER_RDG_BUFFER_SRV(StructuredBuffer<FComputeNoiseLayer>, NoiseLayers)
+		
 		// Out
 		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<float>, Output)
 
@@ -86,14 +90,21 @@ void FVoxelDensityComputeShaderInterface::DispatchRenderThread(FRHICommandListIm
 		if (ComputeShader.IsValid()) {
 			FVoxelDensityComputeShader::FParameters* PassParameters = GraphBuilder.AllocParameters<FVoxelDensityComputeShader::FParameters>();
 
-
+			const uint64 NoiseLayersTotalSize = sizeof(FComputeNoiseLayer) * Params.NoiseLayers.Num();
+			const FRDGBufferRef NoiseLayerBuffer = CreateStructuredBuffer(
+				GraphBuilder, TEXT("NoiseLayerBuffer"), sizeof(FComputeNoiseLayer),
+				Params.NoiseLayers.Num(), Params.NoiseLayers.GetData(), NoiseLayersTotalSize
+			);
+			
 			const FRDGBufferRef OutputBuffer = GraphBuilder.CreateBuffer(
 				FRDGBufferDesc::CreateBufferDesc(sizeof(float),
-					Params.Resolution * Params.Resolution * Params.Resolution),
-				TEXT("OutputBuffer"));
+					Params.Resolution * Params.Resolution * Params.Resolution),TEXT("OutputBuffer"));
 
 			PassParameters->Seed = Params.Seed;
 			PassParameters->Resolution = Params.Resolution;
+			PassParameters->ShapeModifier = Params.ShapeModifier;
+			PassParameters->NoiseLayersLength = Params.NoiseLayersLength;
+			PassParameters->NoiseLayers = GraphBuilder.CreateSRV(FRDGBufferSRVDesc(NoiseLayerBuffer));
 			PassParameters->Output = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(OutputBuffer, PF_R32_FLOAT));
 			
 

@@ -2,17 +2,26 @@
 
 #include "CoreMinimal.h"
 #include "GenericPlatform/GenericPlatformMisc.h"
-#include "Kismet/BlueprintAsyncActionBase.h"
 
-#include "VoxelDensityComputeShader.generated.h"
+struct COMPUTESHADER_API FComputeNoiseLayer
+{
+	int NoiseType = 0;
+	float Scale = 100.f;
+	float Strength = 0.f;
+};
 
 struct COMPUTESHADER_API FVoxelDensityComputeShaderDispatchParams
 {
 	float Seed;
 	int Resolution;
+	int ShapeModifier;
+	int NoiseLayersLength;
+	TArray<FComputeNoiseLayer> NoiseLayers;
 	
-	FVoxelDensityComputeShaderDispatchParams(const int InResolution, const float InSeed)
-	: Resolution(InResolution), Seed(InSeed) {}
+	FVoxelDensityComputeShaderDispatchParams(const float InSeed, const int InResolution, const int InShapeModifier,
+		const TArray<FComputeNoiseLayer>& InNoiseLayers)
+	: Seed(InSeed), Resolution(InResolution), ShapeModifier(InShapeModifier),
+	NoiseLayersLength(InNoiseLayers.Num()), NoiseLayers(InNoiseLayers) {}
 };
 
 // This is a public interface that we define so outside code can invoke our compute shader.
@@ -50,42 +59,4 @@ public:
 			DispatchGameThread(Params, AsyncCallback);
 		}
 	}
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnVoxelDensityComputeShaderLibrary_AsyncExecutionCompleted, const TArray<float>, Value);
-
-UCLASS() // Change the _API to match your project
-class COMPUTESHADER_API UVoxelDensityComputeShaderLibrary_AsyncExecution : public UBlueprintAsyncActionBase
-{
-	GENERATED_BODY()
-
-public:
-	
-	// Execute the actual load
-	virtual void Activate() override {
-		const FVoxelDensityComputeShaderDispatchParams Params(Resolution, Seed);
-		
-		FVoxelDensityComputeShaderInterface::Dispatch(Params, [this](const TArray<float>& Voxels) {
-				Completed.Broadcast(Voxels);
-		});
-	}
-	
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", Category = "ComputeShader", WorldContext = "WorldContextObject"))
-	static UVoxelDensityComputeShaderLibrary_AsyncExecution* ExecuteVoxelDensityComputeShader(UObject* WorldContextObject,
-		const int Resolution, const float Seed) {
-		UVoxelDensityComputeShaderLibrary_AsyncExecution* Action = NewObject<UVoxelDensityComputeShaderLibrary_AsyncExecution>();
-		Action->Resolution = Resolution;
-		Action->Seed = Seed;
-		Action->RegisterWithGameInstance(WorldContextObject);
-
-		return Action;
-	}
-	
-
-	UPROPERTY(BlueprintAssignable)
-	FOnVoxelDensityComputeShaderLibrary_AsyncExecutionCompleted Completed;
-
-
-	int Resolution;
-	float Seed;
 };

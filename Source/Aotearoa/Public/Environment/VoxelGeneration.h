@@ -1,23 +1,24 @@
 ﻿#pragma once
 #include "FastNoiseLite.h"
+#include "VoxelDensityComputeShader/VoxelDensityComputeShader.h"
 #include "VoxelGeneration.generated.h"
 
 UENUM(BlueprintType)
 enum class EShapeModifier : uint8
 {
-	EShapeModifier_Sphere,
-	EShapeModifier_Ground
+	EShapeModifier_Sphere = 0,
+	EShapeModifier_Ground = 1
 };
 
 UENUM(BlueprintType)
 enum class ENoiseTypeWrapper :uint8
 {
-	NoiseType_OpenSimplex2,
-	NoiseType_OpenSimplex2S,
-	NoiseType_Cellular,
-	NoiseType_Perlin,
-	NoiseType_ValueCubic,
-	NoiseType_Value
+	NoiseType_OpenSimplex2 = 0,
+	NoiseType_OpenSimplex2S = 1,
+	NoiseType_Cellular = 2,
+	NoiseType_Perlin = 3,
+	NoiseType_ValueCubic = 4,
+	NoiseType_Value = 5
 };
 
 USTRUCT(BlueprintType)
@@ -31,6 +32,15 @@ struct FNoiseLayer
 	float Scale = 100.f;
 	UPROPERTY(EditAnywhere)
 	float Strength = 0.f;
+
+	FComputeNoiseLayer ToComputeNoiseLayer() const
+	{
+		FComputeNoiseLayer ComputeNoiseLayer;
+		ComputeNoiseLayer.NoiseType = static_cast<int>(NoiseType);
+		ComputeNoiseLayer.Scale = Scale;
+		ComputeNoiseLayer.Strength = Strength;
+		return ComputeNoiseLayer;
+	}
 };
 
 class FVoxelGeneration
