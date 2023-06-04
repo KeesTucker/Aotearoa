@@ -106,7 +106,7 @@ IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/Voxel
 IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/MarchingCubesComputeShader.usf", "MarchingCubesComputeShader", SF_Compute);
 
 void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
-	FDispatchParams Params, TFunction<void(TArray<uint32>, TArray<FVector3f>)> AsyncCallback) {
+	FDispatchParams Params, TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback) {
 	FRDGBuilder GraphBuilder(RHICmdList);
 	{
 		SCOPE_CYCLE_COUNTER(STAT_VoxelDensityComputeShader_Execute);
