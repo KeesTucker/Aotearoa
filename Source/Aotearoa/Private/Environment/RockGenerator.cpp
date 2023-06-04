@@ -53,9 +53,9 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		ComputeNoiseLayers.Add(ComputeNoiseLayer);
 	}
 	
-	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers);
+	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
 	
-	FVoxelDensityComputeShaderInterface::Dispatch(Params, [this](const TArray<float>& Voxels) {
+	FComputeShaderInterface::Dispatch(Params, [this](const TArray<float>& Voxels) {
 		auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
 	
 		const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
