@@ -21,8 +21,8 @@ public:
 	SHADER_USE_PARAMETER_STRUCT(FVoxelDensityComputeShader, FGlobalShader);
 	
 	
-	class FVoxelDensityComputeShader_Perm_TEST : SHADER_PERMUTATION_INT("TEST", 1);
-	using FPermutationDomain = TShaderPermutationDomain<FVoxelDensityComputeShader_Perm_TEST>;
+	class FVoxelDensityComputeShader_Perm_Test : SHADER_PERMUTATION_INT("TEST", 1);
+	using FPermutationDomain = TShaderPermutationDomain<FVoxelDensityComputeShader_Perm_Test>;
 
 	BEGIN_SHADER_PARAMETER_STRUCT(FParameters, )
 	

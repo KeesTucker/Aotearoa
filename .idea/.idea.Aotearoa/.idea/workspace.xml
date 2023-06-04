@@ -11,17 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/ShadeupExamplePlugin.uplugin" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/ShadeupExamplePlugin.uplugin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/ComputeShader.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/ComputeShader.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/ComputeShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/ComputeShader.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Private/VoxelDensityComputeShader/VoxelDensityComputeShader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Public/ComputeShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ComputeShader/Public/ComputeShader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ShadeupTestPlugin/Private/ShadeupExamplePlugin.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ShadeupTestPlugin/Public/ShadeupExamplePlugin.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ComputeShader_Plugin/Source/ShadeupTestPlugin/ShadeupExamplePlugin.Build.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/StaticMeshGeneration.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/StaticMeshGeneration.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -725,7 +715,7 @@
       <workItem from="1685766780848" duration="1448000" />
       <workItem from="1685768460523" duration="1651000" />
       <workItem from="1685770481594" duration="13107000" />
-      <workItem from="1685830144556" duration="24634000" />
+      <workItem from="1685830144556" duration="25033000" />
     </task>
     <servers />
   </component>
