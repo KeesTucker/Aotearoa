@@ -70,5 +70,5 @@ void VoxelDensityComputeShader(
 			+ 0.5f) * NoiseLayers[i].Strength;
 	}
 	
-	Output[Index] = ShapeDensity  + NoiseDensity;
+	Voxels[Index] = ShapeDensity  + NoiseDensity;
 }

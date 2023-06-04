@@ -33,13 +33,13 @@ int VectorIndexToIntIndex(const int3 Coord)
 	return Coord.x * Resolution * Resolution + Coord.y * Resolution + Coord.z;
 }
 
-int IntIndexToVectorIndex()
+int3 IntIndexToVectorIndex(const int Index)
 {
-	x = index / (res * res);
-	y = index / res % res;
-	z = index % res;
+	float X = Index / (Resolution * Resolution);
+	float Y = Index / Resolution % Resolution;
+	float Z = Index % Resolution;
 
-	return float3(x, y, z);
+	return int3(X, Y, Z);
 }
 
 float3 Interp(const float3 EdgeVertex1, const float ValueAtVertex1, const float3 EdgeVertex2, const float ValueAtVertex2)
@@ -47,7 +47,7 @@ float3 Interp(const float3 EdgeVertex1, const float ValueAtVertex1, const float3
 	return EdgeVertex1 + (IsoLevel - ValueAtVertex1) * (EdgeVertex2 - EdgeVertex1)  / (ValueAtVertex2 - ValueAtVertex1);
 }
 
-float3 AddVertex(const int Index, const int3 WorldPos, const int* Edges, const int EdgeIndex)
+float3 AddVertex(const int Index, const int3 WorldPos, const int Edges[], const int EdgeIndex)
 {
 	const int E00 = EdgeConnections[Edges[EdgeIndex]][0];
 	const int E01 = EdgeConnections[Edges[EdgeIndex]][1];
@@ -81,16 +81,16 @@ void MarchingCubesComputeShader(
 	for (int i = 0; i < 8; ++i)
 	{
 		const int CornerPos = Index + VectorIndexToIntIndex(VertexOffsets[i]);
-		if (Voxels[CornerPos] < Isolevel)
-			CubeIndex |= pow(2, i);
+		if (Voxels[CornerPos] < IsoLevel)
+			CubeIndex |= int(pow(2, i));
 	}
 
-	const int* Edges = TriTable[CubeIndex];
+	const int Edges[16] = TriTable[CubeIndex];
 
 	for (int i = 0; Edges[i] != -1; i += 3)
 	{
 		const float3 ObjectOriginOffset = float3(Resolution / 2.f, Resolution / 2.f, Resolution / 2.f);
-		const float WorldPos = float3(VoxelPos) - ObjectOriginOffset;
+		const float3 WorldPos = float3(VoxelPos) - ObjectOriginOffset;
 						
 		// First edge lies between vertex e00 and vertex e01
 		const float3 A = AddVertex(Index, WorldPos, Edges, i);

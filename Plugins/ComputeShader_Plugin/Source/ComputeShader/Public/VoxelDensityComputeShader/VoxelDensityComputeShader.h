@@ -34,13 +34,13 @@ public:
 	static void DispatchRenderThread(
 		FRHICommandListImmediate& RHICmdList,
 		FDispatchParams Params,
-		TFunction<void(TArray<float>)> AsyncCallback
+		TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback
 	);
 
 	// Executes this shader on the render thread from the game thread via EnqueueRenderThreadCommand
 	static void DispatchGameThread(
 		FDispatchParams Params,
-		TFunction<void(TArray<float> Voxels)> AsyncCallback
+		TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback
 	)
 	{
 		ENQUEUE_RENDER_COMMAND(SceneDrawCompletion)(
@@ -53,7 +53,7 @@ public:
 	// Dispatches this shader. Can be called from any thread
 	static void Dispatch(
 		const FDispatchParams& Params,
-		const TFunction<void(TArray<float> Voxels)>& AsyncCallback
+		const TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)>& AsyncCallback
 	)
 	{
 		if (IsInRenderingThread()) {

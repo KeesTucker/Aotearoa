@@ -55,10 +55,8 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	
 	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
 	
-	FComputeShaderInterface::Dispatch(Params, [this](const TArray<float>& Voxels) {
-		auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
-	
-		const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
+	FComputeShaderInterface::Dispatch(Params, [this](const TArray<uint32>& Tris, const TArray<FVector3f>& Verts) {
+				const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Verts, Tris, Mat);
 		
 		StaticMeshComponent->SetStaticMesh(StaticMesh);
 	});

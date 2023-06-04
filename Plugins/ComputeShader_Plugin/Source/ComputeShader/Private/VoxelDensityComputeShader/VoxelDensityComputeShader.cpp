@@ -106,7 +106,7 @@ IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/Voxel
 IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/MarchingCubesComputeShader.usf", "MarchingCubesComputeShader", SF_Compute);
 
 void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
-	FDispatchParams Params, TFunction<void(TArray<float>)> AsyncCallback) {
+	FDispatchParams Params, TFunction<void(TArray<uint32>, TArray<FVector3f>)> AsyncCallback) {
 	FRDGBuilder GraphBuilder(RHICmdList);
 	{
 		SCOPE_CYCLE_COUNTER(STAT_VoxelDensityComputeShader_Execute);
@@ -197,25 +197,36 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 			return;
 		}
 		
-		FRHIGPUBufferReadback* GPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteVoxelDensityComputeShaderOutput"));
-		AddEnqueueCopyPass(GraphBuilder, GPUBufferReadback, VoxelBuffer, 0u);
+		FRHIGPUBufferReadback* TriGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteTriOutput"));
+		FRHIGPUBufferReadback* VertGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteVertOutput"));
+		AddEnqueueCopyPass(GraphBuilder, TriGPUBufferReadback, TriBuffer, 0u);
+		AddEnqueueCopyPass(GraphBuilder, VertGPUBufferReadback, VertBuffer, 0u);
 
-		auto RunnerFunc = [GPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
-			if (GPUBufferReadback->IsReady()) {
-				const int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution; //TODO: actually use resolution
-				const int32 BufferSize = sizeof(float) * NumElements;
-				const float* Buffer = static_cast<float*>(GPUBufferReadback->Lock(BufferSize));
+		auto RunnerFunc = [TriGPUBufferReadback, VertGPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
+			if (TriGPUBufferReadback->IsReady() && VertGPUBufferReadback->IsReady()) {
+				const int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution * 15;
+				int32 BufferSize = sizeof(uint32) * NumElements;
+				const uint32* TriBuffer = static_cast<uint32*>(TriGPUBufferReadback->Lock(BufferSize));
 
-				TArray<float> OutVal;
-				OutVal.Append(Buffer, NumElements);
+				TArray<uint32> Tris;
+				Tris.Append(TriBuffer, NumElements);
 				
-				GPUBufferReadback->Unlock();
+				TriGPUBufferReadback->Unlock();
+				
+				BufferSize = sizeof(FVector3f) * NumElements;
+				const FVector3f* VertBuffer = static_cast<FVector3f*>(VertGPUBufferReadback->Lock(BufferSize));
 
-				AsyncTask(ENamedThreads::GameThread, [AsyncCallback, OutVal]() {
-					AsyncCallback(OutVal);
+				TArray<FVector3f> Verts;
+				Verts.Append(VertBuffer, NumElements);
+				
+				VertGPUBufferReadback->Unlock();
+
+				AsyncTask(ENamedThreads::GameThread, [AsyncCallback, Tris, Verts]() {
+					AsyncCallback(Tris, Verts);
 				});
 
-				delete GPUBufferReadback;
+				delete TriGPUBufferReadback;
+				delete VertGPUBufferReadback;
 			} else {
 				AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
 					RunnerFunc(RunnerFunc);
