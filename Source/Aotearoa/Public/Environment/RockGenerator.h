@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "RockGenerator.generated.h"
 
+#define NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER 8 //TODO: use the one from VoxelDensityComputeShader
+
 UCLASS()
 class AOTEAROA_API ARockGenerator : public AActor
 {

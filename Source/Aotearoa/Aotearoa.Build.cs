@@ -10,7 +10,7 @@ public class Aotearoa : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "ProceduralMeshComponent", "RawMesh"});
 
-		PrivateDependencyModuleNames.AddRange(new string[] {"Utility"});
+		PrivateDependencyModuleNames.AddRange(new string[] {"Utility", "ComputeShader"});
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

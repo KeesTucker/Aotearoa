@@ -6,7 +6,8 @@
 #include "Environment/MarchingCubesUtility.h"
 #include "Environment/StaticMeshGeneration.h"
 #include "Environment/VoxelGeneration.h"
-#include "UObject/ConstructorHelpers.h"
+#include "ExampleComputeShader/ExampleComputeShader.h"
+#include "VoxelDensityComputeShader/VoxelDensityComputeShader.h"
 
 // Sets default values
 ARockGenerator::ARockGenerator()
@@ -33,7 +34,7 @@ void ARockGenerator::Tick(const float DeltaTime)
 void ARockGenerator::PostEditChangeChainProperty(FPropertyChangedChainEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeChainProperty(PropertyChangedEvent);
-
+	
 	if (RegenOnEdit)
 	{
 		GenerateAndUpdateMesh();
@@ -43,15 +44,20 @@ void ARockGenerator::PostEditChangeChainProperty(FPropertyChangedChainEvent& Pro
 void ARockGenerator::GenerateAndUpdateMesh()
 {
 	Resolution = Size * ResolutionPerUnit;
-	Scale = Size / ResolutionPerUnit;
-	
-	auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
-	
-	auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
+	Resolution = (Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER) * NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER;
+	Scale = Size / Resolution / Size;
 
-	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
+	const FVoxelDensityComputeShaderDispatchParams Params(Resolution, Seed);
 	
-	StaticMeshComponent->SetStaticMesh(StaticMesh);
+	FVoxelDensityComputeShaderInterface::Dispatch(Params, [this](const TArray<float>& Voxels) {
+		//auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
+	
+		auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
+	
+		const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
+		
+		StaticMeshComponent->SetStaticMesh(StaticMesh);
+	});
 }
 
 

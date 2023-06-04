@@ -3,9 +3,9 @@
 
 class FMarchingCubesUtility
 {
-	static void AddVertex(const TArray<TArray<TArray<float>>>& Voxels, const FIntVector& VoxelPos, const FVector3f& WorldPos, const int* Edges,
+	static void AddVertex(const TArray<float>& Voxels, const FIntVector& VoxelPos, const FVector3f& WorldPos, const int* Edges,
 								   const int EdgeIndex, TArray<FVector3f>& Vertices, TArray<uint32>& Triangles, TMap<FString,
-								   int>& VertexMap, const float Isolevel, const float Scale)
+								   int>& VertexMap, const float Isolevel, const float Scale, const int Resolution)
 	{
 		const int E00 = FMarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][0];
 		const int E01 = FMarchingCubesLookupTables::EdgeConnections[Edges[EdgeIndex]][1];
@@ -27,9 +27,9 @@ class FMarchingCubesUtility
 		{
 			FVector3f Vert = FMarchingCubesUtility::Interp(
 					FVector3f(FMarchingCubesLookupTables::VertexOffsets[E00]),
-					Voxels[E00Index.X][E00Index.Y][E00Index.Z],
+					Voxels[E00Index.X * Resolution * Resolution + E00Index.Y * Resolution + E00Index.Z],
 					FVector3f(FMarchingCubesLookupTables::VertexOffsets[E01]),
-					Voxels[E01Index.X][E01Index.Y][E01Index.Z],
+					Voxels[E01Index.X * Resolution * Resolution + E01Index.Y * Resolution + E01Index.Z],
 					Isolevel
 				) + WorldPos;
 			Vert = Vert * Scale;
@@ -53,7 +53,7 @@ public:
 		TArray<uint32> Triangles;
 	};
 	
-	static FMeshOutput GenerateMesh(const int Resolution, const float Scale, const float Isolevel, TArray<TArray<TArray<float>>>& Voxels)
+	static FMeshOutput GenerateMesh(const int Resolution, const float Scale, const float Isolevel, const TArray<float>& Voxels)
 	{
 		TArray<FVector3f> Vertices = TArray<FVector3f>();
 		TArray<uint32> Triangles = TArray<uint32>();
@@ -71,7 +71,7 @@ public:
 					for (int i = 0; i < 8; ++i)
 					{
 						if (const FIntVector VertexPos = VoxelPos + FMarchingCubesLookupTables::VertexOffsets[i];
-							Voxels[VertexPos.X][VertexPos.Y][VertexPos.Z] < Isolevel)
+							Voxels[VertexPos.X * Resolution * Resolution + VertexPos.Y * Resolution + VertexPos.Z] < Isolevel)
 							CubeIndex |= static_cast<int>(std::pow(2, i));
 					}
 					
@@ -83,13 +83,13 @@ public:
 						FVector3f WorldPos = FVector3f(VoxelPos) - ObjectOriginOffset;
 						
 						// First edge lies between vertex e00 and vertex e01
-						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i, Vertices, Triangles, VertexMap, Isolevel, Scale);
+						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i, Vertices, Triangles, VertexMap, Isolevel, Scale, Resolution);
 	
 						// Second edge lies between vertex e10 and vertex e11
-						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel, Scale);
+						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i + 1, Vertices, Triangles, VertexMap, Isolevel, Scale, Resolution);
     	    
 						// Third edge lies between vertex e20 and vertex e21
-						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, Scale);
+						AddVertex(Voxels, VoxelPos, WorldPos, Edges, i + 2, Vertices, Triangles, VertexMap, Isolevel, Scale, Resolution);
 					}
 				}
 			}

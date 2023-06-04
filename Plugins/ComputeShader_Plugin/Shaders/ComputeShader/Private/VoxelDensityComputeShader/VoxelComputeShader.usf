@@ -1,0 +1,30 @@
+#include "/Engine/Public/Platform.ush"
+
+RWStructuredBuffer<float> Output;
+
+float Seed = 0.0f;
+int Resolution = 0;
+
+[numthreads(THREADS_X, THREADS_Y, THREADS_Z)]
+void VoxelDensityComputeShader(
+	uint3 DispatchThreadId : SV_DispatchThreadID,
+	uint GroupIndex : SV_GroupIndex )
+{
+	const uint Index = DispatchThreadId.x * Resolution * Resolution
+	+ DispatchThreadId.y * Resolution
+	+ DispatchThreadId.z;
+
+	const float3 Position = float3(DispatchThreadId.x, DispatchThreadId.y, DispatchThreadId.z);
+	const float3 Center = float3(Resolution / 2.0, Resolution / 2.0, Resolution / 2.0);
+
+	// Distance from center
+	const float Distance = distance(Position, Center);
+
+	// Normalize
+	float ShapeDensity = 1.0 - Distance / (Resolution / 2.0);
+
+	// Clamp
+	ShapeDensity = clamp(ShapeDensity, 0.0, 1.0);
+
+	Output[Index] = ShapeDensity;
+}
