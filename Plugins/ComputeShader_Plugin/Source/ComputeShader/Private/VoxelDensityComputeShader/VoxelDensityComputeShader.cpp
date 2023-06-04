@@ -50,9 +50,7 @@ public:
 
 		const FPermutationDomain PermutationVector(Parameters.PermutationId);
 		
-		OutEnvironment.SetDefine(TEXT("THREADS_X"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
-		OutEnvironment.SetDefine(TEXT("THREADS_Y"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
-		OutEnvironment.SetDefine(TEXT("THREADS_Z"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
+		OutEnvironment.SetDefine(TEXT("THREADS"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
 	}
 };
 
@@ -74,6 +72,7 @@ public:
 		SHADER_PARAMETER(float, Scale)
 		SHADER_PARAMETER(float, IsoLevel)
 		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<float>, Voxels)
+		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<int>, Counters)
 		
 		// Out
 		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<FVector3f>, Verts)
@@ -94,9 +93,7 @@ public:
 
 		const FPermutationDomain PermutationVector(Parameters.PermutationId);
 		
-		OutEnvironment.SetDefine(TEXT("THREADS_X"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
-		OutEnvironment.SetDefine(TEXT("THREADS_Y"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
-		OutEnvironment.SetDefine(TEXT("THREADS_Z"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
+		OutEnvironment.SetDefine(TEXT("THREADS"), NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER);
 	}
 };
 
@@ -137,6 +134,11 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 			FRDGBufferDesc::CreateBufferDesc(sizeof(float),
 				Params.Resolution * Params.Resolution * Params.Resolution),TEXT("VoxelBuffer"));
 
+		const TArray InitCounters = {0};
+		const FRDGBufferRef Counters = CreateStructuredBuffer(
+			GraphBuilder, TEXT("Counters"), sizeof(int),
+			1, InitCounters.GetData(), sizeof(int));
+		
 		const FRDGBufferRef VertBuffer = GraphBuilder.CreateBuffer(
 							FRDGBufferDesc::CreateBufferDesc(sizeof(float),
 								Params.Resolution * Params.Resolution * Params.Resolution * 15 * 3),TEXT("VertBuffer"));
@@ -177,6 +179,7 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 			PassParametersMarchingCubes->Scale = Params.Scale;
 			PassParametersMarchingCubes->IsoLevel = Params.IsoLevel;
 			PassParametersMarchingCubes->Voxels = PassParametersVoxels->Voxels;
+			PassParametersMarchingCubes->Counters = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(Counters, PF_R32_SINT));
 
 			PassParametersMarchingCubes->Verts = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(VertBuffer, PF_R32_FLOAT));
 			PassParametersMarchingCubes->Tris = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(TriBuffer, PF_R32_SINT));
@@ -204,7 +207,7 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 
 		auto RunnerFunc = [TriGPUBufferReadback, VertGPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
 			if (TriGPUBufferReadback->IsReady() && VertGPUBufferReadback->IsReady()) {
-				const int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution * 15;
+				int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution * 15;
 				int32 BufferSize = sizeof(uint32) * NumElements;
 				const uint32* TriBuffer = static_cast<uint32*>(TriGPUBufferReadback->Lock(BufferSize));
 
@@ -215,7 +218,7 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 				
 				BufferSize = sizeof(FVector3f) * NumElements;
 				const FVector3f* VertBuffer = static_cast<FVector3f*>(VertGPUBufferReadback->Lock(BufferSize));
-
+				
 				TArray<FVector3f> Verts;
 				Verts.Append(VertBuffer, NumElements);
 				

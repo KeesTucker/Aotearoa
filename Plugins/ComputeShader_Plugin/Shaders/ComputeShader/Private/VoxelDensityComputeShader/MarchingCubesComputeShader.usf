@@ -1,16 +1,12 @@
 #include "/Engine/Public/Platform.ush"
 #include "MarchingCubesLookupTables.usf"
 
-#define E_SHAPE_MODIFIER_SPHERE 0
-#define E_SHAPE_MODIFIER_GROUND 1
-
 struct FTriVerts
 {
 	float3 A;
 	float3 B;
 	float3 C;
 };
-
 struct FTri
 {
 	int A;
@@ -21,8 +17,9 @@ struct FTri
 //In
 int Resolution = 0;
 float Scale = 0.f;
-float IsoLevel = 0.5f;
+float IsoLevel = 0.f;
 RWStructuredBuffer<float> Voxels;
+RWStructuredBuffer<int> Counters;
 
 //Out
 RWStructuredBuffer<FTriVerts> Verts;
@@ -33,40 +30,30 @@ int VectorIndexToIntIndex(const int3 Coord)
 	return Coord.x * Resolution * Resolution + Coord.y * Resolution + Coord.z;
 }
 
-int3 IntIndexToVectorIndex(const int Index)
-{
-	float X = Index / (Resolution * Resolution);
-	float Y = Index / Resolution % Resolution;
-	float Z = Index % Resolution;
-
-	return int3(X, Y, Z);
-}
-
 float3 Interp(const float3 EdgeVertex1, const float ValueAtVertex1, const float3 EdgeVertex2, const float ValueAtVertex2)
 {
 	return EdgeVertex1 + (IsoLevel - ValueAtVertex1) * (EdgeVertex2 - EdgeVertex1)  / (ValueAtVertex2 - ValueAtVertex1);
 }
 
-float3 AddVertex(const int Index, const int3 WorldPos, const int Edges[], const int EdgeIndex)
+float3 AddVertex(const int Index, const int3 WorldPos, const int EdgeIndex)
 {
-	const int E00 = EdgeConnections[Edges[EdgeIndex]][0];
-	const int E01 = EdgeConnections[Edges[EdgeIndex]][1];
-	const int E00Index = Index + VectorIndexToIntIndex(VertexOffsets[E00]);
-	const int E01Index = Index + VectorIndexToIntIndex(VertexOffsets[E01]);
-	
-	float3 Vert = Interp(
-			float3(VertexOffsets[E00]),
-			Voxels[E00Index],
-			float3(VertexOffsets[E01]),
-			Voxels[E01Index]
-		) + WorldPos;
-	Vert = Vert * Scale;
+	const int E00 = EdgeConnections[EdgeIndex][0];
+    const int E01 = EdgeConnections[EdgeIndex][1];
+    const int E00Index = Index + VectorIndexToIntIndex(VertexOffsets[E00]);
+    const int E01Index = Index + VectorIndexToIntIndex(VertexOffsets[E01]);
+
+    float3 Vert = Interp(
+        float3(VertexOffsets[E00]),
+        Voxels[E00Index],
+        float3(VertexOffsets[E01]),
+        Voxels[E01Index]
+    ) + WorldPos;
+    Vert = Vert * Scale * 10.f;
 	return Vert;
 }
 
-[numthreads(THREADS_X, THREADS_Y, THREADS_Z)]
-void MarchingCubesComputeShader(
-	uint3 DispatchThreadId : SV_DispatchThreadID)
+[numthreads(THREADS, THREADS, THREADS)]
+void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 {
 	if (DispatchThreadId.x == Resolution || DispatchThreadId.y == Resolution || DispatchThreadId.z == Resolution)
 		return;
@@ -84,34 +71,44 @@ void MarchingCubesComputeShader(
 		if (Voxels[CornerPos] < IsoLevel)
 			CubeIndex |= int(pow(2, i));
 	}
+	
+	for (int i = 0; i < 15; i += 3)
+	{
+		FTri Tri;
+		Tri.A = -1;
+		Tri.B = -1;
+		Tri.C = -1;
+		Tris[Index * 5 + i / 3] = Tri;
+	}
 
 	const int Edges[16] = TriTable[CubeIndex];
+	uint Count = 0;
+
+	for (int i = 0; Edges[i] != -1; i += 3)
+	{
+		Count += 1;
+	}
+
+	// Atomically increment the counters to reserve space in the output buffers
+	int BufferIndex;
+	InterlockedAdd(Counters[0], Count, BufferIndex);
 
 	for (int i = 0; Edges[i] != -1; i += 3)
 	{
 		const float3 ObjectOriginOffset = float3(Resolution / 2.f, Resolution / 2.f, Resolution / 2.f);
 		const float3 WorldPos = float3(VoxelPos) - ObjectOriginOffset;
-						
-		// First edge lies between vertex e00 and vertex e01
-		const float3 A = AddVertex(Index, WorldPos, Edges, i);
-	
-		// Second edge lies between vertex e10 and vertex e11
-		const float3 B = AddVertex(Index, WorldPos, Edges, i + 1);
-    	    
-		// Third edge lies between vertex e20 and vertex e21
-		const float3 C = AddVertex(Index, WorldPos, Edges, i + 2);
 
 		FTriVerts TriVerts;
-		TriVerts.A = A;
-		TriVerts.B = B;
-		TriVerts.C = C;
-
-		FTri Tri;
-		Tri.A = Index * 15 + i;
-		Tri.B = Index * 15 + i + 1;
-		Tri.C = Index * 15 + i + 2;
+		TriVerts.A = AddVertex(Index, WorldPos, Edges[i]);
+		TriVerts.B = AddVertex(Index, WorldPos, Edges[i + 1]);
+		TriVerts.C = AddVertex(Index, WorldPos, Edges[i + 2]);
 		
-		Verts[Index * 5 + i / 3] = TriVerts;
-		Tris[Index * 5 + i / 3] = Tri;
+		FTri Tri;
+		Tri.A = BufferIndex * 3 + i;
+		Tri.B = BufferIndex * 3 + i + 1;
+		Tri.C = BufferIndex * 3 + i + 2;
+		
+		Verts[BufferIndex + i / 3] = TriVerts;
+		Tris[BufferIndex + i / 3] = Tri;
 	}
 }

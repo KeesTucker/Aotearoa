@@ -21,9 +21,8 @@ StructuredBuffer<FNoiseLayer> NoiseLayers;
 //Out
 RWStructuredBuffer<float> Voxels;
 
-[numthreads(THREADS_X, THREADS_Y, THREADS_Z)]
-void VoxelDensityComputeShader(
-	uint3 DispatchThreadId : SV_DispatchThreadID)
+[numthreads(THREADS, THREADS, THREADS)]
+void VoxelDensityComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 {
 	const uint Index = DispatchThreadId.x * (Resolution * Resolution)
 				 + DispatchThreadId.y * Resolution
