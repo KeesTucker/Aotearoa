@@ -98,8 +98,8 @@ void FVoxelDensityComputeShaderInterface::DispatchRenderThread(FRHICommandListIm
 			
 
 			auto GroupCount = FComputeShaderUtils::GetGroupCount(
-				FIntVector(Params.Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, Params.Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, Params.Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER),
-				FComputeShaderUtils::kGolden2DGroupSize);
+				FIntVector(Params.Resolution, Params.Resolution, Params.Resolution),
+				FIntVector(NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER));
 			GraphBuilder.AddPass(
 				RDG_EVENT_NAME("ExecuteVoxelDensityComputeShader"),
 				PassParameters,

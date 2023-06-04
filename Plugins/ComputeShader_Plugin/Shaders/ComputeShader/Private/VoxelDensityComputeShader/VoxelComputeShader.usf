@@ -10,14 +10,11 @@ void VoxelDensityComputeShader(
 	uint3 DispatchThreadId : SV_DispatchThreadID,
 	uint GroupIndex : SV_GroupIndex)
 {
-	uint3 GroupSize = uint3(THREADS_X, THREADS_Y, THREADS_Z);
-	uint3 GlobalThreadID = GroupIndex * GroupSize + DispatchThreadId;
+	const uint Index = DispatchThreadId.x * (Resolution * Resolution)
+				 + DispatchThreadId.y * Resolution
+				 + DispatchThreadId.z;
 
-	uint Index = GlobalThreadID.x * (Resolution * Resolution)
-				 + GlobalThreadID.y * Resolution
-				 + GlobalThreadID.z;
-
-	const float3 Position = float3(DispatchThreadId.x, DispatchThreadId.y, DispatchThreadId.z) + GroupIndex;
+	const float3 Position = float3(DispatchThreadId.x, DispatchThreadId.y, DispatchThreadId.z);
 	const float3 Center = float3(Resolution / 2.0, Resolution / 2.0, Resolution / 2.0);
 
 	// Distance from center
