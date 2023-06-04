@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "ShadeupExamplePlugin",
+	"FriendlyName": "VoxelComputeShaderPlugin",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "",
@@ -15,11 +15,6 @@
 	"IsExperimentalVersion": false,
 	"Installed": false,
 	"Modules": [
-		{
-			"Name": "ShadeupExamplePlugin",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		},
 		{
 			"Name": "ComputeShader",
 			"Type": "Runtime",

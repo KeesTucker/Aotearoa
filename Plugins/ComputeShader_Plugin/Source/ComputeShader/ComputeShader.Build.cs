@@ -2,8 +2,7 @@ using UnrealBuildTool;
 
 public class ComputeShader: ModuleRules 
 
-{ 
-
+{
 	public ComputeShader(ReadOnlyTargetRules Target) : base(Target) 
 
 	{
@@ -11,7 +10,6 @@ public class ComputeShader: ModuleRules
 		
 		PrivateIncludePaths.AddRange(new string[] 
 		{
-			"Runtime/Renderer/Private",
 			"ComputeShader/Private"
 		});
 		if (Target.bBuildEditor == true)

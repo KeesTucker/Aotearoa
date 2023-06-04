@@ -33,8 +33,6 @@ public:
 		// Create StaticMesh object
 		UStaticMesh* StaticMesh = NewObject<UStaticMesh>(Package, FName(*Name), RF_Public | RF_Standalone);
 		StaticMesh->InitResources();
-		//FGuid::NewGuid() = StaticMesh->GetLightingGuid();
-		//StaticMesh->GetLightingGuid() = FGuid::NewGuid();
 		// Create a Source Model then set it to variable
 		FStaticMeshSourceModel& SrcModel = StaticMesh->AddSourceModel();;
 		// Add source to new StaticMesh

@@ -5,12 +5,9 @@
 #include "RenderCore/Public/RenderGraphUtils.h"
 #include "MeshPassProcessor.inl"
 #include "StaticMeshResources.h"
-#include "DynamicMeshBuilder.h"
 #include "RenderGraphResources.h"
 #include "GlobalShader.h"
 #include "UnifiedBuffer.h"
-#include "CanvasTypes.h"
-#include "MaterialShader.h"
 
 DECLARE_STATS_GROUP(TEXT("VoxelDensityComputeShader"), STATGROUP_VoxelDensityComputeShader, STATCAT_Advanced);
 DECLARE_CYCLE_STAT(TEXT("VoxelDensityComputeShader Execute"), STAT_VoxelDensityComputeShader_Execute, STATGROUP_VoxelDensityComputeShader);
