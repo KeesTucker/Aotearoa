@@ -41,9 +41,6 @@ public:
 	EShapeModifier ShapeModifier = EShapeModifier::EShapeModifier_Sphere;
 	UPROPERTY(EditAnywhere)
 	TArray<FNoiseLayer> NoiseLayers;
-
-	int Resolution = Size * ResolutionPerUnit;
-	float Scale = Size / ResolutionPerUnit;
 	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

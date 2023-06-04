@@ -138,14 +138,20 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 		const FRDGBufferRef Counters = CreateStructuredBuffer(
 			GraphBuilder, TEXT("Counters"), sizeof(int),
 			1, InitCounters.GetData(), sizeof(int));
-		
-		const FRDGBufferRef VertBuffer = GraphBuilder.CreateBuffer(
-							FRDGBufferDesc::CreateBufferDesc(sizeof(float),
-								Params.Resolution * Params.Resolution * Params.Resolution * 15 * 3),TEXT("VertBuffer"));
 
-		const FRDGBufferRef TriBuffer = GraphBuilder.CreateBuffer(
-						FRDGBufferDesc::CreateBufferDesc(sizeof(int),
-							Params.Resolution * Params.Resolution * Params.Resolution * 15),TEXT("TriBuffer"));
+		TArray<float> InitVerts;
+		InitVerts.Init(-1.f, Params.Resolution * Params.Resolution * Params.Resolution * 15 * 3);
+		const FRDGBufferRef VertBuffer = CreateStructuredBuffer(
+			GraphBuilder, TEXT("VertBuffer"), sizeof(float),
+			Params.Resolution * Params.Resolution * Params.Resolution * 15 * 3,
+			InitVerts.GetData(), sizeof(float) * Params.Resolution * Params.Resolution * Params.Resolution * 15 * 3);
+
+		TArray<int> InitTris;
+		InitTris.Init(-1, Params.Resolution * Params.Resolution * Params.Resolution * 15);
+		const FRDGBufferRef TriBuffer = CreateStructuredBuffer(
+			GraphBuilder, TEXT("TriBuffer"), sizeof(int),
+			Params.Resolution * Params.Resolution * Params.Resolution * 15,
+			InitTris.GetData(), sizeof(int) * Params.Resolution * Params.Resolution * Params.Resolution * 15);
 		
 		if (VoxelDensityComputeShader.IsValid())
 		{
@@ -207,7 +213,7 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 
 		auto RunnerFunc = [TriGPUBufferReadback, VertGPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
 			if (TriGPUBufferReadback->IsReady() && VertGPUBufferReadback->IsReady()) {
-				int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution * 15;
+				const int32 NumElements = Params.Resolution * Params.Resolution * Params.Resolution * 15;
 				int32 BufferSize = sizeof(uint32) * NumElements;
 				const uint32* TriBuffer = static_cast<uint32*>(TriGPUBufferReadback->Lock(BufferSize));
 

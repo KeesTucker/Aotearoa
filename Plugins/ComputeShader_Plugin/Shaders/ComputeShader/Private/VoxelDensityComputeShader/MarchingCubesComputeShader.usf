@@ -48,7 +48,7 @@ float3 AddVertex(const int Index, const int3 WorldPos, const int EdgeIndex)
         float3(VertexOffsets[E01]),
         Voxels[E01Index]
     ) + WorldPos;
-    Vert = Vert * Scale * 10.f;
+    Vert = Vert * Scale;
 	return Vert;
 }
 
@@ -70,15 +70,6 @@ void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 		const int CornerPos = Index + VectorIndexToIntIndex(VertexOffsets[i]);
 		if (Voxels[CornerPos] < IsoLevel)
 			CubeIndex |= int(pow(2, i));
-	}
-	
-	for (int i = 0; i < 15; i += 3)
-	{
-		FTri Tri;
-		Tri.A = -1;
-		Tri.B = -1;
-		Tri.C = -1;
-		Tris[Index * 5 + i / 3] = Tri;
 	}
 
 	const int Edges[16] = TriTable[CubeIndex];
