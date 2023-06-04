@@ -56,9 +56,16 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
 	
 	FComputeShaderInterface::Dispatch(Params, [this](const TArray<uint32>& Tris, const TArray<FVector3f>& Verts) {
-				const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Verts, Tris, Mat);
+		for (auto Index : Tris)
+		{
+			if (Index == 0)
+			{
+				Debug::LogInt(TEXT(""), Index);
+			}
+		}
+		//const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Verts, Tris, Mat);
 		
-		StaticMeshComponent->SetStaticMesh(StaticMesh);
+		//StaticMeshComponent->SetStaticMesh(StaticMesh);
 	});
 }
 

@@ -7,9 +7,7 @@
 class FStaticMeshGeneration
 {
 public:
-	static UStaticMesh* GenerateStaticMesh(const FString& SavePath, const FString& Name,
-	                                       const TArray<FVector3f>& Vertices, const TArray<uint32>& Triangles,
-	                                       UMaterialInterface* Mat)
+	static UStaticMesh* GenerateStaticMesh(const FString& SavePath, const FString& Name, const TArray<FVector3f>& Vertices, const TArray<uint32>& Triangles, UMaterialInterface* Mat)
 	{
 		TArray<int32> FaceMatIndices;
 		FaceMatIndices.Init(0, Triangles.Num() / 3);

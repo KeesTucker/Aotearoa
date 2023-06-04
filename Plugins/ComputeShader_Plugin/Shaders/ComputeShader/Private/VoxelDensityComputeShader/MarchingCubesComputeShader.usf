@@ -107,9 +107,9 @@ void MarchingCubesComputeShader(
 		TriVerts.C = C;
 
 		FTri Tri;
-		Tri.A = Index + i;
-		Tri.B = Index + i + 1;
-		Tri.C = Index + i + 2;
+		Tri.A = Index * 15 + i;
+		Tri.B = Index * 15 + i + 1;
+		Tri.C = Index * 15 + i + 2;
 		
 		Verts[Index * 5 + i / 3] = TriVerts;
 		Tris[Index * 5 + i / 3] = Tri;
