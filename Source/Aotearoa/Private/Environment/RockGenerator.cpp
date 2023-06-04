@@ -3,6 +3,7 @@
 
 #include "Environment/RockGenerator.h"
 
+#include "MeshDescription.h"
 #include "Environment/MarchingCubesUtility.h"
 #include "Environment/StaticMeshGeneration.h"
 #include "Environment/VoxelGeneration.h"
@@ -53,9 +54,7 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		ComputeNoiseLayers.Add(ComputeNoiseLayer);
 	}
 	
-	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
-
-	FDateTime StartTime = FDateTime::UtcNow();
+	/*FDateTime StartTime = FDateTime::UtcNow();
 	auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
 	
 	auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
@@ -63,11 +62,13 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
 	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
 
-	/*const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
-	
+	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
+
 	StaticMeshComponent->SetStaticMesh(StaticMesh);*/
+
+	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
 	
-	StartTime = FDateTime::UtcNow();
+	FDateTime StartTime = FDateTime::UtcNow();
 	FComputeShaderInterface::Dispatch(Params, [this, StartTime](const TArray<uint32>& Tris, const TArray<FVector3f>& Verts) {
 		const FDateTime EndTime = FDateTime::UtcNow();
 		const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
@@ -89,6 +90,9 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		TArray<FVector3f> VertsCleaned;
 		VertsCleaned.Append(Verts);
 		VertsCleaned.SetNum(Length);
+
+		Debug::LogInt(TEXT("OriginalLength:"), Tris.Num());
+		Debug::LogInt(TEXT("Length:"), Length);
 		
 		const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, VertsCleaned, TrisCleaned, Mat);
 		

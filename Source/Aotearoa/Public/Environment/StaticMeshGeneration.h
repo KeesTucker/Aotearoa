@@ -36,7 +36,7 @@ public:
 		// Add source to new StaticMesh
 		SrcModel.BuildSettings.bRecomputeNormals = true;
 		SrcModel.BuildSettings.bRecomputeTangents = true;
-		SrcModel.BuildSettings.bRemoveDegenerates = false;
+		SrcModel.BuildSettings.bRemoveDegenerates = true;
 		SrcModel.BuildSettings.bUseHighPrecisionTangentBasis = false;
 		SrcModel.BuildSettings.bUseFullPrecisionUVs = false;
 		SrcModel.BuildSettings.bGenerateLightmapUVs = true;
