@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "FastNoiseLite.h"
-#include "VoxelDensityComputeShader/VoxelDensityComputeShader.h"
+#include "Dispatch/VoxelDensityComputeShader.h"
 #include "VoxelGeneration.generated.h"
 
 UENUM(BlueprintType)

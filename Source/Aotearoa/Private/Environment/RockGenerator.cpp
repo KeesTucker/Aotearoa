@@ -7,7 +7,7 @@
 #include "Environment/MarchingCubesUtility.h"
 #include "Environment/StaticMeshGeneration.h"
 #include "Environment/VoxelGeneration.h"
-#include "VoxelDensityComputeShader/VoxelDensityComputeShader.h"
+#include "Dispatch/VoxelDensityComputeShader.h"
 
 // Sets default values
 ARockGenerator::ARockGenerator()

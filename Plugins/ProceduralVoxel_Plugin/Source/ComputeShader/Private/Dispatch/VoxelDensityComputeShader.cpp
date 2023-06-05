@@ -1,5 +1,5 @@
 ﻿#include "VoxelDensityComputeShader.h"
-#include "ComputeShader/Public/VoxelDensityComputeShader/VoxelDensityComputeShader.h"
+#include "ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h"
 
 #include "PixelShaderUtils.h"
 #include "RenderCore/Public/RenderGraphUtils.h"
@@ -99,8 +99,8 @@ public:
 
 // This will tell the engine to create the shader and where the shader entry point is.
 //                            ShaderType                            ShaderPath                     Shader function name    Type
-IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/VoxelDensityComputeShader.usf", "VoxelDensityComputeShader", SF_Compute);
-IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader/MarchingCubesComputeShader.usf", "MarchingCubesComputeShader", SF_Compute);
+IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader.usf", "VoxelDensityComputeShader", SF_Compute);
+IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/MarchingCubesComputeShader.usf", "MarchingCubesComputeShader", SF_Compute);
 
 void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
 	FDispatchParams Params, TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback) {

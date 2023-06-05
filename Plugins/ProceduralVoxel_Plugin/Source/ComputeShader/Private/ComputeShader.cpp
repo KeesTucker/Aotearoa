@@ -16,7 +16,7 @@ void FComputeShader::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 
-	FString PluginShaderDir = FPaths::Combine(IPluginManager::Get().FindPlugin(TEXT("ShadeupExamplePlugin"))->GetBaseDir(), TEXT("Shaders/ComputeShader/Private"));
+	const FString PluginShaderDir = FPaths::Combine(IPluginManager::Get().FindPlugin(TEXT("ProceduralVoxelPlugin"))->GetBaseDir(), TEXT("Shaders/ComputeShader/Private"));
 	AddShaderSourceDirectoryMapping(TEXT("/ComputeShaderShaders"), PluginShaderDir);
 }
 
@@ -28,4 +28,4 @@ void FComputeShader::ShutdownModule()
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FComputeShader, ShadeupExamplePlugin)
+IMPLEMENT_MODULE(FComputeShader, ProceduralVoxelPlugin)

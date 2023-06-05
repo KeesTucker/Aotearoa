@@ -1,5 +1,5 @@
 #include "/Engine/Public/Platform.ush"
-#include "../FastNoiseLite/FastNoiseLite.usf"
+#include "FastNoiseLite/FastNoiseLite.usf"
 
 #define E_SHAPE_MODIFIER_SPHERE 0
 #define E_SHAPE_MODIFIER_GROUND 1
