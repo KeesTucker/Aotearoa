@@ -107,7 +107,8 @@ void FComputeShaderInterface::DispatchRenderThread(
 	FRHICommandListImmediate& RHICmdList,
 	FDispatchParams Params,
 	TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
-	TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback)
+	TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback,
+	FBufferReadbackManager& ReadbackManagerInstance)
 {
 	FRDGBuilder GraphBuilder(RHICmdList);
 	{
@@ -218,8 +219,6 @@ void FComputeShaderInterface::DispatchRenderThread(
 
 		AddEnqueueCopyPass(GraphBuilder, TriGPUBufferReadback, TriBuffer, 0u);
 		AddEnqueueCopyPass(GraphBuilder, VertGPUBufferReadback, VertBuffer, 0u);
-
-		auto ReadbackManagerInstance = FBufferReadbackManager::GetInstance();
 		
 		ReadbackManagerInstance.AddBuffer<uint32, TFunction<void(const TArray<uint32>& Tris)>>(TriGPUBufferReadback, TriAsyncCallback, MaxTriCount);
 		ReadbackManagerInstance.AddBuffer<FVector3f, TFunction<void(const TArray<FVector3f>& Verts)>>(VertGPUBufferReadback, VertAsyncCallback, MaxTriCount);

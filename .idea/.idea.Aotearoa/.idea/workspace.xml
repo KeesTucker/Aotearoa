@@ -10,13 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aotearoa.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Aotearoa.sln.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_Ocean.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" afterDir="false" />
     </list>
@@ -29,6 +26,35 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -343,6 +369,7 @@
       <workItem from="1685928457849" duration="358000" />
       <workItem from="1685938271240" duration="1056000" />
       <workItem from="1685939383230" duration="12911000" />
+      <workItem from="1685952952613" duration="2238000" />
     </task>
     <servers />
   </component>
@@ -361,29 +388,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h</url>
-          <line>68</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp</url>
-          <line>223</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp</url>
-          <line>111</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp</url>
-          <line>191</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp</url>
-          <line>216</line>
-          <option name="timeStamp" value="18" />
+          <line>222</line>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

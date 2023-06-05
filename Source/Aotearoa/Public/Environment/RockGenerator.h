@@ -42,13 +42,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<FNoiseLayer> NoiseLayers;
 
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void PostEditChangeChainProperty(FPropertyChangedChainEvent & PropertyChangedEvent) override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* StaticMeshComponent;
+	FBufferReadbackManager ReadbackManager;
+	
 	void GenerateAndUpdateMesh();
-
 	void MeshGenerateCallback(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts, const FDateTime StartTime) const;
 };

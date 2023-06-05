@@ -19,10 +19,15 @@ ARockGenerator::ARockGenerator()
     SetRootComponent(StaticMeshComponent);
 }
 
+void ARockGenerator::BeginPlay()
+{
+	Super::BeginPlay();
+	ReadbackManager = FBufferReadbackManager::GetInstance();
+}
+
 void ARockGenerator::Tick(float DeltaTime)
 {
-	auto ReadbackManagerInstance = FBufferReadbackManager::GetInstance();
-	ReadbackManagerInstance.Tick();
+	ReadbackManager.Tick();
 }
 
 // Called when changes are made in details window
@@ -89,7 +94,8 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		Verts = InVerts;
 		VertsCompleted = true;
 		CompleteCheckCallback();
-	});
+	},
+	ReadbackManager);
 }
 
 void ARockGenerator::MeshGenerateCallback(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts, const FDateTime StartTime) const
