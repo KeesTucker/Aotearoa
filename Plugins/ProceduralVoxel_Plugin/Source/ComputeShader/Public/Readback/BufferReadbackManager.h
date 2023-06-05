@@ -9,15 +9,6 @@
 #include "RHIGPUReadback.h"
 #include "UnifiedBuffer.h"
 
-#include "CoreMinimal.h"
-#include "GenericPlatform/GenericPlatformMisc.h"
-#include "MeshPassProcessor.inl"
-#include "StaticMeshResources.h"
-#include "RenderGraphResources.h"
-#include "GlobalShader.h"
-#include "UnifiedBuffer.h"
-#include "VoxelDensityComputeShader.h"
-
 struct FBaseReadbackInfo
 {
     virtual ~FBaseReadbackInfo() {}
@@ -83,7 +74,7 @@ public:
         TArray<int> CompletedBuffers;
         for (int i = 0; i < BufferReadbacks.Num(); ++i)
         {
-            ENQUEUE_RENDER_COMMAND(ReadBufferCommand)(
+            ENQUEUE_RENDER_COMMAND(SceneDrawCompletion)(
                 [this, i, &CompletedBuffers](FRHICommandListImmediate& RHICmdList)
                 {
                     if (BufferReadbacks[i]->ReadBuffer())

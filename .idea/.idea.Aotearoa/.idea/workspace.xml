@@ -11,11 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,7 +365,7 @@
       <workItem from="1685928457849" duration="358000" />
       <workItem from="1685938271240" duration="1056000" />
       <workItem from="1685939383230" duration="12911000" />
-      <workItem from="1685952952613" duration="2238000" />
+      <workItem from="1685952952613" duration="2454000" />
     </task>
     <servers />
   </component>
