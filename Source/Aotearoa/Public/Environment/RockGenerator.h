@@ -16,7 +16,7 @@ class AOTEAROA_API ARockGenerator : public AActor
 	
 public:
 	explicit ARockGenerator();
-	
+
 	UPROPERTY(EditAnywhere)
 	bool RegenOnEdit = true;
 
@@ -41,8 +41,7 @@ public:
 	EShapeModifier ShapeModifier = EShapeModifier::EShapeModifier_Sphere;
 	UPROPERTY(EditAnywhere)
 	TArray<FNoiseLayer> NoiseLayers;
-	
-	virtual void BeginPlay() override;
+
 	virtual void Tick(float DeltaTime) override;
 	virtual void PostEditChangeChainProperty(FPropertyChangedChainEvent & PropertyChangedEvent) override;
 
@@ -50,4 +49,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* StaticMeshComponent;
 	void GenerateAndUpdateMesh();
+
+	void MeshGenerateCallback(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts, const FDateTime StartTime) const;
 };

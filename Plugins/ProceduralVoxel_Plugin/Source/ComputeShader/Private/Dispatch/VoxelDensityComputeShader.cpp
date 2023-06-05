@@ -8,6 +8,7 @@
 #include "RenderGraphResources.h"
 #include "GlobalShader.h"
 #include "UnifiedBuffer.h"
+#include "Readback/BufferReadbackManager.h"
 
 DECLARE_STATS_GROUP(TEXT("VoxelDensityComputeShader"), STATGROUP_VoxelDensityComputeShader, STATCAT_Advanced);
 DECLARE_CYCLE_STAT(TEXT("VoxelDensityComputeShader Execute"), STAT_VoxelDensityComputeShader_Execute, STATGROUP_VoxelDensityComputeShader);
@@ -102,8 +103,12 @@ public:
 IMPLEMENT_GLOBAL_SHADER(FVoxelDensityComputeShader, "/ComputeShaderShaders/VoxelDensityComputeShader.usf", "VoxelDensityComputeShader", SF_Compute);
 IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/MarchingCubesComputeShader.usf", "MarchingCubesComputeShader", SF_Compute);
 
-void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHICmdList,
-	FDispatchParams Params, TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback) {
+void FComputeShaderInterface::DispatchRenderThread(
+	FRHICommandListImmediate& RHICmdList,
+	FDispatchParams Params,
+	TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
+	TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback)
+{
 	FRDGBuilder GraphBuilder(RHICmdList);
 	{
 		SCOPE_CYCLE_COUNTER(STAT_VoxelDensityComputeShader_Execute);
@@ -139,19 +144,21 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 			GraphBuilder, TEXT("Counters"), sizeof(int),
 			1, InitCounters.GetData(), sizeof(int));
 
+		const int MaxTriCount = static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f * 3);
+		
 		TArray<float> InitVerts;
-		InitVerts.Init(-1.f, static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f * 3));
+		InitVerts.Init(-1.f, MaxTriCount * 3);
 		const FRDGBufferRef VertBuffer = CreateStructuredBuffer(
 			GraphBuilder, TEXT("VertBuffer"), sizeof(float),
-			static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f * 3),
-			InitVerts.GetData(), static_cast<int>(sizeof(float) * Params.Resolution * Params.Resolution * Params.Resolution * 0.5f * 3));
-
+			MaxTriCount * 3,
+			InitVerts.GetData(), sizeof(float) * MaxTriCount * 3);
+		
 		TArray<int> InitTris;
-		InitTris.Init(-1, static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f));
+		InitTris.Init(-1, MaxTriCount);
 		const FRDGBufferRef TriBuffer = CreateStructuredBuffer(
 			GraphBuilder, TEXT("TriBuffer"), sizeof(int),
-			static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f),
-			InitTris.GetData(), static_cast<int>(sizeof(int) * Params.Resolution * Params.Resolution * Params.Resolution * 0.5f));
+			MaxTriCount,
+			InitTris.GetData(), sizeof(int) * MaxTriCount);
 		
 		if (VoxelDensityComputeShader.IsValid())
 		{
@@ -174,7 +181,7 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 		}
 		else {
 #if WITH_EDITOR
-			GEngine->AddOnScreenDebugMessage((uint64)42145125184, 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
+			GEngine->AddOnScreenDebugMessage(static_cast<uint64>(42145125184), 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
 #endif
 			return;
 		}
@@ -201,51 +208,21 @@ void FComputeShaderInterface::DispatchRenderThread(FRHICommandListImmediate& RHI
 		}
 		else {
 #if WITH_EDITOR
-			GEngine->AddOnScreenDebugMessage((uint64)42145125184, 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
+			GEngine->AddOnScreenDebugMessage(static_cast<uint64>(42145125184), 6.f, FColor::Red, FString(TEXT("The compute shader has a problem.")));
 #endif
 			return;
 		}
 		
 		FRHIGPUBufferReadback* TriGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteTriOutput"));
 		FRHIGPUBufferReadback* VertGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteVertOutput"));
+
 		AddEnqueueCopyPass(GraphBuilder, TriGPUBufferReadback, TriBuffer, 0u);
 		AddEnqueueCopyPass(GraphBuilder, VertGPUBufferReadback, VertBuffer, 0u);
 
-		auto RunnerFunc = [TriGPUBufferReadback, VertGPUBufferReadback, AsyncCallback, Params](auto&& RunnerFunc) -> void {
-			if (TriGPUBufferReadback->IsReady() && VertGPUBufferReadback->IsReady()) {
-				const int32 NumElements = static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f);
-				int32 BufferSize = sizeof(uint32) * NumElements;
-				const uint32* TriBuffer = static_cast<uint32*>(TriGPUBufferReadback->Lock(BufferSize));
-
-				TArray<uint32> Tris;
-				Tris.Append(TriBuffer, NumElements);
-				
-				TriGPUBufferReadback->Unlock();
-				
-				BufferSize = sizeof(FVector3f) * NumElements;
-				const FVector3f* VertBuffer = static_cast<FVector3f*>(VertGPUBufferReadback->Lock(BufferSize));
-				
-				TArray<FVector3f> Verts;
-				Verts.Append(VertBuffer, NumElements);
-				
-				VertGPUBufferReadback->Unlock();
-
-				AsyncTask(ENamedThreads::GameThread, [AsyncCallback, Tris, Verts]() {
-					AsyncCallback(Tris, Verts);
-				});
-
-				delete TriGPUBufferReadback;
-				delete VertGPUBufferReadback;
-			} else {
-				AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
-					RunnerFunc(RunnerFunc);
-				});
-			}
-		};
-
-		AsyncTask(ENamedThreads::ActualRenderingThread, [RunnerFunc]() {
-			RunnerFunc(RunnerFunc);
-		});
+		auto ReadbackManagerInstance = FBufferReadbackManager::GetInstance();
+		
+		ReadbackManagerInstance.AddBuffer<uint32, TFunction<void(const TArray<uint32>& Tris)>>(TriGPUBufferReadback, TriAsyncCallback, MaxTriCount);
+		ReadbackManagerInstance.AddBuffer<FVector3f, TFunction<void(const TArray<FVector3f>& Verts)>>(VertGPUBufferReadback, VertAsyncCallback, MaxTriCount);
 	}
 
 	GraphBuilder.Execute();

@@ -8,6 +8,7 @@
 #include "Environment/StaticMeshGeneration.h"
 #include "Environment/VoxelGeneration.h"
 #include "Dispatch/VoxelDensityComputeShader.h"
+#include "Readback/BufferReadbackManager.h"
 
 // Sets default values
 ARockGenerator::ARockGenerator()
@@ -18,16 +19,10 @@ ARockGenerator::ARockGenerator()
     SetRootComponent(StaticMeshComponent);
 }
 
-// Called when the game starts or when spawned
-void ARockGenerator::BeginPlay()
+void ARockGenerator::Tick(float DeltaTime)
 {
-	Super::BeginPlay();
-}
-
-// Called every frame
-void ARockGenerator::Tick(const float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	auto ReadbackManagerInstance = FBufferReadbackManager::GetInstance();
+	ReadbackManagerInstance.Tick();
 }
 
 // Called when changes are made in details window
@@ -67,37 +62,65 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	StaticMeshComponent->SetStaticMesh(StaticMesh);*/
 
 	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
+
+	TArray<uint32> Tris;
+	TArray<FVector3f> Verts;
+
+	bool TrisCompleted = false;
+	bool VertsCompleted = false;
 	
-	FDateTime StartTime = FDateTime::UtcNow();
-	FComputeShaderInterface::Dispatch(Params, [this, StartTime](const TArray<uint32>& Tris, const TArray<FVector3f>& Verts) {
-		const FDateTime EndTime = FDateTime::UtcNow();
-		const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
-		Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
-		int Length = 0;
-		for (const auto TriIndex : Tris)
-		{
-			if (TriIndex == -1)
-			{
-				break;
-			}
-			Length++;
+	const FDateTime StartTime = FDateTime::UtcNow();
+
+	auto CompleteCheckCallback = [this, &Tris, &Verts, &TrisCompleted, &VertsCompleted, &StartTime]() {
+		if (TrisCompleted && VertsCompleted) {
+			TrisCompleted = false;
+			VertsCompleted = false;
+			MeshGenerateCallback(Tris, Verts, StartTime);
 		}
-		
-		TArray<uint32> TrisCleaned;
-		TrisCleaned.Append(Tris);
-		TrisCleaned.SetNum(Length);
-
-		TArray<FVector3f> VertsCleaned;
-		VertsCleaned.Append(Verts);
-		VertsCleaned.SetNum(Length);
-
-		Debug::LogInt(TEXT("OriginalLength:"), Tris.Num());
-		Debug::LogInt(TEXT("Length:"), Length);
-		
-		const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, VertsCleaned, TrisCleaned, Mat);
-		
-		StaticMeshComponent->SetStaticMesh(StaticMesh);
+	};
+	
+	FComputeShaderInterface::Dispatch(Params,
+		[this, &Tris, &TrisCompleted, &CompleteCheckCallback](const TArray<uint32>& InTris) {
+		Tris = InTris;
+		TrisCompleted = true;
+		CompleteCheckCallback();
+	},
+	[this, &Verts, &VertsCompleted, &CompleteCheckCallback](const TArray<FVector3f>& InVerts) {
+		Verts = InVerts;
+		VertsCompleted = true;
+		CompleteCheckCallback();
 	});
+}
+
+void ARockGenerator::MeshGenerateCallback(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts, const FDateTime StartTime) const
+{
+	const FDateTime EndTime = FDateTime::UtcNow();
+	const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
+	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
+	int Length = 0;
+	for (const auto TriIndex : Tris)
+	{
+		if (TriIndex == -1)
+		{
+			break;
+		}
+		Length++;
+	}
+		
+	TArray<uint32> TrisCleaned;
+	TrisCleaned.Append(Tris);
+	TrisCleaned.SetNum(Length);
+
+	TArray<FVector3f> VertsCleaned;
+	VertsCleaned.Append(Verts);
+	VertsCleaned.SetNum(Length);
+
+	Debug::LogInt(TEXT("OriginalLength:"), Tris.Num());
+	Debug::LogInt(TEXT("Length:"), Length);
+		
+	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, VertsCleaned, TrisCleaned, Mat);
+		
+	StaticMeshComponent->SetStaticMesh(StaticMesh);
 }
 
 

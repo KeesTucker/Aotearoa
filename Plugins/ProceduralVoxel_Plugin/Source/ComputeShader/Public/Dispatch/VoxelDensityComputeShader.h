@@ -33,33 +33,32 @@ public:
 	// Executes this shader on the render thread
 	static void DispatchRenderThread(
 		FRHICommandListImmediate& RHICmdList,
-		FDispatchParams Params,
-		TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback
-	);
+		FDispatchParams Params, TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
+		TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback);
 
 	// Executes this shader on the render thread from the game thread via EnqueueRenderThreadCommand
 	static void DispatchGameThread(
 		FDispatchParams Params,
-		TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)> AsyncCallback
-	)
+		TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
+		TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback)
 	{
 		ENQUEUE_RENDER_COMMAND(SceneDrawCompletion)(
-		[Params, AsyncCallback](FRHICommandListImmediate& RHICmdList)
+		[Params, TriAsyncCallback, VertAsyncCallback](FRHICommandListImmediate& RHICmdList)
 		{
-			DispatchRenderThread(RHICmdList, Params, AsyncCallback);
+			DispatchRenderThread(RHICmdList, Params, TriAsyncCallback, VertAsyncCallback);
 		});
 	}
 
 	// Dispatches this shader. Can be called from any thread
 	static void Dispatch(
 		const FDispatchParams& Params,
-		const TFunction<void(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts)>& AsyncCallback
-	)
+		const TFunction<void(const TArray<uint32>& Tris)>& TriAsyncCallback,
+		const TFunction<void(const TArray<FVector3f>& Verts)>& VertAsyncCallback)
 	{
 		if (IsInRenderingThread()) {
-			DispatchRenderThread(GetImmediateCommandList_ForRenderCommand(), Params, AsyncCallback);
+			DispatchRenderThread(GetImmediateCommandList_ForRenderCommand(), Params, TriAsyncCallback, VertAsyncCallback);
 		}else{
-			DispatchGameThread(Params, AsyncCallback);
+			DispatchGameThread(Params, TriAsyncCallback, VertAsyncCallback);
 		}
 	}
 };
