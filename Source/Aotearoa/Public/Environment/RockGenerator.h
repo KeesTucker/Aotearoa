@@ -49,11 +49,10 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* StaticMeshComponent;
-	FBufferReadbackManager ReadbackManager;
-	
-	
 
 private:
+	FBufferReadbackManager ReadbackManager;
+	
 	TSharedPtr<TArray<uint32>> Tris;
 	TSharedPtr<TArray<FVector3f>> Verts;
 	TSharedPtr<FDateTime> StartTime;
