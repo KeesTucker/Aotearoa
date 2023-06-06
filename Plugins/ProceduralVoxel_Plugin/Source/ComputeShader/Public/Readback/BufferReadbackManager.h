@@ -79,22 +79,17 @@ public:
     void Tick()
     {
         TArray<int> CompletedIndices;
-        for (int i = 0; i < BufferReadbacks.Num(); ++i)
-        {
-            if (!BufferReadbacks[i]->IsCompleted) // Check if the buffer is not already completed
-            {
-                BufferReadbacks[i]->ReadBuffer();
-            }
-        }
         
         for (int i = 0; i < BufferReadbacks.Num(); ++i)
         {
             if (BufferReadbacks[i]->IsCompleted)
             {
                 CompletedIndices.Add(i);
+                continue;
             }
+            BufferReadbacks[i]->ReadBuffer();
         }
-
+        
         // Remove the completed buffer readbacks in reverse order
         for (int i = CompletedIndices.Num() - 1; i >= 0; --i)
         {
