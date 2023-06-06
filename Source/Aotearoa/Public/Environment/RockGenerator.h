@@ -51,6 +51,16 @@ protected:
 	UStaticMeshComponent* StaticMeshComponent;
 	FBufferReadbackManager ReadbackManager;
 	
+	
+
+private:
+	TSharedPtr<TArray<uint32>> Tris;
+	TSharedPtr<TArray<FVector3f>> Verts;
+	TSharedPtr<FDateTime> StartTime;
+	std::atomic<bool> TrisReady;
+	std::atomic<bool> VertsReady;
+
 	void GenerateAndUpdateMesh();
-	void MeshGenerateCallback(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts, const FDateTime StartTime) const;
+	void MeshGenerateCallback() const;
+	void CompleteCheckCallback();
 };

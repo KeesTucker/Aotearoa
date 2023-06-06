@@ -11,7 +11,7 @@
 #include "Readback/BufferReadbackManager.h"
 
 // Sets default values
-ARockGenerator::ARockGenerator()
+ARockGenerator::ARockGenerator() : TrisReady(false), VertsReady(false)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -41,8 +41,23 @@ void ARockGenerator::PostEditChangeChainProperty(FPropertyChangedChainEvent& Pro
 	}
 }
 
+void ARockGenerator::CompleteCheckCallback()
+{
+	if (TrisReady.load() && VertsReady.load()) {
+		TrisReady.store(false);
+		VertsReady.store(false);
+		MeshGenerateCallback();
+	}
+}
+
 void ARockGenerator::GenerateAndUpdateMesh()
 {
+	Tris = MakeShared<TArray<uint32>>();
+	Verts = MakeShared<TArray<FVector3f>>();
+	StartTime = MakeShared<FDateTime>(FDateTime::UtcNow());
+	TrisReady.store(false);
+	VertsReady.store(false);
+	
 	int Resolution = Size * ResolutionPerUnit;
 	Resolution = (Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER) * NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER;
 	const float Scale = Size / Resolution;
@@ -53,58 +68,31 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		FComputeNoiseLayer ComputeNoiseLayer(NoiseLayer.ToComputeNoiseLayer());
 		ComputeNoiseLayers.Add(ComputeNoiseLayer);
 	}
-	
-	/*FDateTime StartTime = FDateTime::UtcNow();
-	auto Voxels = FVoxelGeneration::GenerateVoxelsWithNoise(Resolution, Seed, ShapeModifier, NoiseLayers);
-	
-	auto [Vertices, Triangles] = FMarchingCubesUtility::GenerateMesh(Resolution, Scale, Isolevel, Voxels);
-	const FDateTime EndTime = FDateTime::UtcNow();
-	const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
-	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
-
-	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Vertices, Triangles, Mat);
-
-	StaticMeshComponent->SetStaticMesh(StaticMesh);*/
 
 	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
-
-	TArray<uint32> Tris;
-	TArray<FVector3f> Verts;
-
-	bool TrisCompleted = false;
-	bool VertsCompleted = false;
-	
-	const FDateTime StartTime = FDateTime::UtcNow();
-
-	auto CompleteCheckCallback = [this, &Tris, &Verts, &TrisCompleted, &VertsCompleted, &StartTime]() {
-		if (TrisCompleted && VertsCompleted) {
-			TrisCompleted = false;
-			VertsCompleted = false;
-			MeshGenerateCallback(Tris, Verts, StartTime);
-		}
-	};
 	
 	FComputeShaderInterface::Dispatch(Params,
-		[this, &Tris, &TrisCompleted, &CompleteCheckCallback](const TArray<uint32>& InTris) {
-		Tris = InTris;
-		TrisCompleted = true;
+	[this](const TArray<uint32>& InTris) {
+		*Tris = InTris;
+		TrisReady.store(true);
 		CompleteCheckCallback();
 	},
-	[this, &Verts, &VertsCompleted, &CompleteCheckCallback](const TArray<FVector3f>& InVerts) {
-		Verts = InVerts;
-		VertsCompleted = true;
+	[this](const TArray<FVector3f>& InVerts) {
+		*Verts = InVerts;
+		VertsReady.store(true);
 		CompleteCheckCallback();
 	},
 	ReadbackManager);
 }
 
-void ARockGenerator::MeshGenerateCallback(const TArray<uint32>& Tris, const TArray<FVector3f>& Verts, const FDateTime StartTime) const
+void ARockGenerator::MeshGenerateCallback() const
 {
 	const FDateTime EndTime = FDateTime::UtcNow();
-	const float ExecutionTime = (EndTime - StartTime).GetTotalSeconds();
+	const float ExecutionTime = (EndTime - *StartTime).GetTotalSeconds();
 	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
 	int Length = 0;
-	for (const auto TriIndex : Tris)
+	
+	for (const auto TriIndex : *Tris)
 	{
 		if (TriIndex == -1)
 		{
@@ -114,20 +102,19 @@ void ARockGenerator::MeshGenerateCallback(const TArray<uint32>& Tris, const TArr
 	}
 		
 	TArray<uint32> TrisCleaned;
-	TrisCleaned.Append(Tris);
+	TrisCleaned.Append(*Tris);
 	TrisCleaned.SetNum(Length);
 
 	TArray<FVector3f> VertsCleaned;
-	VertsCleaned.Append(Verts);
+	VertsCleaned.Append(*Verts);
 	VertsCleaned.SetNum(Length);
 
-	Debug::LogInt(TEXT("OriginalLength:"), Tris.Num());
+	Debug::LogInt(TEXT("OriginalLength:"), Tris->Num());
 	Debug::LogInt(TEXT("Length:"), Length);
 		
 	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, VertsCleaned, TrisCleaned, Mat);
 		
 	StaticMeshComponent->SetStaticMesh(StaticMesh);
 }
-
 
 

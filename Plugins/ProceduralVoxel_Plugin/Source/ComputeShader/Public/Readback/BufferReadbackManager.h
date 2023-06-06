@@ -12,14 +12,14 @@
 struct FBaseReadbackInfo
 {
     virtual ~FBaseReadbackInfo() {}
-    virtual bool ReadBuffer() = 0; 
+    virtual void ReadBuffer() = 0;
+    bool IsCompleted = false;
 };
 
 template<typename TReadback, typename TCallback>
 struct TFReadbackInfo final : FBaseReadbackInfo
 {
     typedef TCallback FCallbackType;
-    using ReadbackType = TReadback;
 
     FRHIGPUBufferReadback* BufferReadback;
     FCallbackType Callback;
@@ -28,26 +28,29 @@ struct TFReadbackInfo final : FBaseReadbackInfo
     TFReadbackInfo(FRHIGPUBufferReadback* InBufferReadback, TCallback InCallback, const int InLength)
         : BufferReadback(InBufferReadback), Callback(InCallback), Length(InLength) { }
     
-    virtual bool ReadBuffer() override
+    virtual void ReadBuffer() override
     {
-        if (BufferReadback->IsReady())
+        ENQUEUE_RENDER_COMMAND(FReadBufferCommand)(
+        [this](FRHICommandListImmediate& RHICmdList)
         {
-            int32 BufferSize = sizeof(ReadbackType) * Length;
-            const ReadbackType* BufferPointer = static_cast<ReadbackType*>(BufferReadback->Lock(BufferSize));
+            if (BufferReadback->IsReady())
+            {
+                const int32 BufferSize = sizeof(TReadback) * Length;
+                const TReadback* BufferPointer = static_cast<TReadback*>(BufferReadback->Lock(BufferSize));
 
-            TArray<ReadbackType> Output;
-            Output.Append(BufferPointer, BufferSize);
-				
-            BufferReadback->Unlock();
+                TArray<TReadback>* Output = new TArray<TReadback>();
+                Output->Append(BufferPointer, Length);
 
-            // Execute the callback on the game thread
-            AsyncTask(ENamedThreads::GameThread, [Output, this]() {
-                Callback(Output);
-            });
+                BufferReadback->Unlock();
 
-            return true;
-        }
-        return false;
+                IsCompleted = true;
+                
+                // Execute the callback on the game thread
+                AsyncTask(ENamedThreads::GameThread, [Output = TSharedPtr<TArray<TReadback>>(Output), this]() {
+                    Callback(*Output);
+                });
+            }
+        });
     }
 };
 
@@ -71,22 +74,28 @@ public:
 
     void Tick()
     {
-        TArray<int> CompletedBuffers;
+        TArray<int> CompletedIndices;
         for (int i = 0; i < BufferReadbacks.Num(); ++i)
         {
-            ENQUEUE_RENDER_COMMAND(SceneDrawCompletion)(
-                [this, i, &CompletedBuffers](FRHICommandListImmediate& RHICmdList)
-                {
-                    if (BufferReadbacks[i]->ReadBuffer())
-                    {
-                        CompletedBuffers.Add(i);
-                    }
-                }
-            );
+            if (!BufferReadbacks[i]->IsCompleted) // Check if the buffer is not already completed
+            {
+                BufferReadbacks[i]->ReadBuffer();
+            }
         }
-        for (int i = CompletedBuffers.Num() - 1; i >= 0; --i)
+        
+        for (int i = 0; i < BufferReadbacks.Num(); ++i)
         {
-            BufferReadbacks.RemoveAt(CompletedBuffers[i]);
+            if (BufferReadbacks[i]->IsCompleted)
+            {
+                CompletedIndices.Add(i);
+            }
+        }
+
+        // Remove the completed buffer readbacks in reverse order
+        for (int i = CompletedIndices.Num() - 1; i >= 0; --i)
+        {
+            const int CompletedIndex = CompletedIndices[i];
+            BufferReadbacks.RemoveAt(CompletedIndex);
         }
     }
 };
