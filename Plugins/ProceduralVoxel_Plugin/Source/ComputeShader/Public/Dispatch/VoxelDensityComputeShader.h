@@ -4,6 +4,8 @@
 #include "GenericPlatform/GenericPlatformMisc.h"
 #include "Readback/BufferReadbackManager.h"
 
+#define NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER 8
+
 struct COMPUTESHADER_API FComputeNoiseLayer
 {
 	int NoiseType = 0;

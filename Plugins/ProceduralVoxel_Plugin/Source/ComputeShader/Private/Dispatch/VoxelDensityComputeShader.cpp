@@ -1,5 +1,4 @@
-﻿#include "VoxelDensityComputeShader.h"
-#include "ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h"
+﻿#include "Dispatch/VoxelDensityComputeShader.h"
 
 #include "PixelShaderUtils.h"
 #include "RenderCore/Public/RenderGraphUtils.h"
