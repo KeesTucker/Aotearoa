@@ -13,8 +13,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/RockGenerator.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,7 +373,7 @@
       <workItem from="1685938271240" duration="1056000" />
       <workItem from="1685939383230" duration="12911000" />
       <workItem from="1685952952613" duration="2454000" />
-      <workItem from="1686033550459" duration="4510000" />
+      <workItem from="1686033550459" duration="4939000" />
     </task>
     <servers />
   </component>
@@ -397,11 +395,6 @@
           <url>file://$PROJECT_DIR$/Source/Aotearoa/Private/Environment/RockGenerator.cpp</url>
           <line>89</line>
           <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h</url>
-          <line>79</line>
-          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

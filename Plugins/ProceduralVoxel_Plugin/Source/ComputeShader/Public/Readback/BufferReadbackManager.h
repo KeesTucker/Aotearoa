@@ -33,6 +33,10 @@ struct TFReadbackInfo final : FBaseReadbackInfo
         ENQUEUE_RENDER_COMMAND(FReadBufferCommand)(
         [this](FRHICommandListImmediate& RHICmdList)
         {
+            if (IsCompleted)
+            {
+                return;
+            }
             if (BufferReadback->IsReady())
             {
                 const int32 BufferSize = sizeof(TReadback) * Length;
