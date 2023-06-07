@@ -71,17 +71,17 @@ public:
     }
 
 private:
-    FDelegateHandle TickHandle;
+    FTSTicker::FDelegateHandle TickHandle;
     TArray<TSharedPtr<FBaseReadbackInfo>> BufferReadbacks;
     
     FBufferReadbackManager()
     {
-        TickHandle = FTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateRaw(this, &FBufferReadbackManager::Tick), 1.f);
+        TickHandle = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateRaw(this, &FBufferReadbackManager::Tick), 1.f);
     }
 
     ~FBufferReadbackManager()
     {
-        FTicker::GetCoreTicker().RemoveTicker(TickHandle);
+        FTSTicker::GetCoreTicker().RemoveTicker(TickHandle);
     }
     
     bool Tick(float DeltaTime)
