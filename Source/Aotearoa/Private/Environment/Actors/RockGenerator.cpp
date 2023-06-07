@@ -8,7 +8,7 @@
 #include "Dispatch/VoxelDensityComputeShader.h"
 
 // Sets default values
-ARockGenerator::ARockGenerator() : TrisReady(false), VertsReady(false)
+ARockGenerator::ARockGenerator() : /*TrisReady(false),*/ VertsReady(false)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -39,8 +39,8 @@ void ARockGenerator::PostEditChangeChainProperty(FPropertyChangedChainEvent& Pro
 
 void ARockGenerator::CompleteCheckCallback()
 {
-	if (TrisReady.load() && VertsReady.load()) {
-		TrisReady.store(false);
+	if (/*TrisReady.load() && */VertsReady.load()) {
+		/*TrisReady.store(false);*/
 		VertsReady.store(false);
 		MeshGenerateCallback();
 	}
@@ -48,10 +48,10 @@ void ARockGenerator::CompleteCheckCallback()
 
 void ARockGenerator::GenerateAndUpdateMesh()
 {
-	Tris = MakeShared<TArray<uint32>>();
+	/*Tris = MakeShared<TArray<uint32>>();*/
 	Verts = MakeShared<TArray<FVector3f>>();
 	StartTime = MakeShared<FDateTime>(FDateTime::UtcNow());
-	TrisReady.store(false);
+	/*TrisReady.store(false);*/
 	VertsReady.store(false);
 	
 	int Resolution = Size * ResolutionPerUnit;
@@ -68,11 +68,11 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
 	
 	FComputeShaderInterface::Dispatch(Params,
-	[this](const TArray<uint32>& InTris) {
+	/*[this](const TArray<uint32>& InTris) {
 		*Tris = InTris;
 		TrisReady.store(true);
 		CompleteCheckCallback();
-	},
+	},*/
 	[this](const TArray<FVector3f>& InVerts) {
 		*Verts = InVerts;
 		VertsReady.store(true);
@@ -88,27 +88,31 @@ void ARockGenerator::MeshGenerateCallback() const
 	Debug::LogFloat(TEXT("Time Taken:"), ExecutionTime);
 	int Length = 0;
 	
-	for (const auto TriIndex : *Tris)
+	for (const auto Vert : *Verts)
 	{
-		if (TriIndex == -1)
-		{
+		if (Vert.X > std::numeric_limits<float>::max() - 1.f)
 			break;
-		}
 		Length++;
 	}
 		
-	TArray<uint32> TrisCleaned;
+	/*TArray<uint32> TrisCleaned;
 	TrisCleaned.Append(*Tris);
-	TrisCleaned.SetNum(Length);
+	TrisCleaned.SetNum(Length);*/
 
 	TArray<FVector3f> VertsCleaned;
 	VertsCleaned.Append(*Verts);
 	VertsCleaned.SetNum(Length);
 
-	Debug::LogInt(TEXT("OriginalLength:"), Tris->Num());
+	Debug::LogInt(TEXT("OriginalLength:"), Verts->Num());
 	Debug::LogInt(TEXT("Length:"), Length);
+
+	TArray<uint32> Tris;
+	for (uint32 i = 0; i < static_cast<uint32>(Verts->Num()); ++i)
+	{
+		Tris.Add(i);
+	}
 		
-	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, VertsCleaned, TrisCleaned, Mat);
+	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, VertsCleaned, /*TrisCleaned,*/ Tris, Mat);
 		
 	StaticMeshComponent->SetStaticMesh(StaticMesh);
 }

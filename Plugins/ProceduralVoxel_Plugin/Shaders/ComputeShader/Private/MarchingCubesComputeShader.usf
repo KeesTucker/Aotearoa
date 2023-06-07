@@ -23,7 +23,7 @@ RWStructuredBuffer<int> Counters;
 
 //Out
 RWStructuredBuffer<FTriVerts> Verts;
-RWStructuredBuffer<FTri> Tris;
+/*RWStructuredBuffer<FTri> Tris;*/
 
 int VectorIndexToIntIndex(const int3 Coord)
 {
@@ -95,12 +95,12 @@ void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 		TriVerts.B = AddVertex(Index, WorldPos, Edges[i + 1]);
 		TriVerts.C = AddVertex(Index, WorldPos, Edges[i + 2]);
 		
-		FTri Tri;
+		/*FTri Tri;
 		Tri.A = BufferIndex * 3 + i;
 		Tri.B = BufferIndex * 3 + i + 1;
-		Tri.C = BufferIndex * 3 + i + 2;
+		Tri.C = BufferIndex * 3 + i + 2;*/
 		
 		Verts[BufferIndex + i / 3] = TriVerts;
-		Tris[BufferIndex + i / 3] = Tri;
+		/*Tris[BufferIndex + i / 3] = Tri;*/
 	}
 }

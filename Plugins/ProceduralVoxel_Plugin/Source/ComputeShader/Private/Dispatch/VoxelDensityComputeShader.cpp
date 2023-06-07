@@ -75,7 +75,7 @@ public:
 		
 		// Out
 		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<FVector3f>, Verts)
-		SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<int>, Tris)
+		/*SHADER_PARAMETER_RDG_BUFFER_UAV(RWStructuredBuffer<int>, Tris)*/
 
 	END_SHADER_PARAMETER_STRUCT()
 
@@ -104,7 +104,7 @@ IMPLEMENT_GLOBAL_SHADER(FMarchingCubesComputeShader, "/ComputeShaderShaders/Marc
 void FComputeShaderInterface::DispatchRenderThread(
 	FRHICommandListImmediate& RHICmdList,
 	FDispatchParams Params,
-	TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
+	/*TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,*/
 	TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback,
 	FBufferReadbackManager& ReadbackManagerInstance)
 {
@@ -146,18 +146,19 @@ void FComputeShaderInterface::DispatchRenderThread(
 		const int MaxTriCount = static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f * 3);
 		
 		TArray<float> InitVerts;
-		InitVerts.Init(-1.f, MaxTriCount * 3);
+		// Hacky way of initing the array so I can tell if a value has been updated, will be changed later
+		InitVerts.Init(std::numeric_limits<float>::max(), MaxTriCount * 3);
 		const FRDGBufferRef VertBuffer = CreateStructuredBuffer(
 			GraphBuilder, TEXT("VertBuffer"), sizeof(float),
 			MaxTriCount * 3,
 			InitVerts.GetData(), sizeof(float) * MaxTriCount * 3);
 		
-		TArray<int> InitTris;
+		/*TArray<int> InitTris;
 		InitTris.Init(-1, MaxTriCount);
 		const FRDGBufferRef TriBuffer = CreateStructuredBuffer(
 			GraphBuilder, TEXT("TriBuffer"), sizeof(int),
 			MaxTriCount,
-			InitTris.GetData(), sizeof(int) * MaxTriCount);
+			InitTris.GetData(), sizeof(int) * MaxTriCount);*/
 		
 		if (VoxelDensityComputeShader.IsValid())
 		{
@@ -194,7 +195,7 @@ void FComputeShaderInterface::DispatchRenderThread(
 			PassParametersMarchingCubes->Counters = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(Counters, PF_R32_SINT));
 
 			PassParametersMarchingCubes->Verts = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(VertBuffer, PF_R32_FLOAT));
-			PassParametersMarchingCubes->Tris = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(TriBuffer, PF_R32_SINT));
+			/*PassParametersMarchingCubes->Tris = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(TriBuffer, PF_R32_SINT));*/
 
 			GraphBuilder.AddPass(
 				RDG_EVENT_NAME("ExecuteMarchingCubesComputeShader"),
@@ -212,13 +213,13 @@ void FComputeShaderInterface::DispatchRenderThread(
 			return;
 		}
 		
-		FRHIGPUBufferReadback* TriGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteTriOutput"));
+		/*FRHIGPUBufferReadback* TriGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteTriOutput"));*/
 		FRHIGPUBufferReadback* VertGPUBufferReadback = new FRHIGPUBufferReadback(TEXT("ExecuteVertOutput"));
 
-		AddEnqueueCopyPass(GraphBuilder, TriGPUBufferReadback, TriBuffer, 0u);
+		/*AddEnqueueCopyPass(GraphBuilder, TriGPUBufferReadback, TriBuffer, 0u);*/
 		AddEnqueueCopyPass(GraphBuilder, VertGPUBufferReadback, VertBuffer, 0u);
 		
-		ReadbackManagerInstance.AddBuffer<uint32, TFunction<void(const TArray<uint32>& Tris)>>(TriGPUBufferReadback, TriAsyncCallback, MaxTriCount);
+		/*ReadbackManagerInstance.AddBuffer<uint32, TFunction<void(const TArray<uint32>& Tris)>>(TriGPUBufferReadback, TriAsyncCallback, MaxTriCount);*/
 		ReadbackManagerInstance.AddBuffer<FVector3f, TFunction<void(const TArray<FVector3f>& Verts)>>(VertGPUBufferReadback, VertAsyncCallback, MaxTriCount);
 	}
 

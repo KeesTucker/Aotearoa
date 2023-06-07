@@ -51,10 +51,10 @@ protected:
 	UStaticMeshComponent* StaticMeshComponent;
 
 private:
-	TSharedPtr<TArray<uint32>> Tris;
+	//TSharedPtr<TArray<uint32>> Tris;
 	TSharedPtr<TArray<FVector3f>> Verts;
 	TSharedPtr<FDateTime> StartTime;
-	std::atomic<bool> TrisReady;
+	//std::atomic<bool> TrisReady;
 	std::atomic<bool> VertsReady;
 
 	void GenerateAndUpdateMesh();

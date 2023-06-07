@@ -10,8 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Readback/BufferReadbackManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Shaders/ComputeShader/Private/MarchingCubesComputeShader.usf" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Shaders/ComputeShader/Private/MarchingCubesComputeShader.usf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Private/Dispatch/VoxelDensityComputeShader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ProceduralVoxel_Plugin/Source/ComputeShader/Public/Dispatch/VoxelDensityComputeShader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/RockGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/RockGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/Actors/RockGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/Actors/RockGenerator.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +275,7 @@
       <workItem from="1686033550459" duration="5382000" />
       <workItem from="1686041004752" duration="55000" />
       <workItem from="1686041258547" duration="2383000" />
-      <workItem from="1686120623111" duration="4398000" />
+      <workItem from="1686120623111" duration="5310000" />
     </task>
     <servers />
   </component>
@@ -284,16 +289,5 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/RockGenerator.cpp</url>
-          <line>85</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

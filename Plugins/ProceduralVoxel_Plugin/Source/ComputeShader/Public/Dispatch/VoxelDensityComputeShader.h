@@ -37,36 +37,36 @@ public:
 	static void DispatchRenderThread(
 		FRHICommandListImmediate& RHICmdList,
 		FDispatchParams Params,
-		TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
+		/*TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,*/
 		TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback,
 		FBufferReadbackManager& ReadbackManagerInstance);
 
 	// Executes this shader on the render thread from the game thread via EnqueueRenderThreadCommand
 	static void DispatchGameThread(
 		FDispatchParams Params,
-		TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,
+		/*TFunction<void(const TArray<uint32>& Tris)> TriAsyncCallback,*/
 		TFunction<void(const TArray<FVector3f>& Verts)> VertAsyncCallback,
 		FBufferReadbackManager& ReadbackManagerInstance)
 	{
 		ENQUEUE_RENDER_COMMAND(SceneDrawCompletion)(
-			[Params, TriAsyncCallback, VertAsyncCallback, &ReadbackManagerInstance](FRHICommandListImmediate& RHICmdList)
+			[Params, /*TriAsyncCallback,*/ VertAsyncCallback, &ReadbackManagerInstance](FRHICommandListImmediate& RHICmdList)
 			{
-				DispatchRenderThread(RHICmdList, Params, TriAsyncCallback, VertAsyncCallback, ReadbackManagerInstance);
+				DispatchRenderThread(RHICmdList, Params, /*TriAsyncCallback,*/ VertAsyncCallback, ReadbackManagerInstance);
 			});
 	}
 
 	// Dispatches this shader. Can be called from any thread
 	static void Dispatch(
 		const FDispatchParams& Params,
-		const TFunction<void(const TArray<uint32>& Tris)>& TriAsyncCallback,
+		/*const TFunction<void(const TArray<uint32>& Tris)>& TriAsyncCallback,*/
 		const TFunction<void(const TArray<FVector3f>& Verts)>& VertAsyncCallback,
 		FBufferReadbackManager& ReadbackManagerInstance)
 	{
 		if (IsInRenderingThread()) {
-			DispatchRenderThread(GetImmediateCommandList_ForRenderCommand(), Params, TriAsyncCallback, VertAsyncCallback, ReadbackManagerInstance);
+			DispatchRenderThread(GetImmediateCommandList_ForRenderCommand(), Params, /*TriAsyncCallback,*/ VertAsyncCallback, ReadbackManagerInstance);
 		}
 		else {
-			DispatchGameThread(Params, TriAsyncCallback, VertAsyncCallback, ReadbackManagerInstance);
+			DispatchGameThread(Params, /*TriAsyncCallback,*/ VertAsyncCallback, ReadbackManagerInstance);
 		}
 	}
 };
