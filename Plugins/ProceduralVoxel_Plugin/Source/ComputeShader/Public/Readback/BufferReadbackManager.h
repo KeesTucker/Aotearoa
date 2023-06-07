@@ -56,11 +56,6 @@ struct TFReadbackInfo final : FBaseReadbackInfo
 
 class FBufferReadbackManager
 {
-    TArray<TSharedPtr<FBaseReadbackInfo>> BufferReadbacks;
-
-    // Made private to ensure single instance
-    FBufferReadbackManager() {}
-
 public:
     static FBufferReadbackManager& GetInstance()
     {
@@ -75,7 +70,21 @@ public:
         BufferReadbacks.Add(MoveTemp(ReadbackInfo));
     }
 
-    void Tick()
+private:
+    FDelegateHandle TickHandle;
+    TArray<TSharedPtr<FBaseReadbackInfo>> BufferReadbacks;
+    
+    FBufferReadbackManager()
+    {
+        TickHandle = FTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateRaw(this, &FBufferReadbackManager::Tick), 1.f);
+    }
+
+    ~FBufferReadbackManager()
+    {
+        FTicker::GetCoreTicker().RemoveTicker(TickHandle);
+    }
+    
+    bool Tick(float DeltaTime)
     {
         TArray<int> CompletedIndices;
         
@@ -95,5 +104,7 @@ public:
             const int CompletedIndex = CompletedIndices[i];
             BufferReadbacks.RemoveAt(CompletedIndex);
         }
+
+        return true;
     }
 };

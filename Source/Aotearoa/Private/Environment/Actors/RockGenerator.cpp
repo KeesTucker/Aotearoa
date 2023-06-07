@@ -23,7 +23,7 @@ void ARockGenerator::BeginPlay()
 
 void ARockGenerator::Tick(float DeltaTime)
 {
-	FBufferReadbackManager::GetInstance().Tick();
+	
 }
 
 // Called when changes are made in details window
