@@ -7,8 +7,12 @@
 class FStaticMeshGeneration
 {
 public:
-	static UStaticMesh* GenerateStaticMesh(const FString& SavePath, const FString& Name, const TArray<FVector3f>& Vertices, const TArray<uint32>& Triangles, UMaterialInterface* Mat)
+	static UStaticMesh* GenerateStaticMesh(const FString& SavePath, const FString& Name, UMaterialInterface* Mat,
+		const TArray<FVector3f>& Vertices, const TArray<uint32>& Triangles,
+		const TArray<FVector3f>& Normals = TArray<FVector3f>(), const bool IsNanite = false)
 	{
+		const bool bHasNormals = Normals.Num() > 0;
+		
 		TArray<int32> FaceMatIndices;
 		FaceMatIndices.Init(0, Triangles.Num() / 3);
 		TArray<uint32> FaceSmoothingGroups;
@@ -24,8 +28,12 @@ public:
 		Mesh.FaceSmoothingMasks = FaceSmoothingGroups;
 		Mesh.WedgeTexCoords[0].Init(FVector2f(0.0f, 0.0f), Triangles.Num());
 		Mesh.WedgeColors.Init(FColor(0, 0, 0, 0), Triangles.Num());
-		Mesh.WedgeTangentY.Init(FVector3f(0.0f, 0.0f, 1.0f), Triangles.Num());
 		
+		if (bHasNormals)
+			Mesh.WedgeTangentZ = Normals;
+		else
+			Mesh.WedgeTangentY.Init(FVector3f(0.0f, 0.0f, 1.0f), Triangles.Num());
+
 		UPackage* Package = CreatePackage(*(SavePath + Name));
 		check(Package);
 		// Create StaticMesh object
@@ -34,7 +42,7 @@ public:
 		// Create a Source Model then set it to variable
 		FStaticMeshSourceModel& SrcModel = StaticMesh->AddSourceModel();;
 		// Add source to new StaticMesh
-		SrcModel.BuildSettings.bRecomputeNormals = true;
+		SrcModel.BuildSettings.bRecomputeNormals = !bHasNormals;
 		SrcModel.BuildSettings.bRecomputeTangents = true;
 		SrcModel.BuildSettings.bRemoveDegenerates = true;
 		SrcModel.BuildSettings.bUseHighPrecisionTangentBasis = false;
@@ -47,7 +55,7 @@ public:
 		StaticMesh->GetStaticMaterials().Add(FStaticMaterial(Mat));
 		//Set the Imported version before calling the build
 		StaticMesh->ImportVersion = LastVersion;
-		StaticMesh->NaniteSettings.bEnabled = true;
+		StaticMesh->NaniteSettings.bEnabled = IsNanite;
 		// Build mesh from source
 		StaticMesh->Build(false);
 		
