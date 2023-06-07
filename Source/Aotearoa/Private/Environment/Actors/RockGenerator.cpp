@@ -109,7 +109,7 @@ void ARockGenerator::MeshGenerateCallback() const
 		Tris.Add(i);
 	}
 		
-	const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Mat, VertsCleaned, /*TrisCleaned,*/ Tris);
+	/*const auto StaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Mat, VertsCleaned, /*TrisCleaned,#1# Tris);
 	
 	FStaticMeshLODResources& LODModel = StaticMesh->GetRenderData()->LODResources[0];
 
@@ -132,7 +132,10 @@ void ARockGenerator::MeshGenerateCallback() const
 	}
 	
 	const auto NaniteStaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Mat, BakedVerts,
-		BakedTris, true);
+		BakedTris, true);*/
+
+	const auto NaniteStaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Mat, VertsCleaned,
+		Tris, true);
 	
 	StaticMeshComponent->SetStaticMesh(NaniteStaticMesh);
 }
