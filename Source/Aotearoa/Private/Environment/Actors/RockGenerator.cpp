@@ -114,29 +114,25 @@ void ARockGenerator::MeshGenerateCallback() const
 	FStaticMeshLODResources& LODModel = StaticMesh->GetRenderData()->LODResources[0];
 
 	FPositionVertexBuffer& PositionVertexBuffer = LODModel.VertexBuffers.PositionVertexBuffer;
-	const FStaticMeshVertexBuffer& StaticMeshVertexBuffer = LODModel.VertexBuffers.StaticMeshVertexBuffer;
 	const FRawStaticIndexBuffer& IndexBuffer = LODModel.IndexBuffer;
 	
 	TArray<FVector3f> BakedVerts;
 	TArray<uint32> BakedTris;
-	TArray<FVector3f> BakedNormals;
 	
 	for(uint32 Index = 0; Index < PositionVertexBuffer.GetNumVertices(); Index++)
 	{
 		FVector3f& VertexPosition = PositionVertexBuffer.VertexPosition(Index);
 		BakedVerts.Add(VertexPosition);
-		FVector3f VertexNormal = FVector3f(StaticMeshVertexBuffer.VertexTangentZ(Index));
-		BakedNormals.Add(VertexNormal);
 	}
 
 	for(int32 Index = 0; Index < IndexBuffer.GetNumIndices(); Index++)
 	{
 		const uint32 TriangleIndex = IndexBuffer.GetIndex(Index);
-		BakedTris.Add(Index);
+		BakedTris.Add(TriangleIndex);
 	}
 	
 	const auto NaniteStaticMesh = FStaticMeshGeneration::GenerateStaticMesh(SavePath, Name, Mat, BakedVerts,
-		BakedTris, BakedNormals, true);
+		BakedTris, true);
 	
 	StaticMeshComponent->SetStaticMesh(NaniteStaticMesh);
 }
