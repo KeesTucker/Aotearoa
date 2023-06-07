@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "VoxelGeneration.h"
+#include "../MarchingCubes/VoxelGeneration.h"
 #include "GameFramework/Actor.h"
 #include "RockGenerator.generated.h"
 
@@ -51,8 +51,6 @@ protected:
 	UStaticMeshComponent* StaticMeshComponent;
 
 private:
-	FBufferReadbackManager ReadbackManager;
-	
 	TSharedPtr<TArray<uint32>> Tris;
 	TSharedPtr<TArray<FVector3f>> Verts;
 	TSharedPtr<FDateTime> StartTime;

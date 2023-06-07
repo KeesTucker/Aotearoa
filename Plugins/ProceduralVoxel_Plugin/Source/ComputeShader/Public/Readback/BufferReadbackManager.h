@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include "BufferReadbackManager.h"
-#include "GlobalShader.h"
 #include "MeshPassProcessor.inl"
-#include "RenderGraphResources.h"
-#include "RHIGPUReadback.h"
 #include "StaticMeshResources.h"
+#include "RenderGraphResources.h"
+#include "GlobalShader.h"
+#include "RHIGPUReadback.h"
 #include "UnifiedBuffer.h"
 
 struct FBaseReadbackInfo
@@ -40,12 +40,9 @@ struct TFReadbackInfo final : FBaseReadbackInfo
             {
                 const int32 BufferSize = sizeof(TReadback) * Length;
                 const TReadback* BufferPointer = static_cast<TReadback*>(BufferReadback->Lock(BufferSize));
-
                 TArray<TReadback>* Output = new TArray<TReadback>();
                 Output->Append(BufferPointer, Length);
-
                 BufferReadback->Unlock();
-
                 IsCompleted = true;
                 
                 // Execute the callback on the game thread
@@ -60,6 +57,9 @@ struct TFReadbackInfo final : FBaseReadbackInfo
 class FBufferReadbackManager
 {
     TArray<TSharedPtr<FBaseReadbackInfo>> BufferReadbacks;
+
+    // Made private to ensure single instance
+    FBufferReadbackManager() {}
 
 public:
     static FBufferReadbackManager& GetInstance()

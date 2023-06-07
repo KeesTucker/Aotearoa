@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "FastNoiseLite.h"
+#include "../FastNoiseLite/FastNoiseLite.h"
 #include "Dispatch/VoxelDensityComputeShader.h"
 #include "VoxelGeneration.generated.h"
 

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "MarchingCubesLookupTables.h"
+#include "../Resources//MarchingCubesLookupTables.h"
 
 class FMarchingCubesUtility
 {

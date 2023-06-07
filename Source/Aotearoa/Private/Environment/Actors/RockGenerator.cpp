@@ -1,14 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Environment/RockGenerator.h"
+#include "Environment/Actors/RockGenerator.h"
 
-#include "MeshDescription.h"
-#include "Environment/MarchingCubesUtility.h"
-#include "Environment/StaticMeshGeneration.h"
-#include "Environment/VoxelGeneration.h"
+#include "Environment/MarchingCubes/StaticMeshGeneration.h"
+#include "Environment/MarchingCubes/VoxelGeneration.h"
 #include "Dispatch/VoxelDensityComputeShader.h"
-#include "Readback/BufferReadbackManager.h"
 
 // Sets default values
 ARockGenerator::ARockGenerator() : TrisReady(false), VertsReady(false)
@@ -22,12 +19,11 @@ ARockGenerator::ARockGenerator() : TrisReady(false), VertsReady(false)
 void ARockGenerator::BeginPlay()
 {
 	Super::BeginPlay();
-	ReadbackManager = FBufferReadbackManager::GetInstance();
 }
 
 void ARockGenerator::Tick(float DeltaTime)
 {
-	ReadbackManager.Tick();
+	FBufferReadbackManager::GetInstance().Tick();
 }
 
 // Called when changes are made in details window
@@ -82,7 +78,7 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		VertsReady.store(true);
 		CompleteCheckCallback();
 	},
-	ReadbackManager);
+	FBufferReadbackManager::GetInstance());
 }
 
 void ARockGenerator::MeshGenerateCallback() const
