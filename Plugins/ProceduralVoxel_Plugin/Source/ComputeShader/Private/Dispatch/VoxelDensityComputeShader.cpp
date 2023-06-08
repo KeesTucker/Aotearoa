@@ -29,6 +29,7 @@ public:
 		SHADER_PARAMETER(int, Resolution)
 		SHADER_PARAMETER(int, ShapeModifier)
 		SHADER_PARAMETER(int, NoiseLayersLength)
+		SHADER_PARAMETER(FVector3f, Offset)
 		SHADER_PARAMETER_RDG_BUFFER_SRV(StructuredBuffer<FComputeNoiseLayer>, NoiseLayers)
 		
 		// Out
@@ -167,6 +168,7 @@ void FComputeShaderInterface::DispatchRenderThread(
 			PassParametersVoxels->ShapeModifier = Params.ShapeModifier;
 			PassParametersVoxels->NoiseLayersLength = Params.NoiseLayersLength;
 			PassParametersVoxels->NoiseLayers = GraphBuilder.CreateSRV(FRDGBufferSRVDesc(NoiseLayerBuffer));
+			PassParametersVoxels->Offset = Params.Offset;
 			
 			PassParametersVoxels->Voxels = GraphBuilder.CreateUAV(FRDGBufferUAVDesc(VoxelBuffer, PF_R32_FLOAT));
 			

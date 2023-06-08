@@ -39,13 +39,17 @@ void AWorldGenManager::GenerateWorld() const
 			TemplateGenerator->Size = ChunkSize;
 			TemplateGenerator->Seed = Seed;
 			TemplateGenerator->ShapeModifier = EShapeModifier::EShapeModifier_Ground;
-			FString Name = TemplateGenerator->Name;
 			SpawnParams.Template = Cast<AActor>(TemplateGenerator);
+
 			ARockGenerator* Generator = GetWorld()->SpawnActor<ARockGenerator>(ARockGenerator::StaticClass(), SpawnParams);
-			FVector SpawnLocation = FVector(ChunkSize * x, ChunkSize * y, 0);
+
+			FVector SpawnLocation = FVector(ChunkSize * (x - NumChunks / 2.f), ChunkSize * (y - NumChunks / 2.f), 0);
 			Generator->SetActorLocation(SpawnLocation);
-			Generator->Name = FString::Printf(TEXT("%sGround_X%d_Y%d"), *Name, x, y);
 			Generator->SetActorLabel(FString::Printf(TEXT("Ground_X%d_Y%d"), x, y));
+
+			FString Name = TemplateGenerator->Name;
+			Generator->Name = FString::Printf(TEXT("%sGround_X%d_Y%d"), *Name, x, y);
+			Generator->Offset = FVector3f(SpawnLocation);
 
 			TFuture<void> CurrentGenerator;
 			Async(EAsyncExecution::TaskGraphMainThread, [Generator]() mutable {

@@ -19,14 +19,15 @@ struct COMPUTESHADER_API FDispatchParams
 	int Resolution;
 	int ShapeModifier;
 	int NoiseLayersLength;
+	FVector3f Offset;
 	TArray<FComputeNoiseLayer> NoiseLayers;
 
 	float Scale;
 	float IsoLevel;
 	
 	FDispatchParams(const float InSeed, const int InResolution, const int InShapeModifier,
-		const TArray<FComputeNoiseLayer>& InNoiseLayers, const float InScale, const float InIsoLevel)
-	: Seed(InSeed), Resolution(InResolution), ShapeModifier(InShapeModifier),
+		const TArray<FComputeNoiseLayer>& InNoiseLayers, const FVector3f InOffset, const float InScale, const float InIsoLevel)
+	: Seed(InSeed), Resolution(InResolution), ShapeModifier(InShapeModifier), Offset(InOffset),
 	NoiseLayersLength(InNoiseLayers.Num()), NoiseLayers(InNoiseLayers), Scale(InScale), IsoLevel(InIsoLevel) {}
 };
 

@@ -16,6 +16,7 @@ float Seed = 0.0f;
 int Resolution = 0;
 int ShapeModifier = 0;
 int NoiseLayersLength = 0;
+float3 Offset;
 StructuredBuffer<FNoiseLayer> NoiseLayers;
 
 //Out
@@ -63,9 +64,9 @@ void VoxelDensityComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 		Noise.noise_type = NoiseLayers[i].NoiseType;
 		NoiseDensity += (fnlGetNoise3D(
 			Noise,
-			DispatchThreadId.x * NoiseLayers[i].Scale / Resolution + Seed,
-			DispatchThreadId.y * NoiseLayers[i].Scale / Resolution + Seed,
-			DispatchThreadId.z * NoiseLayers[i].Scale / Resolution + Seed)
+			(DispatchThreadId.x + Offset.x) * NoiseLayers[i].Scale / Resolution + Seed,
+			(DispatchThreadId.y + Offset.y) * NoiseLayers[i].Scale / Resolution + Seed,
+			(DispatchThreadId.z + Offset.z) * NoiseLayers[i].Scale / Resolution + Seed)
 			+ 0.5f) * NoiseLayers[i].Strength;
 	}
 	

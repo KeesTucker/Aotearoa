@@ -39,6 +39,8 @@ public:
 	EShapeModifier ShapeModifier = EShapeModifier::EShapeModifier_Sphere;
 	UPROPERTY(EditAnywhere)
 	TArray<FNoiseLayer> NoiseLayers;
+
+	FVector3f Offset;
 	
 	void GenerateAndUpdateMesh();
 

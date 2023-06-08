@@ -47,7 +47,7 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	
 	int Resolution = Size * ResolutionPerUnit;
 	Resolution = (Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER) * NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER;
-	const float Scale = Size / Resolution;
+	const float Scale = Size / Resolution - 2;
 
 	TArray<FComputeNoiseLayer> ComputeNoiseLayers;
 	for (const FNoiseLayer& NoiseLayer : NoiseLayers)
@@ -56,7 +56,8 @@ void ARockGenerator::GenerateAndUpdateMesh()
 		ComputeNoiseLayers.Add(ComputeNoiseLayer);
 	}
 
-	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers, Scale, Isolevel);
+	const FDispatchParams Params(Seed, Resolution, static_cast<int>(ShapeModifier), ComputeNoiseLayers,
+		Offset, Scale, Isolevel);
 	
 	FComputeShaderInterface::Dispatch(Params,
 	/*[this](const TArray<uint32>& InTris) {
