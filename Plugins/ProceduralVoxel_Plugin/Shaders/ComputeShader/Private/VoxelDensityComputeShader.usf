@@ -57,6 +57,8 @@ void VoxelDensityComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 	
 
 	float NoiseDensity = 0.f;
+
+	float Scale = Resolution + 1 / Resolution;
 	
 	for (int i = 0; i < NoiseLayersLength; ++i)
 	{
@@ -64,9 +66,9 @@ void VoxelDensityComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 		Noise.noise_type = NoiseLayers[i].NoiseType;
 		NoiseDensity += (fnlGetNoise3D(
 			Noise,
-			(DispatchThreadId.x + Offset.x) * NoiseLayers[i].Scale / Resolution + Seed,
-			(DispatchThreadId.y + Offset.y) * NoiseLayers[i].Scale / Resolution + Seed,
-			(DispatchThreadId.z + Offset.z) * NoiseLayers[i].Scale / Resolution + Seed)
+			(DispatchThreadId.x + Offset.x) * Scale * NoiseLayers[i].Scale / Resolution + Seed,
+			(DispatchThreadId.y + Offset.y) * Scale * NoiseLayers[i].Scale / Resolution + Seed,
+			(DispatchThreadId.z + Offset.z) * Scale * NoiseLayers[i].Scale / Resolution + Seed)
 			+ 0.5f) * NoiseLayers[i].Strength;
 	}
 	

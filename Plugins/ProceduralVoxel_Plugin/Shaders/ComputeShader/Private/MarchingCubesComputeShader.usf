@@ -57,10 +57,7 @@ void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 {
 	if (DispatchThreadId.x >= Resolution - 1 ||
 		DispatchThreadId.y >= Resolution - 1 ||
-		DispatchThreadId.z >= Resolution - 1 ||
-		DispatchThreadId.x == 0 ||
-		DispatchThreadId.y == 0 ||
-		DispatchThreadId.z == 0)
+		DispatchThreadId.z >= Resolution - 1)
 		return;
 	
 	const uint Index = DispatchThreadId.x * (Resolution * Resolution)

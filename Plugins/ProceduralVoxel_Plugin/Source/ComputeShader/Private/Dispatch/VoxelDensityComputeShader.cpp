@@ -118,7 +118,7 @@ void FComputeShaderInterface::DispatchRenderThread(
 
 		const FVoxelDensityComputeShader::FPermutationDomain VoxelDensityPermutationVector;
 		const FMarchingCubesComputeShader::FPermutationDomain MarchingCubesPermutationVector;
-
+		
 		auto GroupCount = FComputeShaderUtils::GetGroupCount(
 			FIntVector(Params.Resolution, Params.Resolution, Params.Resolution),
 			FIntVector(NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER));

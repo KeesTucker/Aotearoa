@@ -44,10 +44,9 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	StartTime = MakeShared<FDateTime>(FDateTime::UtcNow());
 	/*TrisReady.store(false);*/
 	VertsReady.store(false);
-	
-	int Resolution = Size * ResolutionPerUnit;
-	Resolution = (Resolution / NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER) * NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER;
-	const float Scale = Size / (Resolution - 2);
+
+	const int Resolution = Size * ResolutionPerUnit;
+	const float Scale = Size / (Resolution + 1);
 
 	TArray<FComputeNoiseLayer> ComputeNoiseLayers;
 	for (const FNoiseLayer& NoiseLayer : NoiseLayers)
