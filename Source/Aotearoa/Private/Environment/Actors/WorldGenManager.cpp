@@ -25,13 +25,13 @@ void AWorldGenManager::PostEditChangeChainProperty(FPropertyChangedChainEvent& P
 
 void AWorldGenManager::GenerateWorld() const
 {
-	const float Seed = FMath::RandRange(-69696969.f, 69696969.f);
+	const float Seed = 0.f;
 	const int NumChunks = Size * ResolutionPerUnit / ResolutionPerChunk;
 	const float ChunkSize = Size / NumChunks;
 	
-	for (int x = 0; x < NumChunks; ++x)
+	for (int x = -NumChunks / 2; x < NumChunks / 2; ++x)
 	{
-		for (int y = 0; y < NumChunks; ++y)
+		for (int y = -NumChunks / 2; y < NumChunks / 2; ++y)
 		{
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Name = FName(*FString::Printf(TEXT("Chunk_X%d_Y%d"), x, y));
@@ -43,7 +43,7 @@ void AWorldGenManager::GenerateWorld() const
 
 			ARockGenerator* Generator = GetWorld()->SpawnActor<ARockGenerator>(ARockGenerator::StaticClass(), SpawnParams);
 
-			FVector SpawnLocation = FVector(ChunkSize * (x - NumChunks / 2.f), ChunkSize * (y - NumChunks / 2.f), 0);
+			FVector SpawnLocation = FVector(ChunkSize * x, ChunkSize * y, 0);
 			Generator->SetActorLocation(SpawnLocation);
 			Generator->SetActorLabel(FString::Printf(TEXT("Ground_X%d_Y%d"), x, y));
 
