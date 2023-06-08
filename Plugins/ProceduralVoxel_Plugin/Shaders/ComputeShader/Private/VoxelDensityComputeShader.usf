@@ -58,7 +58,7 @@ void VoxelDensityComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 
 	float NoiseDensity = 0.f;
 
-	float Scale = Resolution + 1 / Resolution;
+	const float Scale = (Resolution + 1.f) / Resolution;
 	
 	for (int i = 0; i < NoiseLayersLength; ++i)
 	{

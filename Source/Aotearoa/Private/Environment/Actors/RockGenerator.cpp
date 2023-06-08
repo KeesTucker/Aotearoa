@@ -46,7 +46,8 @@ void ARockGenerator::GenerateAndUpdateMesh()
 	VertsReady.store(false);
 
 	const int Resolution = Size * ResolutionPerUnit;
-	const float Scale = Size / (Resolution + 1);
+	float Scale = Size / Resolution;
+	Scale *= (Resolution + 1.f) / Resolution;
 
 	TArray<FComputeNoiseLayer> ComputeNoiseLayers;
 	for (const FNoiseLayer& NoiseLayer : NoiseLayers)
