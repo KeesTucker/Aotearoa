@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -41,14 +39,16 @@ public:
 	EShapeModifier ShapeModifier = EShapeModifier::EShapeModifier_Sphere;
 	UPROPERTY(EditAnywhere)
 	TArray<FNoiseLayer> NoiseLayers;
-
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
-	virtual void PostEditChangeChainProperty(FPropertyChangedChainEvent & PropertyChangedEvent) override;
+	
+	void GenerateAndUpdateMesh();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* StaticMeshComponent;
+
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+	virtual void PostEditChangeChainProperty(FPropertyChangedChainEvent & PropertyChangedEvent) override;
 
 private:
 	//TSharedPtr<TArray<uint32>> Tris;
@@ -56,8 +56,7 @@ private:
 	TSharedPtr<FDateTime> StartTime;
 	//std::atomic<bool> TrisReady;
 	std::atomic<bool> VertsReady;
-
-	void GenerateAndUpdateMesh();
+	
 	void MeshGenerateCallback() const;
 	void CompleteCheckCallback();
 };

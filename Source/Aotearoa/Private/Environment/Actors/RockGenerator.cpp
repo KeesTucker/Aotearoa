@@ -1,17 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Environment/Actors/RockGenerator.h"
 
-#include "MeshDescription.h"
 #include "Environment/MarchingCubes/StaticMeshGeneration.h"
 #include "Environment/MarchingCubes/VoxelGeneration.h"
 #include "Dispatch/VoxelDensityComputeShader.h"
 
-// Sets default values
 ARockGenerator::ARockGenerator() : /*TrisReady(false),*/ VertsReady(false)
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
     StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
     SetRootComponent(StaticMeshComponent);
