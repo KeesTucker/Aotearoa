@@ -27,7 +27,7 @@ RWStructuredBuffer<FTriVerts> Verts;
 
 int VectorIndexToIntIndex(const int3 Coord)
 {
-	return Coord.x * Resolution * Resolution + Coord.y * Resolution + Coord.z;
+	return Coord.x * (Resolution + 1) * (Resolution + 1) + Coord.y * (Resolution + 1) + Coord.z;
 }
 
 float3 Interp(const float3 EdgeVertex1, const float ValueAtVertex1, const float3 EdgeVertex2, const float ValueAtVertex2)
@@ -55,14 +55,15 @@ float3 AddVertex(const int Index, const int3 WorldPos, const int EdgeIndex)
 [numthreads(THREADS, THREADS, THREADS)]
 void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 {
-	/*if (DispatchThreadId.x >= Resolution - 1 ||
+	if (DispatchThreadId.x >= Resolution - 1 ||
 		DispatchThreadId.y >= Resolution - 1 ||
 		DispatchThreadId.z >= Resolution - 1)
-		return;*/
-	
-	const uint Index = DispatchThreadId.x * (Resolution * Resolution)
-				 + DispatchThreadId.y * Resolution
-				 + DispatchThreadId.z;
+		return;
+
+	const uint VoxelRes = Resolution + 1;
+	const uint VoxelIndex = DispatchThreadId.x * (VoxelRes * VoxelRes)
+					 + DispatchThreadId.y * VoxelRes
+					 + DispatchThreadId.z;
 
 	const int3 VoxelPos = DispatchThreadId;
 	
@@ -70,7 +71,7 @@ void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 	[UNROLL]
 	for (int i = 0; i < 8; ++i)
 	{
-		const int CornerPos = Index + VectorIndexToIntIndex(VertexOffsets[i]);
+		const int CornerPos = VoxelIndex + VectorIndexToIntIndex(VertexOffsets[i]);
 		if (Voxels[CornerPos] < IsoLevel)
 			CubeIndex |= int(pow(2, i));
 	}
@@ -93,9 +94,9 @@ void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 		const float3 WorldPos = float3(VoxelPos) - ObjectOriginOffset;
 
 		FTriVerts TriVerts;
-		TriVerts.A = AddVertex(Index, WorldPos, Edges[i]);
-		TriVerts.B = AddVertex(Index, WorldPos, Edges[i + 1]);
-		TriVerts.C = AddVertex(Index, WorldPos, Edges[i + 2]);
+		TriVerts.A = AddVertex(VoxelIndex, WorldPos, Edges[i]);
+		TriVerts.B = AddVertex(VoxelIndex, WorldPos, Edges[i + 1]);
+		TriVerts.C = AddVertex(VoxelIndex, WorldPos, Edges[i + 2]);
 		
 		/*FTri Tri;
 		Tri.A = BufferIndex * 3 + i;

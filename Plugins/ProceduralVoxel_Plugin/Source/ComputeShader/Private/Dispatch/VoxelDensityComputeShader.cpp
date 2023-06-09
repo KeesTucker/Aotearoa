@@ -118,6 +118,12 @@ void FComputeShaderInterface::DispatchRenderThread(
 
 		const FVoxelDensityComputeShader::FPermutationDomain VoxelDensityPermutationVector;
 		const FMarchingCubesComputeShader::FPermutationDomain MarchingCubesPermutationVector;
+
+		const int VoxelRes = Params.Resolution + 1;
+		
+		auto VoxelGroupCount = FComputeShaderUtils::GetGroupCount(
+			FIntVector(VoxelRes, VoxelRes, VoxelRes),
+			FIntVector(NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER, NUM_THREADS_VOXEL_DENSITY_COMPUTE_SHADER));
 		
 		auto GroupCount = FComputeShaderUtils::GetGroupCount(
 			FIntVector(Params.Resolution, Params.Resolution, Params.Resolution),
@@ -135,7 +141,6 @@ void FComputeShaderInterface::DispatchRenderThread(
 			Params.NoiseLayers.Num(), Params.NoiseLayers.GetData(), NoiseLayersTotalSize
 		);
 		
-		const int VoxelRes = Params.Resolution + 1;
 		const int VoxelBufferLength = VoxelRes * VoxelRes * VoxelRes;
 		const int BufferLength = Params.Resolution * Params.Resolution * Params.Resolution;
 
@@ -180,9 +185,9 @@ void FComputeShaderInterface::DispatchRenderThread(
 				RDG_EVENT_NAME("ExecuteVoxelDensityComputeShader"),
 				PassParametersVoxels,
 				ERDGPassFlags::Compute,
-				[&PassParametersVoxels, VoxelDensityComputeShader, GroupCount](FRHIComputeCommandList& RHICmdList)
+				[&PassParametersVoxels, VoxelDensityComputeShader, VoxelGroupCount](FRHIComputeCommandList& RHICmdList)
 			{
-				FComputeShaderUtils::Dispatch(RHICmdList, VoxelDensityComputeShader, *PassParametersVoxels, GroupCount);
+				FComputeShaderUtils::Dispatch(RHICmdList, VoxelDensityComputeShader, *PassParametersVoxels, VoxelGroupCount);
 			});
 		}
 		else {
