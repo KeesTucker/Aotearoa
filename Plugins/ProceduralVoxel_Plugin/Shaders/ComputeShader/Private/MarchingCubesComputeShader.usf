@@ -55,10 +55,10 @@ float3 AddVertex(const int Index, const int3 WorldPos, const int EdgeIndex)
 [numthreads(THREADS, THREADS, THREADS)]
 void MarchingCubesComputeShader(uint3 DispatchThreadId : SV_DispatchThreadID)
 {
-	if (DispatchThreadId.x >= Resolution - 1 ||
+	/*if (DispatchThreadId.x >= Resolution - 1 ||
 		DispatchThreadId.y >= Resolution - 1 ||
 		DispatchThreadId.z >= Resolution - 1)
-		return;
+		return;*/
 	
 	const uint Index = DispatchThreadId.x * (Resolution * Resolution)
 				 + DispatchThreadId.y * Resolution

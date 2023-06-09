@@ -134,17 +134,21 @@ void FComputeShaderInterface::DispatchRenderThread(
 			GraphBuilder, TEXT("NoiseLayerBuffer"), sizeof(FComputeNoiseLayer),
 			Params.NoiseLayers.Num(), Params.NoiseLayers.GetData(), NoiseLayersTotalSize
 		);
-			
+		
+		const int VoxelRes = Params.Resolution + 1;
+		const int VoxelBufferLength = VoxelRes * VoxelRes * VoxelRes;
+		const int BufferLength = Params.Resolution * Params.Resolution * Params.Resolution;
+
 		const FRDGBufferRef VoxelBuffer = GraphBuilder.CreateBuffer(
 			FRDGBufferDesc::CreateBufferDesc(sizeof(float),
-				Params.Resolution * Params.Resolution * Params.Resolution),TEXT("VoxelBuffer"));
+				VoxelBufferLength),TEXT("VoxelBuffer"));
 
 		const TArray InitCounters = {0};
 		const FRDGBufferRef Counters = CreateStructuredBuffer(
 			GraphBuilder, TEXT("Counters"), sizeof(int),
 			1, InitCounters.GetData(), sizeof(int));
 
-		const int MaxTriCount = static_cast<int>(Params.Resolution * Params.Resolution * Params.Resolution * 0.5f * 3);
+		const int MaxTriCount = BufferLength / 2 * 3;
 		
 		TArray<float> InitVerts;
 		// Hacky way of initing the array so I can tell if a value has been updated, will be changed later
@@ -164,7 +168,7 @@ void FComputeShaderInterface::DispatchRenderThread(
 		if (VoxelDensityComputeShader.IsValid())
 		{
 			PassParametersVoxels->Seed = Params.Seed;
-			PassParametersVoxels->Resolution = Params.Resolution;
+			PassParametersVoxels->Resolution = VoxelRes;
 			PassParametersVoxels->ShapeModifier = Params.ShapeModifier;
 			PassParametersVoxels->NoiseLayersLength = Params.NoiseLayersLength;
 			PassParametersVoxels->NoiseLayers = GraphBuilder.CreateSRV(FRDGBufferSRVDesc(NoiseLayerBuffer));
