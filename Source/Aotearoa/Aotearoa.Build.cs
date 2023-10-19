@@ -8,7 +8,7 @@ public class Aotearoa : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "ProceduralMeshComponent", "RawMesh"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "ProceduralMeshComponent", "RawMesh", "Landscape", "CableComponent", "GeometryCache"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {"Utility", "ComputeShader"});
 
