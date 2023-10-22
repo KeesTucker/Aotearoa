@@ -1,10 +1,9 @@
 ﻿#include "Environment/Actors/Current.h"
-
-#include "FoliageInstancedStaticMeshComponent.h"
 #include "Components/WindDirectionalSourceComponent.h"
-#include "Math/UnitConversion.h"
+#include "Materials/MaterialParameterCollection.h"
+#include "Materials/MaterialParameterCollectionInstance.h"
 
-ACurrent::ACurrent(): Macro(nullptr), MacroMI(nullptr), WindComponent(nullptr), MacroDMI(nullptr)
+ACurrent::ACurrent(): WindMatParam(nullptr), WindComponent(nullptr), WindMatParamInstance(nullptr)
 {
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -12,24 +11,17 @@ ACurrent::ACurrent(): Macro(nullptr), MacroMI(nullptr), WindComponent(nullptr), 
 void ACurrent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	RandomStream.Initialize(FMath::Rand());
 	
 	WindComponent = FindComponentByClass<UWindDirectionalSourceComponent>();
 	TargetSpeed = MaxWaveSpeed;
 
-	CurrentChangeTime = RandomStream.FRandRange(0.6f * WaveDuration, 1.4 * WaveDuration);
+	CurrentChangeTime = WaveDuration;
 
-	MacroDMI = UMaterialInstanceDynamic::Create(MacroMI, nullptr);
+	WindMatParamInstance = GetWorld()->GetParameterCollectionInstance(WindMatParam);
 
-	TArray<UFoliageInstancedStaticMeshComponent*> MacroInstances;
-	Macro->GetComponents(MacroInstances);
-
-	for (const auto MacroInstance : MacroInstances)
-	{
-		MacroInstance->SetMaterial(0, MacroDMI);
-		MacroInstance->SetMaterial(1, MacroDMI);
-	}
+	WindMatParamInstance->SetVectorParameterValue("WaveDir", FLinearColor(GetActorForwardVector()));
+	WindMatParamInstance->SetScalarParameterValue("MaxWaveSpeed", MaxWaveSpeed);
+	WindMatParamInstance->SetScalarParameterValue("WaveDuration", WaveDuration);
 }
 
 void ACurrent::Tick(const float DeltaTime)
@@ -43,14 +35,10 @@ void ACurrent::Tick(const float DeltaTime)
 	if (CurrentTime > CurrentChangeTime)
 	{
 		CurrentTime = 0;
-		CurrentChangeTime = RandomStream.FRandRange(0.6f * WaveDuration, 1.4 * WaveDuration);
+		CurrentChangeTime = WaveDuration;
 
 		PreviousSpeed = TargetSpeed;
 		TargetSpeed *= -1.0f;
 	}
-	
-	MacroWindValue = GetActorForwardVector() * WindComponent->Speed * WindVertexOffsetMultiplier * DeltaTime + MacroWindValue;
-	
-	MacroDMI->SetVectorParameterValue("Wind", MacroWindValue - GetActorForwardVector() * WindVertexOffset);
 }
 

@@ -20,13 +20,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float MaxWaveSpeed = 5;
 	UPROPERTY(EditAnywhere)
-	AActor* Macro;
-	UPROPERTY(EditAnywhere)
-	UMaterialInstance* MacroMI;
-	UPROPERTY(EditAnywhere)
-	float WindVertexOffsetMultiplier = 10;
-	UPROPERTY(EditAnywhere)
-	float WindVertexOffset = -10;
+	UMaterialParameterCollection* WindMatParam;
 	
 	virtual void BeginPlay() override;
 
@@ -35,14 +29,11 @@ private:
 	UWindDirectionalSourceComponent* WindComponent;
 
 	UPROPERTY()
-	UMaterialInstanceDynamic* MacroDMI;
-	
-	FRandomStream RandomStream;
+	UMaterialParameterCollectionInstance* WindMatParamInstance;
 	
 	float PreviousSpeed = 0;
 	float TargetSpeed = 0;
 	float CurrentChangeTime = 0;
 	float CurrentTime = 0;
 	bool bChanging = false;
-	FVector MacroWindValue;
 };
