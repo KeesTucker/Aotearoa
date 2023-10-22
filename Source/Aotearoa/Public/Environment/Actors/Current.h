@@ -17,17 +17,32 @@ public:
 protected:
 	UPROPERTY(EditAnywhere)
 	float WaveDuration = 5;
+	UPROPERTY(EditAnywhere)
+	float MaxWaveSpeed = 5;
+	UPROPERTY(EditAnywhere)
+	AActor* Macro;
+	UPROPERTY(EditAnywhere)
+	UMaterialInstance* MacroMI;
+	UPROPERTY(EditAnywhere)
+	float WindVertexOffsetMultiplier = 10;
+	UPROPERTY(EditAnywhere)
+	float WindVertexOffset = -10;
 	
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY()
 	UWindDirectionalSourceComponent* WindComponent;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* MacroDMI;
 	
 	FRandomStream RandomStream;
+	
 	float PreviousSpeed = 0;
 	float TargetSpeed = 0;
 	float CurrentChangeTime = 0;
 	float CurrentTime = 0;
 	bool bChanging = false;
+	FVector MacroWindValue;
 };
