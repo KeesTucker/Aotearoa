@@ -11,24 +11,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
+    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="fix: Wind improvements on WPO">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/Macro/EckloniaRadiata.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BPs/Macro/EckloniaRadiata.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/Macro/EckloniaRadiataBlades.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BPs/Macro/EckloniaRadiataBlades.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/BP_UnderWater.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/BP_UnderWater.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/L_OceanV2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_OceanV2.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/PerfTest.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/PerfTest.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaBrownii.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaBrownii.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaBrowniiStem.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaBrowniiStem.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaGeminata.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaGeminata.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MP_Waves.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/MP_Waves.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/M_Caulerpa.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/M_Caulerpa.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_ScreenWave.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_ScreenWave.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/EckloniaRadiata/EckloniaRadiataBlades.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/EckloniaRadiata/EckloniaRadiataBlades.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PCG/Macro.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PCG/Macro.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/Current.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/Current.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/Macro/MacroKelp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Private/Environment/Actors/Macro/MacroKelp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/Actors/Current.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/Actors/Current.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/Actors/Macro/MacroKelp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aotearoa/Public/Environment/Actors/Macro/MacroKelp.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -523,7 +508,7 @@
       <workItem from="1698026368106" duration="3471000" />
       <workItem from="1698097470034" duration="2430000" />
       <workItem from="1698110073202" duration="678000" />
-      <workItem from="1698112457792" duration="3719000" />
+      <workItem from="1698112457792" duration="5037000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Rebuild project! Git is not broken anymore! yay!">
       <option name="closed" value="true" />
@@ -565,7 +550,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698040331586</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix: Wind improvements on WPO">
+      <option name="closed" value="true" />
+      <created>1698132801247</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698132801247</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,6 +598,7 @@
     <MESSAGE value="chore: Rebuild project! Git is not broken anymore! yay!&#10;Update SerializedUObject.h" />
     <MESSAGE value="Added Caulerpa Geminata" />
     <MESSAGE value="feat: Added Coralline" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Added Coralline" />
+    <MESSAGE value="fix: Wind improvements on WPO" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Wind improvements on WPO" />
   </component>
 </project>

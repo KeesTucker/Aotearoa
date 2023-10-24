@@ -12,9 +12,9 @@ AMacroKelp::AMacroKelp()
 	BaseComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base"));
 	SetRootComponent(BaseComponent);
 
-	/*StemComponent = CreateDefaultSubobject<UCableComponent>(TEXT("Stem"));
+	StemComponent = CreateDefaultSubobject<UCableComponent>(TEXT("Stem"));
 	StemComponent->SetupAttachment(BaseComponent);
-	StemComponent->CableLength = StemLength * 0.9f;*/
+	StemComponent->CableLength = StemLength * 0.9f;
 
 	StemConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(TEXT("Stem Constraint"));
 	StemConstraint->SetupAttachment(BaseComponent);
@@ -33,9 +33,9 @@ void AMacroKelp::BeginPlay()
 	
 	BladeActor = GetWorld()->SpawnActor<AMacroKelpBlades>(Blades, GetActorLocation() + FVector(0, 0, RandStemLength), FRotator(0, FMath::RandRange(0.0f, 360.0f), 0));
 
-	/*StemComponent->SetAttachEndTo(BladeActor, NAME_None);
+	StemComponent->SetAttachEndTo(BladeActor, NAME_None);
 	//StemComponent->CableLength = 1;
-	StemComponent->CableLength = RandStemLength * 0.9f;*/
+	StemComponent->CableLength = RandStemLength * 0.9f;
 
 	StemConstraint->ConstraintActor1 = TObjectPtr<AActor>(this);
 	StemConstraint->ConstraintActor2 = TObjectPtr<AActor>(BladeActor);
