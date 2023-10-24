@@ -14,8 +14,9 @@ void ACurrent::BeginPlay()
 	
 	WindComponent = FindComponentByClass<UWindDirectionalSourceComponent>();
 	TargetSpeed = MaxWaveSpeed;
+	PreviousSpeed = -TargetSpeed;
 
-	CurrentChangeTime = WaveDuration;
+	CurrentChangeTime = WaveDuration / 2.0f;
 
 	WindMatParamInstance = GetWorld()->GetParameterCollectionInstance(WindMatParam);
 
@@ -40,5 +41,9 @@ void ACurrent::Tick(const float DeltaTime)
 		PreviousSpeed = TargetSpeed;
 		TargetSpeed *= -1.0f;
 	}
+
+	WaveSum += WindComponent->Speed * GetActorForwardVector() * DeltaTime;
+	
+	WindMatParamInstance->SetVectorParameterValue("WaveSum", FLinearColor(WaveSum));
 }
 

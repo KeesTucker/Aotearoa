@@ -21,9 +21,9 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* BaseComponent;
-	UPROPERTY(EditAnywhere)
-	UCableComponent* StemComponent;
+	UStaticMeshComponent* BaseComponent; 
+	/*UPROPERTY(EditAnywhere)
+	UCableComponent* StemComponent;*/
 	UPROPERTY(EditAnywhere)
 	UPhysicsConstraintComponent* StemConstraint;
 

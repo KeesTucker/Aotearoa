@@ -30,7 +30,9 @@ private:
 
 	UPROPERTY()
 	UMaterialParameterCollectionInstance* WindMatParamInstance;
-	
+
+	// WaveSum is sent to all materials that sway with the waves. It is a vector used to calculate WPO. 
+	FVector WaveSum;
 	float PreviousSpeed = 0;
 	float TargetSpeed = 0;
 	float CurrentChangeTime = 0;
