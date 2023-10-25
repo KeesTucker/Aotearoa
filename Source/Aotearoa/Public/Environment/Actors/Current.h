@@ -1,18 +1,15 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/WindDirectionalSource.h"
 #include "Current.generated.h"
 
 UCLASS()
-class AOTEAROA_API ACurrent : public AWindDirectionalSource
+class AOTEAROA_API ACurrent : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	ACurrent();
-
-	virtual void Tick(float DeltaTime) override;
 
 protected:
 	UPROPERTY(EditAnywhere)
@@ -26,16 +23,5 @@ protected:
 
 private:
 	UPROPERTY()
-	UWindDirectionalSourceComponent* WindComponent;
-
-	UPROPERTY()
 	UMaterialParameterCollectionInstance* WindMatParamInstance;
-
-	// WaveSum is sent to all materials that sway with the waves. It is a vector used to calculate WPO. 
-	FVector WaveSum;
-	float PreviousSpeed = 0;
-	float TargetSpeed = 0;
-	float CurrentChangeTime = 0;
-	float CurrentTime = 0;
-	bool bChanging = false;
 };
