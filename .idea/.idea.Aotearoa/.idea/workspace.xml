@@ -11,234 +11,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Blurprint/BP_UnderWaterV3.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Blurprint/BP_UnderWaterV3_Scale.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/Caustics.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/M_Water_Surface_2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/NewMaterial_3.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/PP_Materials/M_ScreenWave.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/PP_Materials/UW_Fog_Inst.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/UW_Fog_Inst.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/Water_FarMesh.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Instances/MI_CaulerpaBrownii.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Instances/MI_CaulerpaBrowniiStem.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Instances/MI_CaulerpaGeminata.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Instances/MI_CorallineTipsV2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Instances/MI_CorallineV2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Instances/MI_EckloniaRadiataBlades.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Macro/Parameters/MP_Waves.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Rock/BlendAssets/BA_Noise.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Rock/Instances/MI_EncrustedRock1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Rock/Instances/MI_Rock1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Mats/Rock/Layers/ML_Triplanar.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/StaticMesh/water.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Caustics_Tiling_01_HDR_2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Sand/T_SandDetail_BC.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/Sand/T_SandDetail_N.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/T_Caustics_BC.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/T_Ocean_BC.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/T_Ocean_DP.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/T_Ocean_N.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/T_WaveNoise_BC.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/alpha.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Textures/inline_image_preview.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aotearoa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/Macro/EckloniaRadiata.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BPs/Macro/EckloniaRadiata.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/BP_UnderWater.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/BP_ChasingFish.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/BP_ChasingHorseMackrelNew.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/BP_FishCharacter.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraChannelCorrelation.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraCurlNoiseQuality.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraEmitterLifeCycleMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraEmitterScalabilityMode_Limited.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraExecutionStateManagement.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraExpansionMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraInactiveMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraMeshTransforms.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraRandomnessEvaluation.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraRandomnessMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraRingDiscMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraScaleColorMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraShapeTorusMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraSphereDistributionMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraSystemInactiveMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagaraTorusDistributionMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_AngleInput.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_AttributeSamplingApplyOutput.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_BoxPlaneMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_ColorInitializationMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_ConeMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_CylinderMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_EmitterStateOptions.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_InfiniteLoopDuration.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_LifetimeMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_LocationShapes.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_MassInitializationMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_OffsetMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_PositionInitializationMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_RotationMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_ScaleMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_ScaleSpriteSize.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_SizeScaleMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_SpriteRotationMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_TransformOrder.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_TransformType.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_UVFlippingMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_UnsetDirectSet.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_UnsetDirectSetRandom.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENiagara_VelocityMode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/ENum_FoodType.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/Interface_Eatable.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/Notuse/Interface_Predator.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/B_Gamemode.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FX/Black_Fish.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FX/Dirt.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FX/JapaneseHorseMackerel.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FX/UnderwaterBP/Dirt.uasset" beforeDir="false" />
+    <list default="true" id="5c6cd0ea-53c3-4b14-8e65-88ca5428f374" name="Changes" comment="chore: Updated water asset to new version and enabled virtual shadow maps.">
+      <change afterPath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/BP_UnderWaterV3.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/BPs/UnderwaterBP/BP_UnderWaterV3_Scale.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/Caustics.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_Water_Surface_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/NewMaterial_3.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/PP_Materials/M_ScreenWave.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/PP_Materials/UW_Fog_Inst.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/UW_Fog_Inst.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/Water_FarMesh.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Meshes/UnderwaterBP/water.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/Caustics_Tiling_01_HDR_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Caustics_BC.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Ocean_BC.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Ocean_DP.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Ocean_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_WaveNoise_BC.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/alpha.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/inline_image_preview.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blurprint/BP_UnderWaterV3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blurprint/BP_UnderWaterV3_Scale.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blurprint/BP_UnderWaterV3_Scale.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/L_OceanV2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/L_OceanV2.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/BlendAssets/BA_Noise.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Landscape/M_Landscape.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Landscape/M_Landscape.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Layers/ML_Triplanar.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/Coralline.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/Coralline.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaBrownii.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaBrowniiStem.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CaulerpaGeminata.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CorallineTipsV2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_CorallineV2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MI_EckloniaRadiataBlades.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/MP_Waves.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/MP_Waves.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/M_Caulerpa.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/M_Caulerpa.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/M_CorallineV2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/M_CorallineV2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/M_EckloniaRadiataBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/M_EckloniaRadiataBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Macro/M_EckloniaRadiataBlades.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Macro/M_EckloniaRadiataBlades.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/MaterialFunctions/MF_TriplanarORDp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/MaterialFunctions/MF_TriplanarORDp.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Rock/MI_EncrustedRock1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/Rock/MI_Rock1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mats/Rock/MI_Rock1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/DefaultSpriteMaterial.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_Caustics.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_ScreenWave.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_Water_Surface_2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mats/UnderwaterBP/M_Water_Surface_2_Inst.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG4.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG5.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG5.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG6.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Brownii/CaulerpaBrowniiG6.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG4.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG5.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG5.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG6.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Caulerpa/Geminata/CaulerpaGeminataG6.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Coralline/CorallineAlgaeG1V2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Coralline/CorallineAlgaeG1V2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Coralline/CorallineAlgaeG2V2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Coralline/CorallineAlgaeG2V2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/Coralline/CorallineAlgaeG3V2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/Coralline/CorallineAlgaeG3V2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/Macro/EckloniaRadiata/EckloniaRadiataBladesV2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/Macro/EckloniaRadiata/EckloniaRadiataBladesV2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock4.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock5.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Meshes/ProceduralMeshes/S_Generated_Rock5.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Meshes/UnderwaterBP/water.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/AddVelocity.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/AngleUnitConverter.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ApplyInitialForces.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ApplyRotationVector.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/AxisAngleToQuaternion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CalculateRandomBool.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CalculateRandomPointInConeSphereIntersection.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CalculateRandomRange.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CalculateRandomRangeFloat.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CalculateRandomRangeInteger.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CalculateRandomUnitVector.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Clear_Lighting.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ConeMask.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CoreParameters.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/CurlNoiseForce.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Deep_Blue_Light.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/DirectionAndLengthSafe.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Dirt.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/DistanceBasedFalloff.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Drag.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/EmitterChangeState.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/EmitterState.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/FindAngleBetweenVectors.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/FindQuatBetween.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/FloatFromCurve.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/GetRandomInfo.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/GravityForce.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/HueShiftLinearColor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/InitializeParticle.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/InvertQuaternion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/IsolateLongestVectorComponent.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/MakeQuaternionFrom3BasisVectors.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/MatrixToQuaternion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/MeshRenderer.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/MeshRotationForce.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Moss_LayerInfo.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/MultiplyQuaternion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/MultiplyVectorWithQuaternion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/NewNiagaraSystem_2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/NormalizeDistanceRange.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/NormalizedExecutionIndex.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ParametricTorus.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ParametricTorusKnot.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ParticleState.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/PhysicalMaterial_GreatWhiteShark.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/PolarToCartesianCoordinates.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RandomPointInBox.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RandomRangeFloat.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RandomRangeFloat_2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RandomUnitVector.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RandomVector.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RemapRange.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RibbonRenderer.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/RotateVector2D.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Sand_LayerInfo.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SaturateFloat.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ScaleColor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ScaleSpriteSize.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/ShapeLocation.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SimulationPosition.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SolveForcesAndVelocity.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SpawnRate.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SphericalToCartesianCoordinates.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SpriteRenderer.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SystemChangeState.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/SystemState.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TilingCurl16.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TilingCurl32.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TilingCurl64.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TransformBase.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TransformPosition.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TransformStack_Rotation.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/TransformVector.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/Vector2DFromFloat.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/VectorNoiseForce.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/VortexVelocity.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Migrated/XYZRotationToQuaternion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PCG/Macro.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PCG/Macro.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PCG/Rocks.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PCG/Rocks.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PCG/SmallRocks.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PCG/SmallRocks.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Settings/C_WindSmoothCurve.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Caustics_BC.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Icon_Particle_InfiniteLife.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Icon_Solver_LimitAccel.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Icon_Solver_LimitSpeed.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Icon_Solver_RotationalSolve.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Ocean_BC.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Ocean_DP.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_Ocean_N.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_SandDetail_BC.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_SandDetail_N.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/T_WaveNoise_BC.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Textures/UnderwaterBP/inline_image_preview.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/UnrealUtility" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/UnrealUtility" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/Caustics.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/M_Water_Surface_2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/NewMaterial_3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/PP_Materials/M_ScreenWave.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/PP_Materials/UW_Fog_Inst.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/PP_Materials/UW_Fog_Inst.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/UW_Fog_Inst.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/Water_FarMesh.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StaticMesh/water.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/Caustics_Tiling_01_HDR_2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/T_Caustics_BC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/T_Ocean_BC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/T_Ocean_DP.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/T_Ocean_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/T_WaveNoise_BC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/alpha.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Textures/inline_image_preview.uasset" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -738,6 +548,7 @@
       <workItem from="1698189633639" duration="12805000" />
       <workItem from="1698245558809" duration="5709000" />
       <workItem from="1698299469281" duration="3261000" />
+      <workItem from="1698305704132" duration="426000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Rebuild project! Git is not broken anymore! yay!">
       <option name="closed" value="true" />
@@ -787,7 +598,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698132801247</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="chore: Updated water asset to new version and enabled virtual shadow maps.">
+      <option name="closed" value="true" />
+      <created>1698305740969</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1698305740969</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -828,6 +647,7 @@
     <MESSAGE value="Added Caulerpa Geminata" />
     <MESSAGE value="feat: Added Coralline" />
     <MESSAGE value="fix: Wind improvements on WPO" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Wind improvements on WPO" />
+    <MESSAGE value="chore: Updated water asset to new version and enabled virtual shadow maps." />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: Updated water asset to new version and enabled virtual shadow maps." />
   </component>
 </project>
