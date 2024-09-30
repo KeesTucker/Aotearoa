@@ -22,10 +22,6 @@
 			]
 		},
 		{
-			"Name": "UnrealUtility",
-			"Enabled": true
-		},
-		{
 			"Name": "Water",
 			"Enabled": true
 		},
